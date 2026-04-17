@@ -1,0 +1,12 @@
+
+/* AUTH Folder Stylesheet + Index */
+
+/* LANDING PAGE*/
+
+.landing-page-bg {
+  background-image: url("../img/landing-page.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}

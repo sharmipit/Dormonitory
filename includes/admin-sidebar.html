@@ -11,6 +11,32 @@
     />
   </head>
   <body>
+<div class="navbar" id="navbar">
+        <div class="navbar-left">
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <span class="navbar-title"><?php echo $page_title; ?></span>
+        </div>
+
+        <div class="navbar-right">
+            <div class="search-box">
+                Search Bar
+            </div>
+
+            <button class="notif-btn" title="Notifications">
+                <i class="bi bi-bell-fill" style="color: white;"></i>
+            </button>
+
+            <div class="avatar" title="<?php echo htmlspecialchars($name); ?>">
+                <img src="../assets/img/cute-duck-for-good-luck.jpeg">
+            </div>
+        </div>
+    </div>
+
     <div class="layout">
       <aside class="sidebar" id="sidebar">
         <div class="brand">
@@ -52,22 +78,16 @@
           </a>
         </div>
       </aside>
-      <main class="main" id="main">
-        <div class="topbar">
-          <button class="hamburger" id="hamburger">
-            <span></span><span></span><span></span>
-          </button>
-        </div>
-      </main>
     </div>
+    
     <script>
-      const btn = document.getElementById("hamburger");
-      const sidebar = document.getElementById("sidebar");
-      const main = document.getElementById("main");
-      btn.onclick = () => {
-        sidebar.classList.toggle("closed");
-        main.classList.toggle("full");
-      };
+        const btn = document.getElementById("hamburger");
+        const sidebar = document.getElementById("sidebar");
+
+        btn.onclick = () => {
+            sidebar.classList.toggle("closed");
+            document.body.classList.toggle("sidebar-closed");
+        };
     </script>
   </body>
 </html>

@@ -18,15 +18,151 @@
 body {
   font-family: "Inter", sans-serif;
   background: #ffffff;
-  color: #12128a;
+  color: #3030b6;
 }
 
 .layout {
   display: flex;
   min-height: 100vh;
+  margin-left: var(--w);
+  transition: margin-left var(--t);
 }
 
-/* SIDEBAR */
+body.sidebar-closed .layout {
+  margin-left: 0;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: var(--w);
+  width: calc(100% - var(--w));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: #fff;
+  border-bottom: 1.5px solid #e5e7eb;
+  transition: left var(--t), width var(--t);
+  z-index: 999;
+}
+
+body.sidebar-closed .navbar {
+  left: 0;
+  width: 100%;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.main.full .navbar {
+  left: 0;
+  width: 100%;
+}
+
+.navbar-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 40px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f3f4f6;
+  border-radius: 999px;
+  padding: 8px 16px;
+  width: 220px;
+  color: rgba(55, 65, 81, 0.6); /* transparent text */
+  font-size: 13px;
+}
+
+.search-icon {
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  color: #374151;
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notif-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #3030b6;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s;
+}
+
+.notif-btn:hover {
+  background: #2d31a6;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-initial {
+  display: none;
+  font-size: 15px;
+  font-weight: 700;
+  color: #3b3fc4;
+}
+
+.avatar.avatar-fallback .avatar-initial {
+  display: flex;
+}
+
+.avatar.avatar-fallback img {
+  display: none;
+}
+
 .sidebar {
   width: var(--w);
   background: var(--bg);
@@ -46,7 +182,6 @@ body {
   transform: translateX(-100%);
 }
 
-/* BRAND */
 .brand {
   width: 120%;
   display: flex;
@@ -59,7 +194,6 @@ body {
   height: auto;
 }
 
-/* DIVIDERS */
 .divider {
   width: calc(100% - 48px);
   height: 1px;
@@ -74,7 +208,6 @@ body {
   width: 100%;
 }
 
-/* NAV */
 nav {
   width: 100%;
   flex: 1;
@@ -119,7 +252,6 @@ nav li.active a i {
   color: var(--icon-active-color);
 }
 
-/* ICONS */
 nav a i,
 .signout-btn i {
   font-size: var(--icon-size);
@@ -128,7 +260,6 @@ nav a i,
   transition: 0.2s;
 }
 
-/* SIGN OUT */
 .sidebar-bottom {
   width: 100%;
   padding: 0 14px;
@@ -156,19 +287,19 @@ nav a i,
   color: #ffb3b3;
 }
 
-/* MAIN CONTENT */
 .main {
   margin-left: var(--w);
-  width: 100%;
+  width: calc(100% - var(--w));
   padding: 40px;
-  transition: margin-left var(--t);
+  padding-top: calc(40px + 68px); /* account for fixed navbar height */
+  transition: margin-left var(--t), width var(--t);
 }
 
 .main.full {
   margin-left: 0;
+  width: 100%;
 }
 
-/* TOPBAR */
 .topbar {
   display: flex;
   align-items: center;
@@ -176,10 +307,10 @@ nav a i,
 }
 
 .hamburger {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border: none;
-  border-radius: 14px;
+  border-radius: 12px;
   background: linear-gradient(145deg, #3030b6, #28288e);
   display: flex;
   flex-direction: column;
@@ -190,31 +321,34 @@ nav a i,
 }
 
 .hamburger span {
-  width: 24px;
+  width: 22px;
   height: 3px;
   background: white;
   border-radius: 3px;
-  transition: 0.35s;
-  transform: none;
-  opacity: 1;
+  transition: 0.35s ease;
 }
 
-/* HAMBURGER ANIMATION */
-.sidebar.closed + .topbar .hamburger span:nth-child(1) {
+/* Animate to X when sidebar closed */
+.sidebar.closed ~ .navbar .hamburger span:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
 
-.sidebar.closed + .topbar .hamburger span:nth-child(2) {
+.sidebar.closed ~ .navbar .hamburger span:nth-child(2) {
   opacity: 0;
 }
 
-.sidebar.closed + .topbar .hamburger span:nth-child(3) {
+.sidebar.closed ~ .navbar .hamburger span:nth-child(3) {
   transform: translateY(-8px) rotate(-45deg);
 }
 
-/* MOBILE */
 @media (max-width: 900px) {
+  .navbar {
+    left: 0;
+    width: 100%;
+  }
+
   .main {
     margin-left: 0;
+    width: 100%;
   }
 }

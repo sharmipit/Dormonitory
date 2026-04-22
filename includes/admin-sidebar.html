@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Dormonitory</title>
+        <link rel="stylesheet" href="../../assets/css/sidebar-styles.css">
+    </head>
+
+    <body>
+        <div class="layout">
+            <aside class="sidebar" id="sidebar">
+                <div class="brand">
+                    <img src="../../assets/img/secondary-logo.png" alt="Brand">
+                </div>
+
+                <div class="divider"></div>
+            
+                <nav>
+                    <ul>
+                        <li class="active"><a href="../admin/dashboard.html"><img src="../../assets/img/dashboard.png"><span>Dashboard</span></a></li>
+                        <li><a href="../admin/residency-directory.html"><img src="../../assets/img/residency.png"><span>Residency Directory</span></a></li>
+                        <li><a href="../admin/room-allocation.html"><img src="../../assets/img/room.png"><span>Room Allocation</span></a></li>
+                        <li><a href="../admin/announcements.html"><img src="../../assets/img/announcements.png"><span>Announcements</span></a></li>
+                    </ul>
+                </nav>
+
+                <div class="sidebar-bottom">
+                    <div class="divider-bottom"></div>
+                    <a href="#" class="signout-btn">
+                        <img src="../../assets/img/out.png">
+                        <span>Sign Out</span>
+                    </a>
+                </div>
+            </aside>
+
+            <main class="main" id="main">
+                <div class="topbar">
+                    <button class="hamburger" id="hamburger">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </main>
+        </div>
+
+        <script>
+            const btn = document.getElementById('hamburger');
+            const sidebar = document.getElementById('sidebar');
+            const main = document.getElementById('main');
+            btn.onclick = () => {
+                sidebar.classList.toggle('closed');
+                main.classList.toggle('full');
+            };
+        </script>
+    </body>
+</html>

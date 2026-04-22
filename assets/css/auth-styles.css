@@ -1,4 +1,4 @@
-/* --- Global Styles --- */
+/* --- Global & Shared Styles --- */
 
 :root {
     --brand-blue: #3030b6;
@@ -18,16 +18,12 @@ body {
     overflow-x: hidden; 
 }
 
-
-/* --- Landing Page Styles --- */
-
-.landing-container {
+.landing-container, .auth-container { 
     display: flex;
     height: 100vh; 
-    width: 100vw;
+    overflow: hidden;
     position: relative;
 }
-
 
 .hero-left {
     flex: 1;
@@ -35,13 +31,20 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 8%;
     position: relative;
     color: white;
     z-index: 1;
     overflow: hidden; 
 }
 
+.hero-right {
+    flex: 1;
+    background-color: white;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+}
 
 .pattern-overlay {
     position: absolute;
@@ -59,311 +62,595 @@ body {
 }
 
 
-.main-logo {
-    width: 85%;
-    max-width: 500px;
-    margin-bottom: 25px;
-}
+
+/* ==========================================================================
+   AUTENTICATION PAGE STYLES
+   ========================================================================== */
 
 
-.tagline {
-    font-size: 1.15rem;
-    max-width: 400px;
-    line-height: 1.6;
-    margin-bottom: 40px;
-}
 
+/* --- Login Page --- */
 
-.hero-right {
-    flex: 1;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.signup-visual {
+    flex: 1; 
     position: relative;
-    z-index: 5;
-}
-
-
-.image-wrapper {
-    position: relative;
-    width: 85%;
-    max-width: 580px;
-    margin-left: -35%; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.building-img {
-    width: 100%;
-    height: auto;
-    border-radius: 45px; 
-    display: block;
-}
-
-
-.btn-landing-white {
-    background-color: white;
-    color: var(--brand-blue);
-    font-weight: 700;
-    border-radius: 50px;
-    padding: 14px 38px;
-    font-size: 1.1rem;
-    margin-right: 20px;
-    transition: all 0.3s ease;
-    border: none;
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-
-.btn-landing-white:hover {
-    transform: translateY(-3px);
-    background-color: #f1f1f1;
-    color: var(--electric-blue);
-}
-
-
-/* --- Floating Info Pills --- */
-
-.info-pill {
-    position: absolute;
-    background: var(--electric-blue);
-    color: white;
-    padding: 15px 30px;
-    border-radius: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
-    justify-content: center; 
-    text-align: center;      
-    min-width: 210px;        
-    z-index: 10;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.info-pill strong { 
-    font-size: 1.3rem; 
-    font-weight: 800; 
-    letter-spacing: 0.5px;
-    margin-bottom: 2px;
-}
-
-.info-pill span { 
-    font-size: 0.85rem; 
-    font-weight: 400;
-    opacity: 0.95; 
-}
-
-
-/* --- Hollow White Icons --- */
-
-.floating-icon {
-    position: absolute;
-    width: 65px;
-    height: 65px;
-    background: var(--electric-blue);
-    border-radius: 50%;
+    background-color: var(--brand-blue);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 1.8rem;
-    z-index: 11;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.icon-key { top: 12%; left: -12%; }
-.icon-user { top: 45%; right: -10%; }
-.icon-shield { bottom: 0%; left: 35%; }
-
-.icon-lg {
-    width: 90px;
-    height: 90px;
-    font-size: 2.5rem;
-}
-
-
-/* --- Placements of Floating Pills & Icons --- */
-
-.p-secure { 
-    top: 5%; 
-    right: 2%; 
-}
-.p-seamless { 
-    bottom: 30%; 
-    left: -8%; 
-}
-.p-connected { 
-    bottom: 0%; 
-    right: -5%; 
-}
-
-.icon-key { 
-    top: 17%; 
-    left: 2%; 
-} 
-
-.icon-user { 
-    top: 42%; 
-    right: -5%; 
-}
-
-.icon-shield { 
-    bottom: 0%; 
-    left: 25%; 
-}
-
-
-/* --- Image Hover Effect --- */
-
-.building-img {
-    width: 100%;
-    height: auto;
-    border-radius: 45px; 
-    display: block;
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    cursor: pointer;
-}
-
-.building-img:hover {
-    transform: scale(1.03);
-}
-
-
-/* --- Floating Info Pills & Icons Hover Effect --- */
-
-.info-pill {
-    position: absolute;
-    background: var(--electric-blue);
-    color: white;
-    padding: 15px 30px;
-    border-radius: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
-    justify-content: center; 
-    text-align: center;      
-    min-width: 210px;        
-    z-index: 10;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    cursor: default;
-}
-
-.info-pill:hover {
-    transform: translateY(-10px);
-    background-color: #3535ff; 
-    box-shadow: 0 15px 30px rgba(31, 31, 255, 0.4);
-}
-
-
-.floating-icon {
-    position: absolute;
-    background: var(--electric-blue);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    z-index: 11;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    /* Transition for icons */
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.floating-icon:hover {
-    transform: scale(1.1) rotate(10deg);
-    background-color: white;
-    color: var(--brand-blue);
-}
-
-
-
-/* --- About Us Section --- */
-
-.about-fullscreen {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url('../img/rubia-img2.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
     overflow: hidden;
+    z-index: 1;
 }
 
-.about-blur-overlay {
+.pattern-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.2); 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 1;
+    background-image: url('../img/translucent-bg.png'); 
+    background-size: cover; 
+    background-position: center;
+    opacity: 1; 
+    z-index: -1;
+    pointer-events: none;
 }
 
-.about-fullscreen .container {
+.collage-wrapper {
     position: relative;
+    top: 45px;
+    width: 510px;    
+    height: 600px; 
+    margin-right: 45px; 
+    display: block; 
+}
+
+.col-img {
+    position: absolute;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+}
+
+.col-img:hover {
+    transform: translateY(-10px) scale(1.03); 
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.35));
+    z-index: 10; 
+}
+
+/* 1. Community Hands (Top Left) */
+.img-1 {
+    width: 200px;
+    top: 30px;
+    left: 10px;
     z-index: 2;
 }
 
-
-/* --- Glassmorphism Card --- */
-
-.about-card {
-    background: rgba(255, 255, 255, 0.85); 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 60px;
-    border-radius: 50px;
-    border: 2px solid #FFFFFF;
-    box-shadow: 0 20px 40px rgba(48, 48, 182, 0.15); 
-    max-width: 800px;
-    transition: transform 0.3s ease;
+/* 2. Resident Smiling (Middle Right) */
+.img-2 {
+    width: 250px;
+    top: 160px;
+    right: 15px;
+    z-index: 3;
 }
 
-.about-card:hover {
-    transform: translateY(-5px);
+/* 3. Security House (Bottom Left) */
+.img-3 {
+    width: 200px; 
+    bottom: 115px;
+    left: 10px; 
+    z-index: 2;
 }
 
-.about-title {
+/* 4. Logo */
+.branding-float {
+    position: absolute;
+    top: 20px; 
+    right: 15px;
+    width: 260px;
+    z-index: 4;
+}
+
+.signup-logo {
+    width: 100%;
+    display: block;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+}
+
+.signup-logo:hover {
+    transform: translateY(-8px) scale(1.02);
+    filter: drop-shadow(0 10px 15px rgba(255, 255, 255, 0.2));
+}
+
+/* Text Description */
+.signup-description {
+    position: absolute; 
+    font-family: var(--inter);
+    font-size: 20px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    width: 220px; 
+    top: 310px; 
+    left: 7px; 
+    text-align: justify;
+}
+
+/* --- Role Selection Interface --- */
+
+.role-selection {
+    flex: 1;
+    background-color: #fcfcfc;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 60px 5% !important;
+    position: relative;
+}
+
+.back-nav {
+    margin-bottom: 60px;
+    align-self: flex-start; 
+}
+
+.btn-go-back {
+    color: #b0b0e0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.selection-box {
+    width: 100%;
+    max-width: 520px; 
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.role-title {
+    font-family: var(--inter);
+    color: var(--brand-blue);
     font-size: 2.8rem;
     font-weight: 800;
-    color: #333333; 
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.role-subtitle {
+    font-family: var(--inter);
+    color: #7d7db3;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 50px;
+    max-width: 400px;
+}
+
+.role-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.role-card {
+    background: #FFFFFF;
+    border: none;
+    border-radius: 25px;
+    padding: 25px 30px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    border: 1px solid transparent; 
+}
+
+.role-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(48, 48, 182, 0.08);
+}
+
+.role-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--brand-blue);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-right: 25px;
+    flex-shrink: 0;
+}
+
+.role-info strong {
+    display: block;
+    color: #333;
+    font-size: 1.3rem; 
+}
+
+.role-info span {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.arrow-icon {
+    color: #eee;
+    font-size: 1.2rem;
+    margin-left: auto;
+}
+
+.login-redirect {
+    margin-top: 40px;
+    text-align: center;
+    color: #888;
+}
+
+.login-redirect a {
+    color: var(--brand-blue);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.role-card:hover {
+    transform: translateY(-5px); 
+    background: #ffffff;
+    border-color: var(--brand-blue); 
+    box-shadow: 0 15px 35px rgba(48, 48, 182, 0.1); 
+}
+
+.role-card:hover .role-icon {
+    transform: scale(1.1);
+    background: #3d3dbd; 
+    transition: all 0.3s ease;
+}
+
+.role-card:hover .arrow-icon {
+    transform: translateX(8px);
+    color: var(--brand-blue);
+    transition: all 0.3s ease;
+}
+
+
+/* --- Signup Page --- */
+
+.signup-visual {
+    display: flex;
+    align-items: center;   
+    justify-content: center; 
+    height: 100vh;
+    overflow: hidden;
+}
+
+.join-container {
+    position: relative;
+    width: 90%;           
+    max-width: 480px;      
+    margin: 0 auto;
+    z-index: 5;
+    transform: translateX(20px); 
+    transform: translateX(-10px); 
+}
+
+.brandmark-box-img {
+    width: 100%;          
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+}
+
+.join-content {
+    position: absolute;
+    top: 65%;               
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;             
+    text-align: center;
+    z-index: 10;          
+    pointer-events: none;   
+}
+
+.join-title {
+    font-family: 'Inter', sans-serif;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 2.5rem;     
+    margin-bottom: 12px;
+    line-height: 1.1;
+}
+
+.join-text {
+    font-family: 'Inter', sans-serif;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;       
+    line-height: 1.4;
+    margin: 0;
+}
+
+
+/* Login - Tenant */
+
+.back-nav-fixed {
+    position: sticky;
+    top: 0;
+    width: calc(100% + 20%); 
+    margin-left: -10%; 
+    margin-right: -10%;
+    padding: 40px 10% 20px 10%; 
+    background-color: white; 
+    z-index: 100;
+}
+
+.hero-left {
+    flex: 1; 
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.hero-right {
+    flex: 1;
+    height: 100vh;
+    overflow-y: auto; 
+    display: block; 
+    padding: 0 10% 100px 10%; 
+    background-color: #ffffff;
+    position: relative;
+}
+
+.btn-go-back {
+    color: #8a94ad !important; 
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
+
+.btn-go-back:hover {
+    color: var(--brand-blue) !important;
+}
+
+.auth-form-panel {
+    position: relative;
+    display: block;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 420px;
+    margin: 180px auto 0 auto; 
+    position: relative;
+    z-index: 1;
+}
+
+.btn-google-auth {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    color: #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.btn-google-auth img {
+    width: 22px; 
+    height: 22px;
+    object-fit: contain;
+}
+
+.btn-google-auth:hover {
+    background-color: #f8f9fa;
+    border-color: #d0d0d0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.forgot-link {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: #3b4eda; 
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.login-redirect a {
+    color: #3b4eda;
+    text-decoration: none;
+}
+
+.auth-form-panel {
+    padding: 40px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.portal-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px; 
+}
+
+.portal-badge i {
+    font-size: 2rem;
+    color: var(--brand-blue); 
+}
+
+.portal-badge span {
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    font-size: 0.9rem;
+    color: var(--brand-blue);
+}
+
+.auth-title {
+    color: var(--brand-blue);
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
-.about-title span {
-    color: #3030b6;
+.auth-subtitle {
+    color: #7d7db3;
+    margin-bottom: 40px;
 }
 
-.title-underline {
-    width: 80px;
-    height: 6px;
-    background-color: #3030b6;
+.input-group-custom {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-group-custom i {
+    position: absolute;
+    left: 20px;
+    color: #adb5bd;
+    font-size: 1.2rem;
+}
+
+.input-group-custom .form-control {
+    padding: 18px 20px 18px 55px;
+    background-color: #f8f9fa;
+    border: none;
+    border-radius: 15px;
+    font-family: var(--inter);
+}
+
+.form-label {
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: #adb5bd;
+    margin-left: 5px;
+}
+
+.forgot-link {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: var(--brand-blue);
+}
+
+.btn-auth-primary {
+    background-color: var(--brand-blue);
+    color: white;
+    padding: 16px;
+    border-radius: 15px;
+    border: none;
+    font-weight: 700;
+    transition: transform 0.2s;
+}
+
+.btn-auth-primary:hover {
+    transform: translateY(-2px);
+    background-color: #2a3eb1;
+}
+
+.btn-google-auth {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    padding: 16px;
+    border-radius: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.btn-google-auth img {
+    width: 20px;
+}
+
+.btn-google-auth:hover {
+    background-color: #f1f1f1;
+}
+
+.auth-divider {
+    text-align: center;
+    margin: 30px 0;
+    position: relative;
+}
+
+.auth-divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #dee2e6;
+    z-index: 1;
+}
+
+.auth-divider span {
+    background-color: white;
+    padding: 0 15px;
+    position: relative;
+    z-index: 2;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.hero-right::-webkit-scrollbar {
+    width: 6px;
+}
+.hero-right::-webkit-scrollbar-track {
+    background: transparent;
+}
+.hero-right::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
     border-radius: 10px;
-    margin-bottom: 35px;
 }
 
-.about-content p {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    color: #444444;
-    margin-bottom: 20px;
-    text-align: justify; 
-}
 
-.about-content p:last-child {
-    margin-bottom: 0;
+/* Size Responsiveness*/
+
+@media (max-width: 992px) {
+    .hero-left, .signup-visual {
+        display: none;
+    }
+
+    .hero-right {
+        display: flex;
+        flex: 0 0 100%;
+        width: 100%;
+        height: 100vh;
+        padding: 40px 5%; 
+        overflow-y: auto;
+    }
+
+    .login-box {
+        margin: 100px auto 40px auto; 
+        padding: 0 20px;
+    }
+
+    .back-nav-fixed {
+        position: fixed;
+        width: 100%;
+        left: 0;
+        margin: 0;
+        padding: 20px 5%;
+    }
+
+    .auth-title {
+        font-size: 2.2rem;
+    }
 }

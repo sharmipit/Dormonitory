@@ -1,8 +1,8 @@
 const pageTitles = {
-    'home.html': 'Home',
+    'home.html': 'Resident Web Portal',
     'digital-key.html': 'Digital Key',
-    'invite-visitor.html': 'Invite Visitor',
-    'dashboard.html': 'Dashboard',
+    'invite-visitor.html': 'Visitor Management',
+    'dashboard.html': 'Admin Web Portal',
     'residency-directory.html': 'Residency Directory',
     'room-allocation.html': 'Room Allocation',
     'announcements.html': 'Announcements',

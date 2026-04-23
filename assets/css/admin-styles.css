@@ -1,2 +1,49 @@
+*, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* Admin Folder Stylesheet + Index */
+    :root {
+      --bg-page: #f0f1f8;
+      --bg-card: #ffffff;
+      --bg-button: #f4f5fb;
+      --accent: #3030B6;
+      --accent-light: #e8e9f8;
+      --text-primary: #3E4755;
+      --text-secondary: #9E9A9A;
+      --shadow-card: 0 2px 12px rgba(60, 65, 168, 0.07);
+      --shadow-btn: 0 2px 8px rgba(60, 65, 168, 0.08);
+      --radius-card: 16px;
+      --radius-btn: 12px;
+      --font-main: 'DM Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-page);
+      padding: 32px 24px;
+      min-height: 100vh;
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 768px) {
+      .actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .actions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      body {
+        padding: 20px 16px;
+      }
+
+      .greeting-card,
+      .quick-actions-card {
+        padding: 20px;
+      }
+    }

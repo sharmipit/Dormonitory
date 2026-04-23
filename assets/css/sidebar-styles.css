@@ -66,7 +66,8 @@ body.sidebar-closed .navbar {
 .navbar-title {
   font-size: 20px;
   font-weight: 700;
-  color: #111827;
+  color: #3030b6; 
+  font-family: 'Inter', sans-serif; 
 }
 
 .navbar-center {
@@ -82,7 +83,7 @@ body.sidebar-closed .navbar {
   background: #f3f4f6;
   border-radius: 999px;
   padding: 8px 16px;
-  width: 220px;
+  width: 260px;
   color: rgba(55, 65, 81, 0.6); /* transparent text */
   font-size: 13px;
 }
@@ -311,7 +312,7 @@ nav a i,
   height: 44px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(145deg, #3030b6, #28288e);
+  background: linear-gradient(145deg, #3030b6, #5959ed);
   display: flex;
   flex-direction: column;
   justify-content: center;

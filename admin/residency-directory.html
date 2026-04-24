@@ -5,19 +5,185 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dormitory</title>
     <link rel="stylesheet" href="../../assets/css/sidebar-navbar-styles.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+    <link rel="stylesheet" href="../../assets/css/admin-styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
 
+  <body>
     <div id="navbar-placeholder"></div>
 
     <div class="layout">
       <div class="main">
-        <p>content</p>
+        <button class="add-res-btn">
+          <i class="bi bi-plus-lg"></i> Add New Resident
+        </button>
+
+        <div class="card">
+          <div class="top-bar">
+            <div class="search">
+              <i class="bi bi-search"></i>
+              <input type="text" placeholder="Search by name, ID, or room..." />
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Resident</th>
+                <th>Room</th>
+                <th>Status</th>
+                <th>Last Movement</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>
+                  <div class="user">
+                    <div class="avatar"><i class="bi bi-person"></i></div>
+                    <div class="user-info">
+                      James Abobo
+                      <small>ID: ST10001</small>
+                    </div>
+                  </div>
+                </td>
+                <td>RM10001</td>
+                <td>
+                  <span class="resident-status resident-inside">INSIDE</span>
+                </td>
+                <td>
+                  <div class="time">
+                    <i class="bi bi-clock"></i> 10 mins ago
+                  </div>
+                </td>
+                <td class="actions">
+                  <i class="bi bi-pencil-square edit-btn"></i>
+                  <i class="bi bi-trash delete-btn"></i>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="user">
+                    <div class="avatar"><i class="bi bi-person"></i></div>
+                    <div class="user-info">
+                      Hazel Ann Carillo
+                      <small>ID: ST10002</small>
+                    </div>
+                  </div>
+                </td>
+                <td>RM10002</td>
+                <td>
+                  <span class="resident-status resident-inside">INSIDE</span>
+                </td>
+                <td>
+                  <div class="time">
+                    <i class="bi bi-clock"></i> 2 hours ago
+                  </div>
+                </td>
+                <td class="actions">
+                  <i class="bi bi-pencil-square edit-btn"></i>
+                  <i class="bi bi-trash delete-btn"></i>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="user">
+                    <div class="avatar"><i class="bi bi-person"></i></div>
+                    <div class="user-info">
+                      Sharmagne Gamboa
+                      <small>ID: ST10003</small>
+                    </div>
+                  </div>
+                </td>
+                <td>RM10003</td>
+                <td>
+                  <span class="resident-status resident-outside">OUTSIDE</span>
+                </td>
+                <td>
+                  <div class="time">
+                    <i class="bi bi-clock"></i> 35 mins ago
+                  </div>
+                </td>
+                <td class="actions">
+                  <i class="bi bi-pencil-square edit-btn"></i>
+                  <i class="bi bi-trash delete-btn"></i>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="user">
+                    <div class="avatar"><i class="bi bi-person"></i></div>
+                    <div class="user-info">
+                      Gwyneth Miasco
+                      <small>ID: ST10004</small>
+                    </div>
+                  </div>
+                </td>
+                <td>RM10004</td>
+                <td>
+                  <span class="resident-status resident-inside">INSIDE</span>
+                </td>
+                <td>
+                  <div class="time"><i class="bi bi-clock"></i> 1 hour ago</div>
+                </td>
+                <td class="actions">
+                  <i class="bi bi-pencil-square edit-btn"></i>
+                  <i class="bi bi-trash delete-btn"></i>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="user">
+                    <div class="avatar"><i class="bi bi-person"></i></div>
+                    <div class="user-info">
+                      Alquien Capuyan
+                      <small>ID: ST10005</small>
+                    </div>
+                  </div>
+                </td>
+                <td>RM10005</td>
+                <td>
+                  <span class="resident-status resident-outside">OUTSIDE</span>
+                </td>
+                <td>
+                  <div class="time">
+                    <i class="bi bi-clock"></i> 17 mins ago
+                  </div>
+                </td>
+                <td class="actions">
+                  <i class="bi bi-pencil-square edit-btn"></i>
+                  <i class="bi bi-trash delete-btn"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="footer">
+            <div>Showing 5 of 143 users</div>
+            <div class="pagination">
+              <span>Previous</span>
+              <div class="page active">1</div>
+              <div class="page">2</div>
+              <div class="page">3</div>
+              <span>Next</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <script src="../../assets/js/sidebar-navbar.js"></script>
-
   </body>
 </html>

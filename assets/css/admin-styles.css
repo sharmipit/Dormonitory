@@ -1,49 +1,804 @@
-*, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+/* ============================================================
+   SHARED BASE
+   ============================================================ */
 
-    :root {
-      --bg-page: #f0f1f8;
-      --bg-card: #ffffff;
-      --bg-button: #f4f5fb;
-      --accent: #3030B6;
-      --accent-light: #e8e9f8;
-      --text-primary: #3E4755;
-      --text-secondary: #9E9A9A;
-      --shadow-card: 0 2px 12px rgba(60, 65, 168, 0.07);
-      --shadow-btn: 0 2px 8px rgba(60, 65, 168, 0.2);
-      --radius-card: 16px;
-      --radius-btn: 12px;
-      --font-main: 'Inter', sans-serif;
-    }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    body {
-      font-family: var(--font-main);
-      background-color: var(--bg-page);
-      padding: 32px 24px;
-      min-height: 100vh;
-      color: var(--text-primary);
-    }
+:root {
+  --bg-page: #f0f1f8;
+  --bg-card: #ffffff;
+  --bg-button: #f4f5fb;
+  --accent: #3030b6;
+  --accent-light: #e8e9f8;
+  --text-primary: #3e4755;
+  --text-secondary: #9e9a9a;
+  --shadow-card: 0 2px 12px rgba(60, 65, 168, 0.07);
+  --shadow-btn: 0 2px 8px rgba(60, 65, 168, 0.2);
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --font-main: "Inter", sans-serif;
+}
 
-    @media (max-width: 768px) {
-      .actions-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-page);
+  padding: 32px 24px;
+  min-height: 100vh;
+  color: var(--text-primary);
+}
 
-    @media (max-width: 480px) {
-      .actions-grid {
-        grid-template-columns: 1fr;
-      }
+/* ============================================================
+   SHARED COMPONENTS  (used on 2+ pages)
+   ============================================================ */
 
-      body {
-        padding: 20px 16px;
-      }
+/* Primary action button — Add Resident / Add Room */
+.add-res-btn {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 10px;
+  width: 250px;
+  font-size: 1rem;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-      .greeting-card,
-      .quick-actions-card {
-        padding: 20px;
-      }
-    }
+.add-res-btn:hover {
+  background-color: #2525a0;
+}
+
+/* White content card */
+.card {
+  background: var(--bg-card);
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* Top bar (search row) */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Search input */
+.search {
+  display: flex;
+  align-items: center;
+  background: #f1f2f6;
+  padding: 10px 15px;
+  border-radius: 30px;
+  width: 300px;
+}
+
+.search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  margin-left: 10px;
+  width: 100%;
+  font-family: var(--font-main);
+}
+
+/* ============================================================
+   DASHBOARD  —  greeting & quick actions
+   ============================================================ */
+
+.greeting-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 20px;
+}
+
+.greeting-card h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.greeting-card p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.quick-actions-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-card);
+}
+
+.quick-actions-card h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-button);
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 16px 18px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-btn);
+  transition:
+    background 0.18s ease,
+    transform 0.15s ease,
+    box-shadow 0.18s ease;
+  white-space: nowrap;
+}
+
+.action-btn:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(60, 65, 168, 0.13);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-btn);
+}
+
+.icon-placeholder {
+  width: 36px;
+  height: 36px;
+  background: var(--accent);
+  color: white;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+/* ============================================================
+   DASHBOARD  —  stat cards
+   ============================================================ */
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: 24px;
+}
+
+.stat-card {
+  background: linear-gradient(to bottom, #4949ff, #3030b6);
+  border-radius: var(--radius-card);
+  padding: 20px 22px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(48, 48, 182, 0.25);
+  position: relative;
+  overflow: hidden;
+  height: 115px;
+}
+
+.stat-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.stat-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(226, 197, 197, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.stat-label {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.88;
+  line-height: 1.3;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.stat-badge {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11.5px;
+  font-weight: 500;
+  width: fit-content;
+}
+
+.stat-deco {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-60%);
+  font-size: 52px;
+  opacity: 0.18;
+  color: #fff;
+  line-height: 1;
+  pointer-events: none;
+  padding-bottom: 10px;
+}
+
+/* ============================================================
+   DASHBOARD  —  chart & traffic
+   ============================================================ */
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 20px;
+}
+
+.chart-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+}
+
+.chart-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.chart-subtitle {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.range-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-button);
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-family: var(--font-main);
+  box-shadow: var(--shadow-btn);
+}
+
+.range-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--text-secondary);
+  fill: none;
+  stroke-width: 2;
+}
+
+.chart-wrap {
+  position: relative;
+  height: 240px;
+}
+
+svg.chart {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.y-label {
+  font-size: 11px;
+  fill: var(--text-secondary);
+  font-family: var(--font-main);
+}
+
+.x-label {
+  font-size: 11px;
+  fill: var(--text-secondary);
+  font-family: var(--font-main);
+  text-anchor: middle;
+}
+
+.grid-line {
+  stroke: #e8e9f4;
+  stroke-width: 1;
+}
+
+.area-path {
+  fill: url(#areaGrad);
+}
+
+.line-path {
+  fill: none;
+  stroke: #4646d6;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.tooltip-box rect {
+  rx: 8;
+}
+
+/* Traffic monitor */
+.traffic-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.traffic-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.traffic-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.live-badge {
+  background: var(--accent);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 4px 12px;
+  letter-spacing: 0.2px;
+}
+
+.traffic-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.traffic-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-button);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.person-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--accent);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.person-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.person-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.person-meta {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Dashboard live-traffic status tags (INSIDE / OUTSIDE) */
+.status-tag {
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 4px 10px;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+.status-tag.status-inside {
+  background: #e6f9f0;
+  color: #1a9e5c;
+}
+
+.status-tag.status-outside {
+  background: #fdeaea;
+  color: #d94040;
+}
+
+/* ============================================================
+   RESIDENTS PAGE  —  table
+   ============================================================ */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+table th:nth-child(1),
+table td:nth-child(1) {
+  width: 35%;
+}
+
+table th:nth-child(2),
+table td:nth-child(2),
+table th:nth-child(3),
+table td:nth-child(3),
+table th:nth-child(4),
+table td:nth-child(4) {
+  width: 18%;
+}
+
+table th:nth-child(5),
+table td:nth-child(5) {
+  width: 10%;
+}
+
+thead {
+  text-align: left;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+thead th {
+  padding: 15px 10px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+tbody tr {
+  border-top: 1px solid #eee;
+}
+
+tbody td {
+  padding: 18px 10px;
+  vertical-align: middle;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info small {
+  display: block;
+  color: var(--text-secondary);
+}
+
+/* Residents table — person status badge */
+.resident-status {
+  display: inline-block;
+  min-width: 90px;
+  text-align: center;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.resident-status.resident-inside {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.resident-status.resident-outside {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #6b7280;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.edit-btn {
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.delete-btn {
+  color: #dc2626;
+  cursor: pointer;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  color: #6b7280;
+}
+
+.pagination {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.page {
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #e5e7eb;
+  cursor: pointer;
+}
+
+.page.active {
+  background: #4338ca;
+  color: #fff;
+}
+
+/* ============================================================
+   ROOMS PAGE  —  grid cards
+   ============================================================ */
+
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.room-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.room-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.room-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.room-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--accent);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+/* Rooms page — room availability badge */
+.room-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.room-status.room-available {
+  background: transparent;
+  color: #059669;
+  border: 1.5px solid #059669;
+}
+
+.room-status.room-full {
+  background: transparent;
+  color: #dc2626;
+  border: 1.5px solid #dc2626;
+}
+
+.room-status.room-maintenance {
+  background: transparent;
+  color: #d97706;
+  border: 1.5px solid #d97706;
+}
+
+.room-meta h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 2px;
+}
+
+.room-meta p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.occupancy-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.occupancy-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: width 0.4s ease;
+}
+
+.progress-fill.room-full {
+  background: #dc2626;
+}
+
+.room-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn-view,
+.btn-manage {
+  flex: 1;
+  padding: 8px 0;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: 0.2s ease;
+  border: none;
+}
+
+.btn-view {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.btn-view:hover {
+  background: #e5e7eb;
+}
+
+.btn-manage {
+  background: #ede9fe;
+  color: var(--accent);
+}
+
+.btn-manage:hover {
+  background: #ddd6fe;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 20px 16px;
+  }
+
+  .actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .greeting-card,
+  .quick-actions-card {
+    padding: 20px;
+  }
+}

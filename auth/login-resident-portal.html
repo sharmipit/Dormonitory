@@ -25,7 +25,7 @@
             </div>
         </section>
 
-        <section class="hero-right auth-form-panel">
+        <section class="hero-right">
             <div class="back-nav-fixed">
                 <a href="login.html" class="btn-go-back">
                     <i class="bi bi-arrow-left"></i> Go Back
@@ -34,34 +34,36 @@
 
             <div class="login-box">
                 <div class="portal-badge">
-                    <i class="bi bi-person-circle"></i>
-                    <span>TENANT PORTAL</span>
+                    <div class="badge-icon-box">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <span>Resident Portal</span>
                 </div>
 
-                <h2 class="auth-title">Welcome</h2>
+                <h2 class="auth-title">Welcome!</h2>
                 <p class="auth-subtitle">Access your digital living experience and stay connected.</p>
 
-                <form action="dashboard.php" method="POST" class="needs-validation" novalidate>
+                <form action="../tenant/home.html" method="GET" class="needs-validation" novalidate>
                     <div class="mb-4">
-                        <label for="email" class="form-label">EMAIL ADDRESS</label>
+                        <label for="email" class="form-label">Email Address</label>
                         <div class="input-group-custom">
                             <i class="bi bi-envelope"></i>
-                            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
-                            <div class="invalid-feedback">Please enter a valid email address.</div>
+                            <input type="email" class="form-control" id="email" placeholder="username@gmail.com" required>
                         </div>
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="password" class="form-label">PASSWORD</label>
+                        <label for="password" class="form-label">Password</label>
                         <div class="input-group-custom">
                             <i class="bi bi-lock"></i>
-                            <input type="password" class="form-control" id="password" placeholder="••••••••" required>
-                            <div class="invalid-feedback">Password is required.</div>
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
                         </div>
+                        <div class="invalid-feedback">Password is required.</div>
                     </div>
 
                     <div class="text-end mb-4">
-                        <a href="forgot-password.html" class="forgot-link">FORGOT PASSWORD?</a>
+                        <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
                     </div>
 
                     <button type="submit" class="btn-auth-primary w-100">Login</button>

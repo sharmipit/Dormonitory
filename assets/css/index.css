@@ -261,17 +261,19 @@ body {
 }
 
 
+
 /* --- About Us Section --- */
+
 .about-fullscreen {
     position: relative;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('../img/rubia-img2.png');
+    background-image: url('../img/rubia-img2.png'); 
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-attachment: fixed; 
     background-repeat: no-repeat;
     overflow: hidden;
 }
@@ -282,65 +284,132 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.2); 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.4); 
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
     z-index: 1;
 }
 
-.about-fullscreen .container {
+.about-container {
     position: relative;
-    z-index: 2;
+    z-index: 5; 
+    padding: 100px 0;
 }
 
-
-/* --- Glassmorphism Card --- */
-
-.about-card {
-    background: rgba(255, 255, 255, 0.85); 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 60px;
-    border-radius: 50px;
-    border: 2px solid #FFFFFF;
-    box-shadow: 0 20px 40px rgba(48, 48, 182, 0.15); 
-    max-width: 800px;
-    transition: transform 0.3s ease;
-}
-
-.about-card:hover {
-    transform: translateY(-5px);
-}
-
-.about-title {
-    font-size: 2.8rem;
+.about-pre-title {
+    display: block;
+    font-size: 0.85rem;
     font-weight: 800;
-    color: #333333; 
+    letter-spacing: 4px;
+    color: var(--brand-blue);
     margin-bottom: 10px;
 }
 
-.about-title span {
-    color: #3030b6;
+.about-title-luxury {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #1a1a3a;
+    margin-bottom: 5px;
 }
 
-.title-underline {
-    width: 80px;
-    height: 6px;
-    background-color: #3030b6;
+.about-title-luxury span {
+    background: linear-gradient(45deg, var(--brand-blue), var(--electric-blue));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--brand-blue); 
+}
+
+.about-subtitle {
+    font-size: 1.2rem;
+    color: #1a1a3a;
+    font-weight: 500;
+}
+
+.header-accent-line {
+    width: 60px;
+    height: 4px;
+    background: var(--brand-blue);
     border-radius: 10px;
-    margin-bottom: 35px;
+    margin-top: 20px;
 }
 
-.about-content p {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    color: #444444;
+.mission-glass-panel {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 40px;
+    border-radius: 40px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.mission-label {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: var(--brand-blue);
+    margin-bottom: 15px;
+}
+
+.mission-description {
+    font-size: 1.25rem;
+    color: #1a1a3a;
+    line-height: 1.7;
+    max-width: 850px;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+.feature-card-centered {
+    background: rgba(255, 255, 255, 0.6); 
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    padding: 50px 30px;
+    border-radius: 40px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.4s ease;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card-centered:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 25px 50px rgba(48, 48, 182, 0.15);
+}
+
+.feature-icon-circle {
+    width: 70px;
+    height: 70px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 20px;
-    text-align: justify; 
+    font-size: 2rem;
+    color: var(--brand-blue);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
 }
 
-.about-content p:last-child {
-    margin-bottom: 0;
+.feature-card-centered h4 {
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: #1a1a3a;
+    margin-bottom: 12px;
+}
+
+.feature-card-centered p {
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.5;
+    margin: 0;
 }
 
 

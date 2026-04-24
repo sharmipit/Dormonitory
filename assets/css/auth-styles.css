@@ -374,49 +374,47 @@ body {
 }
 
 
-/* Login - Tenant */
-
-.back-nav-fixed {
-    position: sticky;
-    top: 0;
-    width: calc(100% + 20%); 
-    margin-left: -10%; 
-    margin-right: -10%;
-    padding: 40px 10% 20px 10%; 
-    background-color: white; 
-    z-index: 100;
-}
-
-.hero-left {
-    flex: 1; 
-    height: 100vh;
-    position: sticky;
-    top: 0;
-}
+/* --- Resident Portal Login --- */
 
 .hero-right {
     flex: 1;
     height: 100vh;
     overflow-y: auto; 
+    overflow-x: hidden;
     display: block; 
-    padding: 0 10% 100px 10%; 
+    padding: 0 40px 100px 40px; 
     background-color: #ffffff;
     position: relative;
 }
 
+.back-nav-fixed {
+    position: relative; 
+    width: 100%;
+    margin: 0; 
+    padding: 40px 0 20px 0; 
+    background-color: transparent; 
+    z-index: 10;
+    display: flex;
+    justify-content: center; 
+}
+
 .btn-go-back {
+    width: 100%;
+    max-width: 600px; 
     color: #8a94ad !important; 
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    padding-left: 20px; 
 }
 
 .btn-go-back:hover {
     color: var(--brand-blue) !important;
+    transform: translateX(-8px); 
 }
 
 .auth-form-panel {
@@ -427,57 +425,9 @@ body {
 .login-box {
     width: 100%;
     max-width: 420px;
-    margin: 180px auto 0 auto; 
+    margin: 40px auto 0 auto; 
     position: relative;
     z-index: 1;
-}
-
-.btn-google-auth {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    padding: 14px;
-    border-radius: 12px;
-    font-weight: 700;
-    color: #444;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.btn-google-auth img {
-    width: 22px; 
-    height: 22px;
-    object-fit: contain;
-}
-
-.btn-google-auth:hover {
-    background-color: #f8f9fa;
-    border-color: #d0d0d0;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.forgot-link {
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.75rem;
-    color: #3b4eda; 
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.login-redirect a {
-    color: #3b4eda;
-    text-decoration: none;
-}
-
-.auth-form-panel {
-    padding: 40px 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .portal-badge {
@@ -487,16 +437,28 @@ body {
     margin-bottom: 30px; 
 }
 
-.portal-badge i {
-    font-size: 2rem;
-    color: var(--brand-blue); 
+.portal-badge .badge-icon-box {
+    width: 45px;
+    height: 45px;
+    background-color: var(--brand-blue);
+    border-radius: 12px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.portal-badge .badge-icon-box i {
+    font-size: 1.5rem;
+    color: #ffffff; 
+    line-height: 0;
 }
 
 .portal-badge span {
     font-weight: 700;
-    letter-spacing: 1.5px;
-    font-size: 0.9rem;
+    font-size: 1.1rem; 
     color: var(--brand-blue);
+    text-transform: none; 
 }
 
 .auth-title {
@@ -533,9 +495,22 @@ body {
     font-family: var(--inter);
 }
 
+.was-validated .input-group-custom:has(.form-control:invalid) + .invalid-feedback {
+    display: block;
+}
+
+.invalid-feedback {
+    display: none; 
+    margin-top: 8px;
+    margin-left: 5px;
+    color: #dc3545;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
 .form-label {
-    font-weight: 700;
-    font-size: 0.75rem;
+    font-weight: 500;
+    font-size: 0.875rem;
     color: #adb5bd;
     margin-left: 5px;
 }
@@ -543,7 +518,7 @@ body {
 .forgot-link {
     text-decoration: none;
     font-weight: 700;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     color: var(--brand-blue);
 }
 
@@ -564,15 +539,16 @@ body {
 
 .btn-google-auth {
     background-color: #ffffff;
-    border: 1px solid #dee2e6;
+    border: 1px solid #dee2e6; 
     padding: 16px;
     border-radius: 15px;
-    font-weight: 700;
+    font-weight: 600;
+    color: #2a3eb1;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    transition: background 0.3s;
+    transition: all 0.3s ease; 
 }
 
 .btn-google-auth img {
@@ -580,7 +556,11 @@ body {
 }
 
 .btn-google-auth:hover {
-    background-color: #f1f1f1;
+    background-color: #ffffff; 
+    border-color: var(--brand-blue);
+    color: var(--brand-blue);
+    box-shadow: 0 0 0 0.3px var(--brand-blue), 0 4px 12px rgba(59, 78, 218, 0.1); 
+    transform: translateY(-1px);
 }
 
 .auth-divider {
@@ -618,6 +598,43 @@ body {
 .hero-right::-webkit-scrollbar-thumb {
     background: #e0e0e0;
     border-radius: 10px;
+}
+
+
+/* --- Management Access Login --- */
+
+.portal-badge {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    margin-bottom: 30px; 
+}
+
+.portal-badge .badge-icon-box {
+    width: 48px; 
+    height: 48px;
+    background-color: var(--brand-blue);
+    border-radius: 12px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(59, 78, 218, 0.2);
+}
+
+.portal-badge .badge-icon-box i {
+    font-size: 1.6rem;
+    color: #ffffff; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.portal-badge span {
+    font-weight: 700;
+    font-size: 1.1rem; 
+    color: var(--brand-blue);
+    letter-spacing: 0.5px; 
 }
 
 

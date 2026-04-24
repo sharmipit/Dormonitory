@@ -159,7 +159,7 @@ nav a i,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 32px;
+  padding: 14px 32px 12px 32px;
   background: #fff;
   border-bottom: 1.5px solid #e5e7eb;
   transition: left var(--t), width var(--t);

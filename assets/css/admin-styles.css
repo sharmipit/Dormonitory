@@ -13,10 +13,10 @@
       --text-primary: #3E4755;
       --text-secondary: #9E9A9A;
       --shadow-card: 0 2px 12px rgba(60, 65, 168, 0.07);
-      --shadow-btn: 0 2px 8px rgba(60, 65, 168, 0.08);
+      --shadow-btn: 0 2px 8px rgba(60, 65, 168, 0.2);
       --radius-card: 16px;
       --radius-btn: 12px;
-      --font-main: 'DM Sans', sans-serif;
+      --font-main: 'Inter', sans-serif;
     }
 
     body {

@@ -21,25 +21,28 @@
 
     <div class="layout">
       <div class="main">
+        <!--
         <button class="add-res-btn">
           <i class="bi bi-plus-lg"></i> Add New Resident
         </button>
-
+        -->
         <div class="card">
           <div class="top-bar">
             <div class="search">
               <i class="bi bi-search"></i>
-              <input type="text" placeholder="Search by name, ID, or room..." />
+              <input
+                type="text"
+                placeholder="Search visitor, resident, or contact..."
+              />
             </div>
           </div>
 
-          <table>
+          <table class="visitor-table">
             <thead>
               <tr>
-                <th>Resident</th>
-                <th>Room</th>
-                <th>Status</th>
-                <th>Last Movement</th>
+                <th>Visitor</th>
+                <th>Resident Visiting</th>
+                <th>Contact Number</th>
                 <th></th>
               </tr>
             </thead>
@@ -50,20 +53,13 @@
                   <div class="user">
                     <div class="avatar"><i class="bi bi-person"></i></div>
                     <div class="user-info">
-                      James Abobo
-                      <small>ID: ST10001</small>
+                      John Dela Cruz
+                      <small>Visitor ID: V10001</small>
                     </div>
                   </div>
                 </td>
-                <td>RM10001</td>
-                <td>
-                  <span class="resident-status resident-inside">INSIDE</span>
-                </td>
-                <td>
-                  <div class="time">
-                    <i class="bi bi-clock"></i> 10 mins ago
-                  </div>
-                </td>
+                <td>James Abobo (RM10001)</td>
+                <td>+63 912 345 6789</td>
                 <td class="actions">
                   <i class="bi bi-pencil-square edit-btn"></i>
                   <i class="bi bi-trash delete-btn"></i>
@@ -75,20 +71,13 @@
                   <div class="user">
                     <div class="avatar"><i class="bi bi-person"></i></div>
                     <div class="user-info">
-                      Hazel Ann Carillo
-                      <small>ID: ST10002</small>
+                      Maria Santos
+                      <small>Visitor ID: V10002</small>
                     </div>
                   </div>
                 </td>
-                <td>RM10002</td>
-                <td>
-                  <span class="resident-status resident-inside">INSIDE</span>
-                </td>
-                <td>
-                  <div class="time">
-                    <i class="bi bi-clock"></i> 2 hours ago
-                  </div>
-                </td>
+                <td>Hazel Ann Carillo (RM10002)</td>
+                <td>+63 917 888 1234</td>
                 <td class="actions">
                   <i class="bi bi-pencil-square edit-btn"></i>
                   <i class="bi bi-trash delete-btn"></i>
@@ -100,68 +89,47 @@
                   <div class="user">
                     <div class="avatar"><i class="bi bi-person"></i></div>
                     <div class="user-info">
-                      Sharmagne Gamboa
-                      <small>ID: ST10003</small>
+                      Carlo Reyes
+                      <small>Visitor ID: V10003</small>
                     </div>
                   </div>
                 </td>
-                <td>RM10003</td>
-                <td>
-                  <span class="resident-status resident-outside">OUTSIDE</span>
-                </td>
-                <td>
-                  <div class="time">
-                    <i class="bi bi-clock"></i> 35 mins ago
-                  </div>
-                </td>
+                <td>Sharmagne Gamboa (RM10003)</td>
+                <td>+63 905 222 9090</td>
                 <td class="actions">
                   <i class="bi bi-pencil-square edit-btn"></i>
                   <i class="bi bi-trash delete-btn"></i>
                 </td>
               </tr>
-
               <tr>
                 <td>
                   <div class="user">
                     <div class="avatar"><i class="bi bi-person"></i></div>
                     <div class="user-info">
-                      Gwyneth Miasco
-                      <small>ID: ST10004</small>
+                      John Dela Cruz
+                      <small>Visitor ID: V10001</small>
                     </div>
                   </div>
                 </td>
-                <td>RM10004</td>
-                <td>
-                  <span class="resident-status resident-inside">INSIDE</span>
-                </td>
-                <td>
-                  <div class="time"><i class="bi bi-clock"></i> 1 hour ago</div>
-                </td>
+                <td>James Abobo (RM10001)</td>
+                <td>+63 912 345 6789</td>
                 <td class="actions">
                   <i class="bi bi-pencil-square edit-btn"></i>
                   <i class="bi bi-trash delete-btn"></i>
                 </td>
               </tr>
-
               <tr>
                 <td>
                   <div class="user">
                     <div class="avatar"><i class="bi bi-person"></i></div>
                     <div class="user-info">
-                      Alquien Capuyan
-                      <small>ID: ST10005</small>
+                      John Dela Cruz
+                      <small>Visitor ID: V10001</small>
                     </div>
                   </div>
                 </td>
-                <td>RM10005</td>
-                <td>
-                  <span class="resident-status resident-outside">OUTSIDE</span>
-                </td>
-                <td>
-                  <div class="time">
-                    <i class="bi bi-clock"></i> 17 mins ago
-                  </div>
-                </td>
+                <td>James Abobo (RM10001)</td>
+                <td>+63 912 345 6789</td>
                 <td class="actions">
                   <i class="bi bi-pencil-square edit-btn"></i>
                   <i class="bi bi-trash delete-btn"></i>
@@ -171,19 +139,18 @@
           </table>
 
           <div class="footer">
-            <div>Showing 5 of 143 users</div>
+            <div>Showing 5 of 58 visitors</div>
             <div class="pagination">
               <span>Previous</span>
               <div class="page active">1</div>
               <div class="page">2</div>
-              <div class="page">3</div>
               <span>Next</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-
+    
     <script src="../../assets/js/sidebar-navbar.js"></script>
   </body>
 </html>

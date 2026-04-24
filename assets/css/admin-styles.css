@@ -1,5 +1,5 @@
 /* ============================================================
-   SHARED BASE
+   BASE
    ============================================================ */
 
 *,
@@ -34,10 +34,9 @@ body {
 }
 
 /* ============================================================
-   SHARED COMPONENTS  (used on 2+ pages)
+   SHARED COMPONENTS
    ============================================================ */
 
-/* Primary action button — Add Resident / Add Room */
 .add-res-btn {
   background-color: var(--accent);
   color: white;
@@ -55,7 +54,6 @@ body {
   background-color: #2525a0;
 }
 
-/* White content card */
 .card {
   background: var(--bg-card);
   border-radius: 20px;
@@ -63,14 +61,12 @@ body {
   margin-top: 20px;
 }
 
-/* Top bar (search row) */
 .top-bar {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
 }
 
-/* Search input */
 .search {
   display: flex;
   align-items: center;
@@ -90,7 +86,7 @@ body {
 }
 
 /* ============================================================
-   DASHBOARD  —  greeting & quick actions
+   DASHBOARD
    ============================================================ */
 
 .greeting-card {
@@ -180,10 +176,6 @@ body {
   justify-content: center;
   font-size: 1rem;
 }
-
-/* ============================================================
-   DASHBOARD  —  stat cards
-   ============================================================ */
 
 .stat-grid {
   display: grid;
@@ -278,10 +270,6 @@ body {
   pointer-events: none;
   padding-bottom: 10px;
 }
-
-/* ============================================================
-   DASHBOARD  —  chart & traffic
-   ============================================================ */
 
 .main-grid {
   display: grid;
@@ -384,7 +372,6 @@ svg.chart {
   rx: 8;
 }
 
-/* Traffic monitor */
 .traffic-card {
   background: var(--bg-card);
   border-radius: var(--radius-card);
@@ -460,7 +447,6 @@ svg.chart {
   margin-top: 2px;
 }
 
-/* Dashboard live-traffic status tags (INSIDE / OUTSIDE) */
 .status-tag {
   font-size: 11px;
   font-weight: 700;
@@ -481,8 +467,16 @@ svg.chart {
 }
 
 /* ============================================================
-   RESIDENTS PAGE  —  table
+   RESIDENTS & VISITORS
    ============================================================ */
+
+.actions-grid a {
+  text-decoration: none;
+}
+
+.actions-grid .action-btn {
+  width: 100%;
+}
 
 table {
   width: 100%;
@@ -492,21 +486,48 @@ table {
 
 table th:nth-child(1),
 table td:nth-child(1) {
-  width: 35%;
+  width: 22%;
 }
 
 table th:nth-child(2),
-table td:nth-child(2),
+table td:nth-child(2) {
+  width: 10%;
+}
+
 table th:nth-child(3),
-table td:nth-child(3),
-table th:nth-child(4),
-table td:nth-child(4) {
+table td:nth-child(3) {
   width: 18%;
 }
 
+table th:nth-child(4),
+table td:nth-child(4),
 table th:nth-child(5),
 table td:nth-child(5) {
+  width: 15%;
+}
+
+table th:last-child,
+table td:last-child {
   width: 10%;
+  text-align: center;
+}
+
+.visitor-table th:nth-child(1),
+.visitor-table td:nth-child(1) {
+  width: 30%;
+}
+
+.visitor-table th:nth-child(2),
+.visitor-table td:nth-child(2),
+.visitor-table th:nth-child(3),
+.visitor-table td:nth-child(3) {
+  width: 28%;
+}
+
+.visitor-table th:last-child,
+.visitor-table td:last-child {
+  width: 14%;
+  text-align: center;
 }
 
 thead {
@@ -539,8 +560,9 @@ tbody td {
 .avatar {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: #e5e7eb;
+  border-radius: 10px;
+  background: var(--accent);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -551,7 +573,6 @@ tbody td {
   color: var(--text-secondary);
 }
 
-/* Residents table — person status badge */
 .resident-status {
   display: inline-block;
   min-width: 90px;
@@ -581,9 +602,10 @@ tbody td {
 
 .actions {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 15px;
   font-size: 1.1rem;
-  cursor: pointer;
 }
 
 .edit-btn {
@@ -622,7 +644,7 @@ tbody td {
 }
 
 /* ============================================================
-   ROOMS PAGE  —  grid cards
+   ROOMS
    ============================================================ */
 
 .room-grid {
@@ -667,7 +689,6 @@ tbody td {
   font-size: 1.3rem;
 }
 
-/* Rooms page — room availability badge */
 .room-status {
   display: inline-block;
   padding: 4px 10px;

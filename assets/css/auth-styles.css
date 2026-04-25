@@ -176,7 +176,9 @@ body {
     text-align: justify;
 }
 
-/* --- Role Selection Interface --- */
+
+
+/* --- Login - Role Selection --- */
 
 .role-selection {
     flex: 1;
@@ -318,6 +320,7 @@ body {
 }
 
 
+
 /* --- Signup Page --- */
 
 .signup-visual {
@@ -372,6 +375,7 @@ body {
     line-height: 1.4;
     margin: 0;
 }
+
 
 
 /* --- Resident Portal Login --- */
@@ -601,6 +605,7 @@ body {
 }
 
 
+
 /* --- Management Access Login --- */
 
 .portal-badge {
@@ -638,7 +643,182 @@ body {
 }
 
 
-/* Size Responsiveness*/
+
+/* --- Forgot Password --- */
+
+.forgot-password-page .auth-title {
+    font-size: 2.8rem; 
+    font-weight: 800;
+    color: var(--brand-blue);
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.forgot-password-page .auth-subtitle {
+    font-family: var(--inter);
+    text-align: center;      
+    display: block;
+    margin-bottom: 40px;
+    color: #7d7db3;       
+}
+
+.forgot-password-page .form-label {
+    font-family: var(--inter);
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #adb5bd;         
+    margin-left: 5px;
+    text-transform: none;
+}
+
+.forgot-password-page .input-group-custom .form-control {
+    padding: 18px 20px 18px 55px;
+    background-color: #f8f9fa; 
+    border: none;         
+    border-radius: 15px;   
+    font-size: 1rem;
+    width: 100%;
+}
+
+
+
+/* --- Reset Confirmation --- */
+
+.verification-page .auth-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--brand-blue);
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    display: block;
+    width: max-content;   
+    margin-left: 50%;   
+    transform: translateX(-50%);
+}
+
+.verification-page .auth-subtitle {
+    text-align: center;
+    color: #7d7db3;
+    font-size: 1rem;
+    max-width: 400px;
+    margin: 0 auto 40px auto;
+}
+
+.verification-page .otp-container {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.verification-page .otp-input {
+    width: 50px;
+    height: 65px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border: 1.5px solid #b0b0e0; 
+    border-radius: 12px;
+    background-color: #f0f0ff; 
+    color: var(--brand-blue);
+    transition: all 0.3s ease;
+}
+
+.verification-page .otp-input:focus {
+    outline: none;
+    border-color: var(--brand-blue);
+    background-color: #ffffff;
+    box-shadow: 0 0 8px rgba(48, 48, 182, 0.2);
+}
+
+.verification-page .resend-text {
+    text-align: center;
+    color: #8a94ad;
+    font-size: 0.95rem;
+}
+
+.was-validated .otp-input:invalid {
+    border-color: #dc3545;
+}
+
+.verification-page .otp-input.is-invalid {
+    border-color: #dc3545 !important;
+    background-color: #fff8f8;
+}
+
+.verification-page #otp-error {
+    display: none; 
+    color: #dc3545;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+
+
+/* --- New Password --- */
+
+.new-password-page .auth-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: var(--brand-blue);
+    margin-bottom: 10px;
+}
+
+.new-password-page .auth-subtitle {
+    margin-bottom: 40px;
+    color: #7d7db3;
+}
+
+.new-password-page .input-group-custom .toggle-password {
+    position: absolute;
+    right: 20px;
+    left: auto;
+    cursor: pointer;
+    color: #adb5bd;
+    z-index: 5;
+}
+
+.new-password-page .input-group-custom .toggle-password:hover {
+    color: var(--brand-blue);
+}
+
+.new-password-page .input-group-custom .form-control {
+    padding-right: 50px !important;
+}
+
+.new-password-page .form-label {
+    font-family: var(--inter);
+    font-size: 0.875rem; 
+    font-weight: 500;
+    color: #adb5bd;
+    margin-left: 5px;
+    text-transform: none;
+    letter-spacing: normal; 
+}
+
+.new-password-page .no-validate-icon {
+    background-image: none !important;
+    padding-right: 50px !important;
+}
+
+.new-password-page .was-validated .form-control:invalid ~ .invalid-feedback {
+    display: block;
+}
+
+.new-password-page .input-group-custom .toggle-password {
+    position: absolute;
+    right: 20px;
+    z-index: 5;
+    cursor: pointer;
+    color: #adb5bd;
+}
+
+
+
+/* --- Size Responsiveness --- */
 
 @media (max-width: 992px) {
     .hero-left, .signup-visual {

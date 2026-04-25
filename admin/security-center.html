@@ -15,12 +15,22 @@
     <div class="layout">
       <div class="main">
         <div class="alerts-top-bar">
-          <button class="alert-top-btn">Emergency Protocol</button>
-          <button class="alert-top-btn">Broadcast Alert</button>
+          <button class="alert-top-btn"><i class="bi bi-shield-check"></i>Emergency Protocol</button>
+          <button class="alert-top-btn"><i class="bi bi-file-earmark-arrow-down"></i>Generate Report</button>
         </div>
- 
-        <div class="alert-list">
-          <div class="alert-item">
+
+        <div class="ann-wrap">
+          <div class="ann-topbar">
+            <div class="ann-filter" id="ann-filter-btn" style="margin-left: 90%;">
+              <span id="filter-label"><i class="bi bi-funnel" style="margin-right: 8px;"></i>Filter</span>
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+                <path d="M5 8l5 5 5-5" stroke="#9E9A9A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="alert-list">
+          <div class="alert-item" style="margin-top: 18px;">
             <div class="alert-icon-slot critical"><i class="bi bi-exclamation-circle"></i></div>
             <div class="alert-body">
               <div class="alert-title-row">
@@ -31,12 +41,9 @@
               <div class="alert-meta">
                 <i class="bi bi-clock"></i>
                 <span>5 mins ago</span>
-                <span>•</span>
-                <i class="bi bi-geo-alt"></i>
-                <span>South Gate Entrance</span>
               </div>
             </div>
-            <button class="alert-action">Take Action →</button>
+            <button class="alert-action" style="margin-right: 20px;">See More →</button>
           </div>
  
           <div class="alert-item">
@@ -50,12 +57,9 @@
               <div class="alert-meta">
                 <i class="bi bi-clock"></i>
                 <span>17 mins ago</span>
-                <span>•</span>
-                <i class="bi bi-geo-alt"></i>
-                <span>Main Entrance</span>
               </div>
             </div>
-            <button class="alert-action">Take Action →</button>
+            <button class="alert-action" style="margin-right: 20px;">See More →</button>
           </div>
  
           <div class="alert-item">
@@ -69,12 +73,9 @@
               <div class="alert-meta">
                 <i class="bi bi-clock"></i>
                 <span>2 hours ago</span>
-                <span>•</span>
-                <i class="bi bi-geo-alt"></i>
-                <span>Floor 1, Room 102</span>
               </div>
             </div>
-            <button class="alert-action">Take Action →</button>
+            <button class="alert-action" style="margin-right: 20px;">See More →</button>
           </div>
           
           <div class="alert-item">
@@ -88,16 +89,42 @@
               <div class="alert-meta">
                 <i class="bi bi-clock"></i>
                 <span>3 hours ago</span>
-                <span>•</span>
-                <i class="bi bi-geo-alt"></i>
-                <span>Floor 1, Room 101</span>
               </div>
             </div>
-            <button class="alert-action">Take Action →</button>
+            <button class="alert-action" style="margin-right: 20px;">See More →</button>
+          </div>
+
+          <div class="alert-item">
+            <div class="alert-icon-slot warning"><i class="bi bi-exclamation-circle"></i></div>
+            <div class="alert-body">
+              <div class="alert-title-row">
+                <span class="alert-title">Late Entry Flag</span>
+                <span class="severity-badge warning">Warning</span>
+              </div>
+              <div class="alert-desc">Resident Erin Zoe Regalado entered building after curfew hours.</div>
+              <div class="alert-meta">
+                <i class="bi bi-clock"></i>
+                <span>14 hours ago</span>
+              </div>
+            </div>
+            <button class="alert-action" style="margin-right: 20px;">See More →</button>
+          </div>
+ 
+          <div class="ann-footer">
+            <span class="ann-footer-info" id="ann-count">Showing 4 of 8 announcements</span>
+            <div class="ann-pagination">
+              <button class="page-nav" id="prev-btn">Previous</button>
+              <button class="page-btn active" data-page="1">1</button>
+              <button class="page-btn" data-page="2">2</button>
+              <button class="page-btn" data-page="3">3</button>
+              <button class="page-nav" id="next-btn">Next</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <script src="../../assets/js/sidebar-navbar.js"></script>
+
   </body>
 </html>

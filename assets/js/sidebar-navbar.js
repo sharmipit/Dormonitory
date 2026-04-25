@@ -7,6 +7,7 @@ const pageTitles = {
   "room-management.html": "Room Management",
   "visitor-management.html": "Visitor Management",
   "announcements.html": "Announcements",
+  "security-center.html": "Security Center",
 };
 
 const isAdmin = window.location.pathname.includes("/admin/");

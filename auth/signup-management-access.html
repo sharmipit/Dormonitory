@@ -35,10 +35,10 @@
                     <div class="badge-icon-box" style="background-color: var(--brand-blue); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
                         <i class="bi bi-shield-lock-fill" style="color: white; font-size: 1.5rem;"></i>
                     </div>
-                    <span style="color: var(--brand-blue); font-weight: 700; letter-spacing: 1px; margin-left: 10px;">Admin Registration</span>
+                    <span style="color: var(--brand-blue); font-weight: 700; letter-spacing: 1px; margin-left: 10px;">Management Registration</span>
                 </div>
 
-                <h2 class="auth-title" style="color: var(--brand-blue);">Admin Access</h2>
+                <h2 class="auth-title" style="color: var(--brand-blue);">Join Us!</h2>
                 <p class="auth-subtitle">Create your administrative account to manage dormitory operations.</p>
 
                 <form action="../admin/dashboard.html" method="GET" class="needs-validation" novalidate>
@@ -130,7 +130,7 @@
             // 2. Handle Form Validation
             Array.from(forms).forEach(form => {
                 form.addEventListener('submit', event => {
-                    // Custom validation to ensure it starts with 09
+                    
                     if (contactInput.value.length > 0 && !contactInput.value.startsWith('09')) {
                         contactInput.setCustomValidity('Invalid');
                     } else if (contactInput.value.length !== 11) {

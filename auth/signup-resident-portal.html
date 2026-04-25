@@ -33,7 +33,7 @@
             <div class="login-box" style="max-width: 500px;">
                 <div class="portal-badge">
                     <div class="badge-icon-box">
-                        <i class="bi bi-person-plus-fill"></i>
+                        <i class="bi bi-person-fill"></i>
                     </div>
                     <span>Resident Registration</span>
                 </div>
@@ -130,7 +130,7 @@
             // 2. Handle Form Validation
             Array.from(forms).forEach(form => {
                 form.addEventListener('submit', event => {
-                    // Custom validation to ensure it starts with 09
+                    
                     if (contactInput.value.length > 0 && !contactInput.value.startsWith('09')) {
                         contactInput.setCustomValidity('Invalid');
                     } else if (contactInput.value.length !== 11) {

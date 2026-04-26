@@ -1,9 +1,15 @@
+<?php
+
+session_start();
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resident Login | Dormonitory</title>
+    <title>Management Login | Dormonitory</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/auth-styles.css" />
@@ -35,29 +41,37 @@
             <div class="login-box">
                 <div class="portal-badge">
                     <div class="badge-icon-box">
-                        <i class="bi bi-person-fill"></i>
+                        <i class="bi bi-shield-lock-fill"></i>
                     </div>
-                    <span>Resident Portal</span>
+                    <span>Management Access</span>
                 </div>
 
                 <h2 class="auth-title">Welcome!</h2>
-                <p class="auth-subtitle">Access your digital living experience and stay connected.</p>
+                <p class="auth-subtitle">Securely manage your property operations and resident safety.</p>
 
-                <form action="../resident/home.html" method="GET" class="needs-validation" novalidate>
+                <!--PHP VALIDATION-->
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                    </div>  
+                <?php endif; ?>
+                <!--END-->
+
+                <form action="management-login_validate.php" method="POST" class="needs-validation" novalidate>
                     <div class="mb-4">
                         <label for="email" class="form-label">Email Address</label>
                         <div class="input-group-custom">
                             <i class="bi bi-envelope"></i>
-                            <input type="email" class="form-control" id="email" placeholder="username@gmail.com" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="username@gmail.com" required>
                         </div>
-                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                        <div class="invalid-feedback">Please enter a valid administrator email.</div>
                     </div>
 
                     <div class="mb-2">
                         <label for="password" class="form-label">Password</label>
                         <div class="input-group-custom">
                             <i class="bi bi-lock"></i>
-                            <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
                         </div>
                         <div class="invalid-feedback">Password is required.</div>
                     </div>
@@ -78,8 +92,8 @@
                     </button>
                 </form>
 
-                <div class="login-redirect mt-4">
-                    Don't have an account? <a href="signup.html" class="fw-bold">Sign Up</a>
+                <div class="login-redirect mt-4 text-center">
+                    Don't have an account? <a href="signup-management-access.php" class="fw-bold">Sign Up</a>
                 </div>
             </div>
         </section>

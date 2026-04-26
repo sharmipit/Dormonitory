@@ -1,3 +1,20 @@
+<?php
+session_start();
+include('../config/db.php');
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../auth/login-management-access.php");
+    exit();
+}
+
+// Fetch admin name from database
+$stmt = $pdo->prepare("SELECT first_name, last_name FROM admin WHERE admin_id = ?");
+$stmt->execute([$_SESSION['id']]); 
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$fullname = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Admin';
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -16,7 +33,7 @@
   <div class="layout">
     <div class="main">
       <div class="greeting-card">
-        <h1>Hi, Faith Gamboa!</h1>
+        <h1>Hi, <?php echo htmlspecialchars($fullname); ?></h1> <!-- DISPLAYS NAME FROM DATABASE -->
         <p>Here's what's happening with your property today.</p>
       </div>
 

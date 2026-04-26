@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dormitory</title>
+  <link rel="stylesheet" href="/Dormonitory/assets/css/sidebar-navbar-styles.css" />
+  <link rel="stylesheet" href="/Dormonitory/assets/css/admin-styles.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+
+<body>
+  <div id="sidebar-navbar"></div>
+
+  <div class="layout">
+    <div class="main">
+      <button class="add-res-btn" style="margin-bottom: 20px;">
+        <i class="bi bi-plus-lg"></i> New Announcement
+      </button>
+
+      <div class="ann-wrap">
+        <div class="ann-topbar">
+          <div class="search">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Search announcements" id="ann-search-input">
+          </div>
+
+          <div class="ann-filter" id="ann-filter-btn">
+            <span id="filter-label">All Categories</span>
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+              <path d="M5 8l5 5 5-5" stroke="#9E9A9A" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <div class="ann-dropdown" id="ann-dropdown">
+              <div class="ann-dropdown-item" data-val="all">All Categories</div>
+              <div class="ann-dropdown-item" data-val="maintenance">Maintenance</div>
+              <div class="ann-dropdown-item" data-val="community">Community</div>
+              <div class="ann-dropdown-item" data-val="security">Security</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ann-table-head">
+          <span>Announcement</span>
+          <span>Category</span>
+          <span>Date</span>
+          <span>Actions</span>
+        </div>
+
+        <div id="ann-body"></div>
+
+        <div class="ann-footer">
+          <span class="ann-footer-info" id="ann-count">Showing 4 of 8 announcements</span>
+          <div class="ann-pagination">
+            <button class="page-nav" id="prev-btn">Previous</button>
+            <button class="page-btn active" data-page="1">1</button>
+            <button class="page-btn" data-page="2">2</button>
+            <button class="page-btn" data-page="3">3</button>
+            <button class="page-nav" id="next-btn">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ALL_DATA = [
+      { id: 1, img: '../assets/img/announcements-maintenance-notice.png', title: 'Maintenance Notice', desc: 'Elevator maintenance scheduled for tomorrow between 9AM and 12PM.', category: 'maintenance', date: '2 hours ago' },
+      { id: 2, img: '../assets/img/announcements-community-event.png', title: 'Community Event', desc: 'Rooftop BBQ this Friday at 6:00 PM. Bring your own drinks!', category: 'community', date: '2 days ago' },
+      { id: 3, img: '../assets/img/announcements-gym-equipment.png', title: 'New Gym Equipment', desc: 'We have just installed new treadmills and weight benches in the gym.', category: 'community', date: '3 days ago' },
+      { id: 4, img: '../assets/img/announcements-security-update.png', title: 'Security Update', desc: 'Following a recent security review, we would like to remind all residents...', category: 'security', date: 'April 02, 2026' },
+      { id: 5, img: '../assets/img/announcements-water-supply.jpg', title: 'Water Supply Notice', desc: 'Water supply will be interrupted on Saturday from 8AM to 2PM.', category: 'maintenance', date: 'April 01, 2026' },
+      { id: 6, img: '../assets/img/announcements-new-residents.jpeg', title: 'Welcome New Residents', desc: 'Please join us in welcoming the new families who moved in this week.', category: 'community', date: 'March 30, 2026' },
+      { id: 7, img: '../assets/img/announcements-parking-reminder.jpg', title: 'Parking Reminder', desc: 'Please ensure your vehicles are parked in designated spots only.', category: 'security', date: 'March 28, 2026' },
+    ];
+
+    const PER_PAGE = 5;
+    let currentPage = 1;
+    let currentFilter = 'all';
+    let searchQ = '';
+
+    function getFiltered() {
+      return ALL_DATA.filter(a => {
+        const matchCat = currentFilter === 'all' || a.category === currentFilter;
+        const matchQ = !searchQ || a.title.toLowerCase().includes(searchQ) || a.desc.toLowerCase().includes(searchQ);
+        return matchCat && matchQ;
+      });
+    }
+
+    function renderRows() {
+      const filtered = getFiltered();
+      const total = filtered.length;
+      const totalPages = Math.ceil(total / PER_PAGE) || 1;
+      if (currentPage > totalPages) currentPage = 1;
+
+      const start = (currentPage - 1) * PER_PAGE;
+      const pageData = filtered.slice(start, start + PER_PAGE);
+
+      document.getElementById('ann-body').innerHTML = pageData.map(a => `
+        <div class="ann-row">
+          <div class="ann-item">
+            <img class="ann-thumb" src="${a.img}" alt="${a.title}">
+            <div>
+              <div class="ann-title">${a.title}</div>
+              <div class="ann-desc">${a.desc}</div>
+            </div>
+          </div>
+          <div>
+            <span class="ann-badge">${a.category}</span>
+          </div>
+        
+          <div class="ann-date">
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="none">
+              <circle cx="10" cy="10" r="8" stroke="#9E9A9A" stroke-width="1.6"/>
+              <path d="M10 6v4l2.5 2.5" stroke="#9E9A9A" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            ${a.date}
+          </div>
+  
+          <div class="ann-actions">
+            <button class="ann-menu-btn">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
+                <circle cx="10" cy="5" r="1.4"/><circle cx="10" cy="10" r="1.4"/><circle cx="10" cy="15" r="1.4"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        `).join('');
+
+      document.getElementById('ann-count').textContent =
+        `Showing ${pageData.length} of ${total} announcement${total !== 1 ? 's' : ''}`;
+
+      document.querySelectorAll('.page-btn').forEach(btn => {
+        btn.classList.toggle('active', Number(btn.dataset.page) === currentPage);
+        btn.style.display = Number(btn.dataset.page) <= totalPages ? '' : 'none';
+      });
+      document.getElementById('prev-btn').disabled = currentPage === 1;
+      document.getElementById('next-btn').disabled = currentPage === totalPages;
+    }
+
+    document.querySelectorAll('.page-btn').forEach(btn => {
+      btn.addEventListener('click', () => { currentPage = Number(btn.dataset.page); renderRows(); });
+    });
+
+    document.getElementById('prev-btn').addEventListener('click', () => { if (currentPage > 1) { currentPage--; renderRows(); } });
+    document.getElementById('next-btn').addEventListener('click', () => {
+      const totalPages = Math.ceil(getFiltered().length / PER_PAGE) || 1;
+      if (currentPage < totalPages) { currentPage++; renderRows(); }
+    });
+
+    document.getElementById('ann-search-input').addEventListener('input', e => {
+      searchQ = e.target.value.toLowerCase().trim();
+      currentPage = 1;
+      renderRows();
+    });
+
+    const filterBtn = document.getElementById('ann-filter-btn');
+    const dropdown = document.getElementById('ann-dropdown');
+    filterBtn.addEventListener('click', e => { e.stopPropagation(); dropdown.classList.toggle('open'); });
+    document.addEventListener('click', () => dropdown.classList.remove('open'));
+    document.querySelectorAll('.ann-dropdown-item').forEach(item => {
+      item.addEventListener('click', e => {
+        e.stopPropagation();
+        currentFilter = item.dataset.val;
+        document.getElementById('filter-label').textContent = item.textContent;
+        dropdown.classList.remove('open');
+        currentPage = 1;
+        renderRows();
+      });
+    });
+    renderRows();
+  </script>
+
+  <script src="/Dormonitory/assets/js/sidebar-navbar.js"></script>
+</body>
+
+</html>

@@ -1,35 +1,37 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dormitory</title>
-    <link rel="stylesheet" href="../../assets/css/admin-styles.css" />
-    <link rel="stylesheet" href="../../assets/css/sidebar-navbar-styles.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
-  </head>
-  
-  <body>
-    <div id="sidebar-navbar"></div>
 
-    <div class="layout">
-      <div class="main">
-        <div class="alerts-top-bar">
-          <button class="alert-top-btn"><i class="bi bi-shield-check"></i>Emergency Protocol</button>
-          <button class="alert-top-btn"><i class="bi bi-file-earmark-arrow-down"></i>Generate Report</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dormitory</title>
+  <link rel="stylesheet" href="/Dormonitory/assets/css/sidebar-navbar-styles.css" />
+  <link rel="stylesheet" href="/Dormonitory/assets/css/admin-styles.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+
+<body>
+  <div id="sidebar-navbar"></div>
+
+  <div class="layout">
+    <div class="main">
+      <div class="alerts-top-bar">
+        <button class="alert-top-btn"><i class="bi bi-shield-check"></i>Emergency Protocol</button>
+        <button class="alert-top-btn"><i class="bi bi-file-earmark-arrow-down"></i>Generate Report</button>
+      </div>
+
+      <div class="ann-wrap">
+        <div class="ann-topbar">
+          <div class="ann-filter" id="ann-filter-btn" style="margin-left: 90%;">
+            <span id="filter-label"><i class="bi bi-funnel" style="margin-right: 8px;"></i>Filter</span>
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+              <path d="M5 8l5 5 5-5" stroke="#9E9A9A" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
         </div>
 
-        <div class="ann-wrap">
-          <div class="ann-topbar">
-            <div class="ann-filter" id="ann-filter-btn" style="margin-left: 90%;">
-              <span id="filter-label"><i class="bi bi-funnel" style="margin-right: 8px;"></i>Filter</span>
-              <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
-                <path d="M5 8l5 5 5-5" stroke="#9E9A9A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-
-          <div class="alert-list">
+        <div class="alert-list">
           <div class="alert-item" style="margin-top: 18px;">
             <div class="alert-icon-slot critical"><i class="bi bi-exclamation-circle"></i></div>
             <div class="alert-body">
@@ -45,7 +47,7 @@
             </div>
             <button class="alert-action" style="margin-right: 20px;">See More →</button>
           </div>
- 
+
           <div class="alert-item">
             <div class="alert-icon-slot warning"><i class="bi bi-exclamation-circle"></i></div>
             <div class="alert-body">
@@ -61,7 +63,7 @@
             </div>
             <button class="alert-action" style="margin-right: 20px;">See More →</button>
           </div>
- 
+
           <div class="alert-item">
             <div class="alert-icon-slot critical"><i class="bi bi-exclamation-circle"></i></div>
             <div class="alert-body">
@@ -77,7 +79,7 @@
             </div>
             <button class="alert-action" style="margin-right: 20px;">See More →</button>
           </div>
-          
+
           <div class="alert-item">
             <div class="alert-icon-slot info"><i class="bi bi-exclamation-circle"></i></div>
             <div class="alert-body">
@@ -109,7 +111,7 @@
             </div>
             <button class="alert-action" style="margin-right: 20px;">See More →</button>
           </div>
- 
+
           <div class="ann-footer">
             <span class="ann-footer-info" id="ann-count">Showing 4 of 8 announcements</span>
             <div class="ann-pagination">
@@ -124,7 +126,7 @@
       </div>
     </div>
 
-    <script src="../../assets/js/sidebar-navbar.js"></script>
+    <script src="/Dormonitory/assets/js/sidebar-navbar.js"></script>
+</body>
 
-  </body>
 </html>

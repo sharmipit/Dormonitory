@@ -3,17 +3,23 @@ const pageTitles = {
   "digital-key.html": "Digital Key",
   "invite-visitor.html": "Visitor Management",
   "dashboard.html": "Admin Web Portal",
+  "dashboard.php": "Admin Web Portal",
   "resident-management.html": "Resident Management",
+  "resident-management.php": "Resident Management",
   "room-management.html": "Room Management",
+  "room-management.php": "Room Management",
   "visitor-management.html": "Visitor Management",
+  "visitor-management.php": "Visitor Management",
   "announcements.html": "Announcements",
+  "announcements.php": "Announcements",
   "security-center.html": "Security Center",
+  "security-center.php": "Security Center",
 };
 
 const isAdmin = window.location.pathname.includes("/admin/");
 
 const sidebarFile = isAdmin
-  ? "../includes/admin-bar-layout.html"
+  ? "../includes/admin-bar-layout.php"
   : "../includes/resident-bar-layout.html";
 
 fetch(sidebarFile)

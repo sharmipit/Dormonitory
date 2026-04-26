@@ -12,46 +12,42 @@
       <i class="bi bi-bell-fill" style="color: #3030b6; font-size: 30px"></i>
     </button>
     <div class="nav-avatar">
-      <img src="../assets/img/cute-duck-for-good-luck.jpeg" />
+      <img src="/Dormonitory/assets/img/cute-duck-for-good-luck.jpeg" />
     </div>
   </div>
 </div>
 
 <aside class="sidebar" id="sidebar">
   <div class="brand">
-    <img src="../../assets/img/secondary-logo.png" alt="Brand" />
+    <img src="/Dormonitory/assets/img/secondary-logo.png" alt="Brand" />
   </div>
   <div class="divider"></div>
   <nav>
     <ul>
       <li>
-        <a href="../admin/dashboard.html"
-          ><i class="bi bi-grid"></i><span>Dashboard</span></a
-        >
+        <a href="../admin/dashboard.php"><i class="bi bi-grid"></i><span>Dashboard</span></a>
       </li>
       <li>
-        <a href="../admin/resident-management.html">
+        <a href="../admin/resident-management.php">
           <i class="bi bi-people-fill"></i><span>Resident Management</span>
         </a>
       </li>
       <li>
-        <a href="../admin/room-management.html">
+        <a href="../admin/room-management.php">
           <i class="bi bi-door-open-fill"></i><span>Room Management</span>
         </a>
       </li>
       <li>
-        <a href="../admin/visitor-management.html"
-          ><i class="bi bi-person-badge-fill"></i
-          ><span>Visitor Management</span></a
-        >
+        <a href="../admin/visitor-management.php"><i class="bi bi-person-badge-fill"></i><span>Visitor
+            Management</span></a>
       </li>
       <li>
-        <a href="../admin/announcements.html">
+        <a href="../admin/announcements.php">
           <i class="bi bi-megaphone-fill"></i><span>Announcements</span>
         </a>
       </li>
       <li>
-        <a href="../admin/security-center.html">
+        <a href="../admin/security-center.php">
           <i class="bi bi-exclamation-circle"></i><span>Security Alert</span>
         </a>
       </li>

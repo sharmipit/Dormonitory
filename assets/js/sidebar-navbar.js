@@ -19,7 +19,7 @@ const sidebarFile = isAdmin
 fetch(sidebarFile)
   .then((res) => res.text())
   .then((html) => {
-    document.getElementById("navbar-placeholder").innerHTML = html;
+    document.getElementById("sidebar-navbar").innerHTML = html;
 
     const btn = document.getElementById("hamburger");
     const sidebar = document.getElementById("sidebar");

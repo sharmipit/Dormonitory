@@ -769,7 +769,7 @@ tbody td {
 }
 
 .btn-view,
-.btn-manage {
+.btn-remove {
   flex: 1;
   padding: 8px 0;
   border-radius: 8px;
@@ -790,13 +790,13 @@ tbody td {
   background: #e5e7eb;
 }
 
-.btn-manage {
-  background: #ede9fe;
-  color: var(--accent);
+.btn-remove {
+  background: #fee2e2;
+  color: #dc2626;
 }
 
-.btn-manage:hover {
-  background: #ddd6fe;
+.btn-remove:hover {
+  background: rgb(240, 193, 193);
 }
 
 /* ============================================================

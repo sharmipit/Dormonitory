@@ -13,8 +13,8 @@ const pageTitles = {
 const isAdmin = window.location.pathname.includes("/admin/");
 
 const sidebarFile = isAdmin
-  ? "../includes/admin-sidebar.html"
-  : "../includes/resident-sidebar.html";
+  ? "../includes/admin-bar-layout.html"
+  : "../includes/resident-bar-layout.html";
 
 fetch(sidebarFile)
   .then((res) => res.text())

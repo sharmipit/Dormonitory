@@ -3,22 +3,118 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dormitory</title>
-    <link rel="stylesheet" href="../../assets/css/sidebar-navbar-styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
+    <title>Invite Visitor | Dormitory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../assets/css/sidebar-navbar-styles.css" />
+    <link rel="stylesheet" href="../assets/css/resident-styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   </head>
- <body>
+  <body>
     <div id="sidebar-navbar"></div>
 
     <div class="layout">
       <div class="main">
-        <p>content</p>
+        <div class="dashboard-grid">
+          
+<section class="card invite-form-card">
+    <div class="card-header-with-subtitle">
+        <div class="header-main">
+            <div class="icon-box"><i class="bi bi-person-plus-fill"></i></div>
+            <div>
+                <h2>Invite Visitor</h2>
+                <p class="subtitle">Generate a temporary access pass</p>
+            </div>
+        </div>
+    </div>
+
+<form class="portal-form" id="visitorForm" novalidate>
+    <div class="form-group">
+        <label for="visitorName">Visitor Name</label>
+        <input type="text" id="visitorName" placeholder="e.g., Juan Dela Cruz" required>
+        <span class="error-msg" id="nameError">Please enter the visitor's name.</span>
+    </div>
+    
+    <div class="form-group">
+        <label for="contactNumber">Contact Number</label>
+        <input type="tel" id="contactNumber" placeholder="09XXXXXYYYY" required pattern="[0-9]{11}">
+        <span class="error-msg" id="contactError">Please enter a valid 11-digit number.</span>
+    </div>
+
+    <div class="form-group">
+        <label for="accessLevel">Access Level</label>
+        <input type="text" id="accessLevel" placeholder="e.g., Main Entrance" required>
+        <span class="error-msg" id="accessError">Please specify the access area.</span>
+    </div>
+
+    <button type="submit" class="btn-primary-portal">Generate Visitor Pass</button>
+</form>
+          </section>
+
+          <section class="card history-card">
+            <div class="card-header">
+                <h2><i class="bi bi-clock"></i> Visitor History</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+
+            <div class="activity-list">
+                <div class="activity-item history-item">
+                    <div class="item-top">
+                        <div class="icon-box"><i class="bi bi-person-fill"></i></div>
+                        <div class="item-content">
+                            <h3>Erin Zoe Regalado</h3>
+                            <p>Yesterday • 07:25 AM</p>
+                        </div>
+                        <div class="chevron"><i class="bi bi-chevron-right"></i></div>
+                    </div>
+                </div>
+
+                <div class="activity-item history-item">
+                    <div class="item-top">
+                        <div class="icon-box"><i class="bi bi-person-fill"></i></div>
+                        <div class="item-content">
+                            <h3>Sharmagne Gamboa</h3>
+                            <p>Yesterday • 10:35 AM</p>
+                        </div>
+                        <div class="chevron"><i class="bi bi-chevron-right"></i></div>
+                    </div>
+                </div>
+
+                <div class="activity-item history-item">
+                    <div class="item-top">
+                        <div class="icon-box"><i class="bi bi-person-fill"></i></div>
+                        <div class="item-content">
+                            <h3>Gwyneth Miasco</h3>
+                            <p>Yesterday • 12:47 PM</p>
+                        </div>
+                        <div class="chevron"><i class="bi bi-chevron-right"></i></div>
+                    </div>
+                </div>
+
+                <div class="activity-item history-item">
+                    <div class="item-top">
+                        <div class="icon-box"><i class="bi bi-person-fill"></i></div>
+                        <div class="item-content">
+                            <h3>Hazel Ann Carillo</h3>
+                            <p>Yesterday • 03:18 PM</p>
+                        </div>
+                        <div class="chevron"><i class="bi bi-chevron-right"></i></div>
+                    </div>
+                </div>
+            </div>
+          </section>
+
+        </div>
       </div>
     </div>
 
+    <div id="universalModal" class="modal-overlay">
+        <div class="modal-container" id="modalContainer"></div>
+    </div>
+
     <script src="../assets/js/sidebar-navbar.js"></script>
+    <script src="../assets/js/main.js"></script>
   </body>
 </html>

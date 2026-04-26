@@ -110,3 +110,47 @@ window.onclick = (e) => {
     if (e.target === modal) closeUniversalModal();
 };
 
+
+
+// --- VISITOR PASS LOGIC ---
+
+document.getElementById('visitorForm').addEventListener('submit', function(e) {
+    e.preventDefault(); 
+    
+    let isValid = true;
+    const inputs = [
+        { id: 'visitorName', errorId: 'nameError' },
+        { id: 'contactNumber', errorId: 'contactError', isPhone: true },
+        { id: 'accessLevel', errorId: 'accessError' }
+    ];
+
+    inputs.forEach(inputObj => {
+        const inputElement = document.getElementById(inputObj.id);
+        const parent = inputElement.parentElement;
+        const value = inputElement.value.trim();
+
+        if (value === "") {
+            parent.classList.add('error');
+            isValid = false;
+        } 
+        else if (inputObj.isPhone && !/^\d{11}$/.test(value)) {
+            parent.classList.add('error');
+            isValid = false;
+        }
+        else {
+            parent.classList.remove('error');
+            parent.classList.add('success');
+        }
+    });
+
+    if (isValid) {
+        alert("Success! Visitor pass for " + document.getElementById('visitorName').value + " has been generated.");
+        this.reset();
+    }
+});
+
+document.querySelectorAll('.form-group input').forEach(input => {
+    input.addEventListener('input', function() {
+        this.parentElement.classList.remove('error');
+    });
+});

@@ -618,3 +618,211 @@ a {
 .read-more:hover {
     color: var(--primary-blue);
 }
+
+
+/* --- Responsiveness --- */
+
+@media (max-width: 992px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr; 
+        gap: 1.5rem;
+    }
+
+    .main {
+        padding: 1.5rem;
+    }
+
+    .welcome-banner {
+        padding: 1.5rem;
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .status-badge {
+        align-items: flex-start; 
+        text-align: left;
+    }
+}
+
+@media (max-width: 600px) {
+    .announcement-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 1.5rem; 
+    }
+
+    .welcome-banner h1 {
+        font-size: 1.5rem; 
+    }
+
+    .modal-container {
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-header-simple {
+        padding: 20px;
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .modal-header-simple .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+}
+
+/* --- Invite Visitor Page --- */
+
+/* --- Visitor Page Specific Styles --- */
+
+.card-header-with-subtitle {
+    margin-bottom: 2rem;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-main h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    margin: 4px 0 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Form Styling */
+.portal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.form-group input {
+    background: #f8faff;
+    border: 1px solid #edf2f7;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background: white;
+}
+
+.btn-primary-portal {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: opacity 0.2s ease;
+}
+
+.btn-primary-portal:hover {
+    opacity: 0.9;
+}
+
+.history-item .icon-box {
+    background: #3030b6; 
+    color: white;
+    font-size: 1.4rem; 
+}
+
+.icon-box {
+    background-color: var(--primary-blue);
+    color: #ffffff;
+    min-width: 48px;
+    height: 48px;
+    border-radius: 12px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    box-shadow: 0 4px 12px rgba(48, 48, 182, 0.15); 
+}
+
+.icon-box i {
+    line-height: 0; 
+}
+
+.chevron {
+    margin-left: auto;
+    background-color: #f1f4f9;
+    color: #a3aed0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.history-item:hover .chevron {
+    background-color: #e2e8f0;
+    color: var(--primary-blue);
+}
+
+/* --- Form Validation Styles --- */
+
+.form-group {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.error-msg {
+    color: #e74c3c;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 4px;
+    display: none; 
+}
+
+.form-group.error input {
+    border: 1.5px solid #e74c3c;
+    background-color: #fff8f8;
+}
+
+.form-group.error .error-msg {
+    display: block;
+}
+
+.form-group.success input {
+    border: 1.5px solid #05cd99;
+}
+

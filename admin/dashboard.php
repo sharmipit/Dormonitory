@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 include('../config/db.php');
 
@@ -13,6 +14,7 @@ $stmt->execute([$_SESSION['id']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $fullname = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Admin';
+
 ?>
 
 <!doctype html>
@@ -28,6 +30,7 @@ $fullname = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Admin';
 </head>
 
 <body>
+  
   <div id="sidebar-navbar"></div>
 
   <div class="layout">

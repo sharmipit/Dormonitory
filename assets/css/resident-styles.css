@@ -78,7 +78,7 @@ a {
     border: 1px solid rgba(5, 205, 153, 0.2); 
 }
 
-/* Grid Layout */
+/* Original Home Grid Layout */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1.2fr 2fr;
@@ -431,12 +431,12 @@ a {
 .modal-header-simple .close-modal, 
 .modal-header-simple .back-modal {
     position: relative; 
-    top: auto;         
-    right: auto;       
-    left: auto;        
-    width: 40px;        
+    top: auto;          
+    right: auto;        
+    left: auto;         
+    width: 40px;         
     height: 40px;
-    margin: 0;         
+    margin: 0;          
 }
 
 /* --- Detail View (Specific Activity) --- */
@@ -512,7 +512,7 @@ a {
 .detail-divider {
     height: 1px;
     background-color: #E0E0E0; 
-    border: none;            
+    border: none;             
     margin: 20px 0;
 }
 
@@ -620,11 +620,11 @@ a {
 }
 
 
-/* --- Responsiveness --- */
+/* --- Global Responsiveness --- */
 
 @media (max-width: 992px) {
     .dashboard-grid {
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr !important;
         gap: 1.5rem;
     }
 
@@ -678,9 +678,16 @@ a {
     }
 }
 
-/* --- Invite Visitor Page --- */
 
-/* --- Visitor Page Specific Styles --- */
+
+/* --- Visitor Management Page Styles --- */
+
+.dashboard-grid.visitor-page-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; 
+    gap: 1.5rem;
+    width: 100%;
+}
 
 .card-header-with-subtitle {
     margin-bottom: 2rem;
@@ -696,6 +703,7 @@ a {
     margin: 0;
     font-size: 1.25rem;
     font-weight: 700;
+    color: var(--text-main);
 }
 
 .subtitle {
@@ -704,65 +712,7 @@ a {
     color: var(--text-muted);
 }
 
-/* Form Styling */
-.portal-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.form-group label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
-}
-
-.form-group input {
-    background: #f8faff;
-    border: 1px solid #edf2f7;
-    padding: 12px 16px;
-    border-radius: 12px;
-    font-family: 'Inter', sans-serif;
-    color: var(--text-main);
-    transition: all 0.2s ease;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: var(--primary-blue);
-    background: white;
-}
-
-.btn-primary-portal {
-    background: var(--primary-blue);
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: opacity 0.2s ease;
-}
-
-.btn-primary-portal:hover {
-    opacity: 0.9;
-}
-
-.history-item .icon-box {
-    background: #3030b6; 
-    color: white;
-    font-size: 1.4rem; 
-}
-
-.icon-box {
+.visitor-icon-box {
     background-color: var(--primary-blue);
     color: #ffffff;
     min-width: 48px;
@@ -775,8 +725,165 @@ a {
     box-shadow: 0 4px 12px rgba(48, 48, 182, 0.15); 
 }
 
-.icon-box i {
-    line-height: 0; 
+/* Invite Content Layout */
+.invite-content-wrapper {
+    display: flex;
+    gap: 3rem; 
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Form Styling */
+.portal-form {
+    flex: 1.5; 
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 280px; 
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.form-group input {
+    background: #f8faff;
+    border: 1px solid #edf2f7;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background: white;
+}
+
+.error-msg {
+    color: #e74c3c;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 4px;
+    display: none; 
+}
+
+.form-group.error input {
+    border: 1.5px solid #e74c3c;
+    background-color: #fff8f8;
+}
+
+.form-group.error .error-msg {
+    display: block;
+}
+
+.btn-primary-portal {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 50px; 
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: opacity 0.2s ease;
+}
+
+.btn-primary-portal:hover {
+    opacity: 0.9;
+}
+
+/* QR Code Section */
+.qr-display-section {
+    flex: 1;
+    max-width: 350px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 35px;
+    background: #f8faff;
+    border-radius: 24px;
+    border: 2px dashed #cbd5e0;
+    box-sizing: border-box;
+}
+
+.qr-placeholder {
+    width: 220px; 
+    height: 220px;
+    background: white;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-blue);
+    box-shadow: 0 10px 25px rgba(48, 48, 182, 0.1);
+}
+
+.qr-placeholder i {
+    font-size: 8.5rem;
+}
+
+.qr-instruction {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+    font-weight: 500;
+}
+
+.qr-expiry {
+    text-align: center;
+    background: #ffffff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 1px solid #edf2f7;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.qr-expiry p {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-main);
+    white-space: normal;
+}
+
+#expiryTimestamp {
+    color: #e74c3c;
+}
+
+/* Visitor History Section */
+.history-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.history-item {
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+}
+
+.history-item .icon-box {
+    background: #3030b6; 
+    color: white;
 }
 
 .chevron {
@@ -798,31 +905,221 @@ a {
     color: var(--primary-blue);
 }
 
-/* --- Form Validation Styles --- */
+/* --- Responsive --- */
 
-.form-group {
-    position: relative;
-    margin-bottom: 5px;
+@media (max-width: 1024px) {
+    .dashboard-grid.visitor-page-grid {
+        grid-template-columns: 1fr; 
+        gap: 1rem;
+    }
+
+    .invite-content-wrapper {
+        gap: 2rem; 
+    }
 }
 
-.error-msg {
-    color: #e74c3c;
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-top: 4px;
-    display: none; 
+@media (max-width: 768px) {
+    .invite-content-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .portal-form {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .qr-display-section {
+        max-width: 100%;
+        width: 100%;
+        padding: 25px;
+    }
+
+    .header-main h2 {
+        font-size: 1.1rem;
+    }
+
+    .visitor-icon-box {
+        min-width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
 }
 
-.form-group.error input {
-    border: 1.5px solid #e74c3c;
-    background-color: #fff8f8;
+@media (max-width: 480px) {
+    .qr-placeholder {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .qr-placeholder i {
+        font-size: 6rem;
+    }
+
+    .btn-primary-portal {
+        font-size: 0.85rem;
+        padding: 12px;
+    }
 }
 
-.form-group.error .error-msg {
+
+
+/* --- Digital Key Page Specific Styles --- */
+
+.key-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+    min-height: 80vh;
+}
+
+.key-card {
+    background: white;
+    border-radius: 30px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0px 15px 45px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.qr-main-wrapper {
+    background: #f8faff;
+    padding: 2rem;
+    border-radius: 24px;
+    border: 1px solid #edf2f7;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.qr-main-wrapper img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
     display: block;
 }
 
-.form-group.success input {
-    border: 1.5px solid #05cd99;
+.key-info-header h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1b2559;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
 }
 
+.key-info-header p {
+    color: #a3aed0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Status and Timer Grid */
+.key-status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.status-box-pill {
+    background: #f8faff;
+    border: 1px solid #edf2f7;
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pill-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #a3aed0;
+    letter-spacing: 1px;
+}
+
+.status-pill {
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 50px;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.status-pill.active {
+    background: #e6fff9;
+    color: #05cd99; 
+}
+
+.expiry-timer {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1b2559;
+}
+
+/* Button Styling */
+.btn-generate-primary {
+    background: #3030b6; 
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 18px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-generate-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(48, 48, 182, 0.2);
+}
+
+.security-footer {
+    font-size: 0.8rem;
+    color: #a3aed0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 5px;
+}
+
+
+/* --- Responsiveness --- */
+
+@media (max-width: 480px) {
+    .key-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .key-info-header h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.bi-spin {
+    animation: spin 0.8s linear infinite;
+}
+
+#mainQrImage {
+    transition: opacity 0.3s ease;
+}

@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dormitory</title>
+    <title>Digital Key | Dormonitory</title>
     <link rel="stylesheet" href="../../assets/css/sidebar-navbar-styles.css" />
+    <link rel="stylesheet" href="../../assets/css/resident-styles.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
@@ -15,10 +16,41 @@
 
     <div class="layout">
       <div class="main">
-        <p>content</p>
+        <div class="key-card-container">
+            <div class="key-card">
+                <div id="activeKeyDisplay" class="qr-main-wrapper">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=RESIDENT_SECURE_TOKEN_01" alt="Digital Entry Key" id="mainQrImage">
+                </div>
+
+                <div class="key-info-header">
+                    <h2>Here’s Your Digital Key</h2>
+                    <p>Scan this code at any building entry point for instant access.</p>
+                </div>
+
+                <div class="key-status-grid">
+                    <div class="status-box-pill">
+                        <span class="pill-label">STATUS</span>
+                        <div class="status-pill active">ACTIVE</div>
+                    </div>
+                    <div class="status-box-pill">
+                        <span class="pill-label">EXPIRES</span>
+                        <div class="expiry-timer" id="keyTimer">in 01h 02m</div>
+                    </div>
+                </div>
+
+                <button id="btnGenerateKey" class="btn-generate-primary">
+                    <i class="bi bi-arrow-clockwise"></i> Generate New Key
+                </button>
+                
+                <div class="security-footer">
+                    <i class="bi bi-shield-check"></i> Encrypted Dynamic Access
+                </div>
+            </div>
+        </div>
       </div>
     </div>
 
     <script src="../assets/js/sidebar-navbar.js"></script>
+    <script src="../assets/js/main.js"></script>
   </body>
 </html>

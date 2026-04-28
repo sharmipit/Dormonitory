@@ -5,7 +5,7 @@ require '../config/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $email    = trim($_POST['email']);
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
 
     if (empty($email) || empty($password)) {
@@ -27,9 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Verify password against 'pass' column
     if (password_verify($password, $admin['pass'])) {
-        $_SESSION['loggedin']  = true;
-        $_SESSION['id']        = $admin['admin_id'];
-        $_SESSION['email']     = $admin['email'];
+        $_SESSION['loggedin'] = true;
+        $_SESSION['admin_id'] = $admin['admin_id'];
+        $_SESSION['email'] = $admin['email'];
         $_SESSION['firstname'] = $admin['first_name'];
 
         header('Location: ../admin/dashboard.php');

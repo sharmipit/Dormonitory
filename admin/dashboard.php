@@ -1,16 +1,15 @@
 <?php
-
 session_start();
 include('../config/db.php');
 
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("Location: ../auth/login-management-access.php");
-    exit();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || !isset($_SESSION['admin_id'])) {
+  header("Location: /Dormonitory/auth/login-management-access.php");
+  exit();
 }
 
 // Fetch admin name from database
 $stmt = $pdo->prepare("SELECT first_name, last_name FROM admin WHERE admin_id = ?");
-$stmt->execute([$_SESSION['id']]); 
+$stmt->execute([$_SESSION['admin_id']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $fullname = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Admin';
@@ -30,7 +29,7 @@ $fullname = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Admin';
 </head>
 
 <body>
-  
+
   <div id="sidebar-navbar"></div>
 
   <div class="layout">

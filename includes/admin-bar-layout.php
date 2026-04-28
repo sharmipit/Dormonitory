@@ -22,40 +22,50 @@
     <img src="/Dormonitory/assets/img/secondary-logo.png" alt="Brand" />
   </div>
   <div class="divider"></div>
+
   <nav>
     <ul>
       <li>
-        <a href="../admin/dashboard.php"><i class="bi bi-grid"></i><span>Dashboard</span></a>
+        <a href="/Dormonitory/admin/dashboard.php">
+          <i class="bi bi-grid"></i><span>Dashboard</span>
+        </a>
       </li>
+
       <li>
-        <a href="../admin/resident-management.php">
+        <a href="/Dormonitory/admin/resident-management.php">
           <i class="bi bi-people-fill"></i><span>Resident Management</span>
         </a>
       </li>
+
       <li>
-        <a href="../admin/room-management.php">
+        <a href="/Dormonitory/admin/room-management.php">
           <i class="bi bi-door-open-fill"></i><span>Room Management</span>
         </a>
       </li>
+
       <li>
-        <a href="../admin/visitor-management.php"><i class="bi bi-person-badge-fill"></i><span>Visitor
-            Management</span></a>
+        <a href="/Dormonitory/admin/visitor-management.php">
+          <i class="bi bi-person-badge-fill"></i><span>Visitor Management</span>
+        </a>
       </li>
+
       <li>
-        <a href="../admin/announcements.php">
+        <a href="/Dormonitory/admin/announcements.php">
           <i class="bi bi-megaphone-fill"></i><span>Announcements</span>
         </a>
       </li>
+
       <li>
-        <a href="../admin/security-center.php">
+        <a href="/Dormonitory/admin/security-center.php">
           <i class="bi bi-exclamation-circle"></i><span>Security Alert</span>
         </a>
       </li>
     </ul>
   </nav>
+
   <div class="sidebar-bottom">
     <div class="divider-bottom"></div>
-    <a href="../auth/login.html" class="signout-btn">
+    <a href="/Dormonitory/index.html" class="signout-btn">
       <i class="bi bi-box-arrow-right"></i>
       <span>Sign Out</span>
     </a>

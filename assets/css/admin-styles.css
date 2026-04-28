@@ -669,157 +669,125 @@ tbody td {
 .room-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  gap: 16px;
 }
 
 .room-card {
   background: var(--bg-card);
-  border-radius: 16px;
-  padding: 20px;
-  border: 1px solid #e5e7eb;
-  transition:
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+  border-radius: var(--radius-card);
+  padding: 18px;
+  border: 1px solid var(--border, #e5e7eb);
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   gap: 12px;
+  transition: 0.2s ease;
 }
 
 .room-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-btn);
 }
 
+/* TOP */
 .room-top {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 }
 
+/* ICON */
 .room-icon {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   background: var(--accent);
-  border-radius: 12px;
+  border-radius: var(--radius-btn);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
-.room-status {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.room-status.room-available {
-  background: transparent;
-  color: #059669;
-  border: 1.5px solid #059669;
-}
-
-.room-status.room-full {
-  background: transparent;
-  color: #dc2626;
-  border: 1.5px solid #dc2626;
-}
-
-.room-status.room-maintenance {
-  background: transparent;
-  color: #d97706;
-  border: 1.5px solid #d97706;
-}
-
+/* TEXT */
 .room-meta h3 {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--text-primary);
-  margin: 0 0 2px;
+  margin: 0;
 }
 
 .room-meta p {
   font-size: 0.82rem;
   color: var(--text-secondary);
-  margin: 0;
+  margin-top: 2px;
 }
 
-.occupancy-section {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.occupancy-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
+/* OCCUPANCY */
+.room-occupancy-text {
+  font-size: 0.82rem;
+  font-weight: 600;
   color: var(--text-secondary);
 }
 
+/* PROGRESS */
 .progress-bar {
   width: 100%;
   height: 6px;
-  background: #e5e7eb;
+  background: var(--border, #e5e7eb);
   border-radius: 999px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  border-radius: 999px;
   background: var(--accent);
-  transition: width 0.4s ease;
+  border-radius: 999px;
+  transition: width 0.3s ease;
 }
 
-.progress-fill.room-full {
-  background: #dc2626;
+.progress-fill.full {
+  background: var(--danger, #dc2626);
 }
 
+/* ACTIONS */
 .room-actions {
   display: flex;
   gap: 10px;
-  margin-top: 4px;
 }
 
 .btn-view,
 .btn-remove {
   flex: 1;
-  padding: 8px 0;
-  border-radius: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius-btn);
   font-size: 0.82rem;
   font-weight: 600;
-  font-family: var(--font-main);
   cursor: pointer;
-  transition: 0.2s ease;
   border: none;
+  transition: 0.2s ease;
 }
 
+/* VIEW */
 .btn-view {
   background: #f3f4f6;
-  color: #374151;
+  color: var(--text-primary);
 }
 
 .btn-view:hover {
   background: #e5e7eb;
 }
 
+/* DELETE */
 .btn-remove {
   background: #fee2e2;
-  color: #dc2626;
+  color: var(--danger, #dc2626);
 }
 
 .btn-remove:hover {
-  background: rgb(240, 193, 193);
+  background: #f8caca;
 }
 
 /* ============================================================
-    Announcements
+    ANNOUNCEMENTS
    ============================================================ */
 
 .ann-wrap {
@@ -1101,7 +1069,7 @@ tbody td {
 }
 
 /* ============================================================
-   Security Center
+   SECURITY CENTER
    ============================================================ */
 
 .alerts-top-bar {

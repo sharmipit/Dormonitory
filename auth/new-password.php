@@ -1,3 +1,38 @@
+<?php
+session_start();
+require '../config/db.php';
+
+// Block access if not verified
+if (!isset($_SESSION['verified']) || !$_SESSION['verified']) {
+    header('Location: forgot-password.php');
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $new_password = $_POST['new_password'];
+    $confirm = $_POST['confirm_password'];
+    $email = $_SESSION['email'];
+    $table = $_SESSION['table'];
+
+    if ($new_password !== $confirm) {
+        $_SESSION['error'] = "Passwords do not match.";
+        header('Location: new-password.php');
+        exit();
+    }
+
+    $hashed = password_hash($new_password, PASSWORD_DEFAULT);
+    $stmt = $pdo->prepare("UPDATE {$table} SET pass = ?, reset_code = NULL WHERE email = ?");
+    $stmt->execute([$hashed, $email]);
+
+    // Clear session
+    unset($_SESSION['email'], $_SESSION['verified']);
+
+    $_SESSION['success'] = "Password reset successful. You can now log in.";
+    header('Location: login.html');
+    exit();
+}
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -23,7 +58,7 @@
 
         <section class="hero-right">
              <div class="back-nav-fixed">
-                <a href="forgot-password.html" class="btn-go-back">
+                <a href="forgot-password.php" class="btn-go-back">
                     <i class="bi bi-arrow-left"></i> Go Back
                 </a>
             </div>
@@ -32,13 +67,19 @@
                 <h2 class="auth-title">New Password</h2>
                 <p class="auth-subtitle">Set a strong password to protect your account.</p>
 
-                <form action="login.html" method="GET" class="needs-validation" novalidate>
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div class="alert alert-danger">
+                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                    </div>
+                <?php endif; ?>
+
+                <form action="new-password.php" method="POST" class="needs-validation" novalidate>
                     
                     <div class="mb-4">
                         <label for="password" class="form-label">New Password</label>
                         <div class="input-group-custom">
                             <i class="bi bi-lock"></i>
-                            <input type="password" class="form-control no-validate-icon" id="password" placeholder="Enter your new password" required>
+                            <input type="password" class="form-control no-validate-icon" id="password" name="new_password" placeholder="Enter your new password" required>
                             <i class="bi bi-eye toggle-password" id="togglePassword"></i>
                         </div>
                         <div class="invalid-feedback">Please enter a new password.</div>
@@ -48,7 +89,7 @@
                         <label for="confirmPassword" class="form-label">Confirm Password</label>
                         <div class="input-group-custom">
                             <i class="bi bi-lock"></i>
-                            <input type="password" class="form-control no-validate-icon" id="confirmPassword" placeholder="Confirm your new password" required>
+                            <input type="password" class="form-control no-validate-icon" id="confirmPassword" name="confirm_password" placeholder="Confirm your new password" required>
                         </div>
                         <div id="confirmFeedback" class="invalid-feedback">Please confirm your password.</div>
                     </div>

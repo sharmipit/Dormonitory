@@ -1,3 +1,28 @@
+<?php
+session_start();
+require '../config/db.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $entered_code = $_POST['code'];
+    $email = $_SESSION['email'];
+    $table = $_SESSION['table'];
+
+    $stmt = $pdo->prepare("SELECT * FROM {$table} WHERE email = ? AND reset_code = ?");
+    $stmt->execute([$email, $entered_code]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        $_SESSION['verified'] = true;
+        header('Location: new-password.php');
+        exit();
+    } else {
+        $_SESSION['error'] = "Invalid or expired code.";
+        header('Location: reset-confirmation.php');
+        exit();
+    }
+}
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -23,7 +48,7 @@
 
         <section class="hero-right">
             <div class="back-nav-fixed">
-                <a href="forgot-password.html" class="btn-go-back">
+                <a href="forgot-password.php" class="btn-go-back">
                     <i class="bi bi-arrow-left"></i> Go Back
                 </a>
             </div>
@@ -32,7 +57,14 @@
                 <h2 class="auth-title">Enter Verification Code</h2>
                 <p class="auth-subtitle mb-5">Verify your number with the 6-digit code we just sent via email. The code expires in 5 minutes.</p>
 
-                <form action="new-password.html" method="GET" class="needs-validation" id="otp-form" novalidate>
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div class="alert alert-danger text-center">
+                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                    </div>
+                <?php endif; ?>
+
+                <form action="reset-confirmation.php" method="POST" class="needs-validation" id="otp-form" novalidate>
+                    <input type="hidden" name="code" id="full-code">
                     <div class="otp-container mb-4">
                         <input type="text" class="otp-input" maxlength="1" pattern="\d*" required inputmode="numeric">
                         <input type="text" class="otp-input" maxlength="1" pattern="\d*" required inputmode="numeric">
@@ -43,7 +75,7 @@
                     </div>
 
                     <p class="resend-text mb-3">
-                        Didn’t received the code? <a href="forgot-password.html" class="forgot-link">Resend</a>
+                        Didn’t received the code? <a href="forgot-password.php" class="forgot-link">Resend</a>
                     </p>
 
                     <div id="otp-error" class="invalid-feedback text-center mb-4">
@@ -94,7 +126,17 @@
 
             // 2. Form Submission Validation
             form.addEventListener('submit', (event) => {
-                const allFilled = Array.from(inputs).every(input => input.value.trim().length === 1);
+                const inputs = document.querySelectorAll('.otp-input');
+                const hiddenInput = document.getElementById('full-code');
+
+                let combinedCode = "";
+                inputs.forEach(input => {
+                    combinedCode += input.value;
+                });
+
+                hiddenInput.value = combinedCode;
+
+                const allFilled = combinedCode.length === 6;
 
                 if (!allFilled) {
                     event.preventDefault();

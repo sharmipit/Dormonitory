@@ -33,19 +33,19 @@
 
       <li>
         <a href="/Dormonitory/admin/resident-management.php">
-          <i class="bi bi-people-fill"></i><span>Resident Management</span>
+          <i class="bi bi-people-fill"></i><span>Resident</span>
         </a>
       </li>
 
       <li>
         <a href="/Dormonitory/admin/room-management.php">
-          <i class="bi bi-door-open-fill"></i><span>Room Management</span>
+          <i class="bi bi-door-open-fill"></i><span>Room</span>
         </a>
       </li>
 
       <li>
         <a href="/Dormonitory/admin/visitor-management.php">
-          <i class="bi bi-person-badge-fill"></i><span>Visitor Management</span>
+          <i class="bi bi-person-badge-fill"></i><span>Visitor Log</span>
         </a>
       </li>
 
@@ -57,7 +57,7 @@
 
       <li>
         <a href="/Dormonitory/admin/security-center.php">
-          <i class="bi bi-exclamation-circle"></i><span>Security Alert</span>
+          <i class="bi bi-exclamation-circle"></i><span>Security Center</span>
         </a>
       </li>
     </ul>

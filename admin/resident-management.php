@@ -469,6 +469,16 @@ try {
     .assign-btn:hover {
       color: #15803d;
     }
+
+    .page-btn:hover {
+      background: #f1f2f6;
+      border-color: #d1d5db;
+    }
+
+    .page-nav:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
   </style>
 </head>
 
@@ -575,30 +585,29 @@ try {
 
         <!-- Footer -->
         <div class="footer">
-          <div>Showing <?= count($residents) ?> of <?= $totalRows ?> resident<?= $totalRows !== 1 ? 's' : '' ?></div>
-          <div class="pagination">
-            <?php $buildUrl = fn($p) => '?' . http_build_query(['page' => $p, 'search' => $search]); ?>
-
-            <?php if ($page > 1): ?>
-              <span><a href="<?= $buildUrl($page - 1) ?>" style="text-decoration:none;color:inherit;">Previous</a></span>
-            <?php else: ?>
-              <span style="opacity:0.4;cursor:default;">Previous</span>
-            <?php endif; ?>
+          <div class="ann-footer-info">
+            Showing <?= count($residents) ?> of <?= $totalRows ?> resident<?= $totalRows !== 1 ? 's' : '' ?>
+          </div>
+          <div class="ann-pagination">
+            <button class="page-nav" id="prev-btn" <?= $page <= 1 ? 'disabled' : '' ?>
+              onclick="window.location='?<?= http_build_query(['page' => $page - 1, 'search' => $search]) ?>'">
+              Previous
+            </button>
 
             <?php
             $start = max(1, $page - 2);
             $end = min($totalPages, $page + 2);
             for ($p = $start; $p <= $end; $p++): ?>
-              <div class="page <?= $p === $page ? 'active' : '' ?>">
-                <a href="<?= $buildUrl($p) ?>" style="text-decoration:none;color:inherit;"><?= $p ?></a>
-              </div>
+              <button class="page-btn <?= $p === $page ? 'active' : '' ?>"
+                onclick="window.location='?<?= http_build_query(['page' => $p, 'search' => $search]) ?>'">
+                <?= $p ?>
+              </button>
             <?php endfor; ?>
 
-            <?php if ($page < $totalPages): ?>
-              <span><a href="<?= $buildUrl($page + 1) ?>" style="text-decoration:none;color:inherit;">Next</a></span>
-            <?php else: ?>
-              <span style="opacity:0.4;cursor:default;">Next</span>
-            <?php endif; ?>
+            <button class="page-nav" id="next-btn" <?= $page >= $totalPages ? 'disabled' : '' ?>
+              onclick="window.location='?<?= http_build_query(['page' => $page + 1, 'search' => $search]) ?>'">
+              Next
+            </button>
           </div>
         </div>
 

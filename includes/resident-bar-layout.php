@@ -8,28 +8,14 @@
     <span class="navbar-title"></span>
   </div>
   <div class="navbar-right">
-    <button
-      class="notif-btn d-flex align-items-center justify-content-center"
-      title="Notifications"
-      style="
-        background-color: #3030b6;
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        border: none;
-      "
-    >
-      <i class="bi bi-bell" style="color: #ffffff; font-size: 22px"></i>
+    <button class="notif-btn" title="Notifications">
+      <i class="bi bi-bell-fill" style="color: #3030b6; font-size: 30px"></i>
     </button>
     <div class="nav-avatar">
-      <img
-        src="/Dormonitory/assets/img/cute-duck-for-good-luck.jpeg"
-        alt="Profile"
-      />
+      <img src="/Dormonitory/assets/img/cute-duck-for-good-luck.jpeg" alt="Profile" />
     </div>
   </div>
 </div>
-
 <aside class="sidebar" id="sidebar">
   <div class="brand">
     <img src="/Dormonitory/assets/img/secondary-logo.png" alt="Brand" />
@@ -38,21 +24,18 @@
   <nav>
     <ul>
       <li>
-        <a href="/Dormonitory/resident/home.html">
-          <i class="bi bi-house"></i>
-          <span>Home</span>
+        <a href="/Dormonitory/resident/home.php">
+          <i class="bi bi-house"></i><span>Home</span>
         </a>
       </li>
       <li>
-        <a href="/Dormonitory/resident/digital-key.html">
-          <i class="bi bi-key"></i>
-          <span>Digital Key</span>
+        <a href="/Dormonitory/resident/digital-key.php">
+          <i class="bi bi-key"></i><span>Digital Key</span>
         </a>
       </li>
       <li>
-        <a href="/Dormonitory/resident/invite-visitor.html">
-          <i class="bi bi-person-plus"></i>
-          <span>Invite Visitor</span>
+        <a href="/Dormonitory/resident/invite-visitor.php">
+          <i class="bi bi-person-plus"></i><span>Invite Visitor</span>
         </a>
       </li>
     </ul>

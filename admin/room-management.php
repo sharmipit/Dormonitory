@@ -261,112 +261,6 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
       gap: 16px;
     }
 
-    .room-card {
-      background: var(--bg-card);
-      border-radius: 20px;
-      padding: 18px;
-      border: 1px solid var(--border, #e5e7eb);
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      transition: 0.2s ease;
-    }
-
-    .room-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-btn);
-    }
-
-    /* ICON */
-    .room-icon {
-      width: 46px;
-      height: 46px;
-      background: var(--accent);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 1.2rem;
-    }
-
-    /* TEXT */
-    .room-meta h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-
-    .room-meta p {
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-    }
-
-    /* OCCUPANCY */
-    .room-occupancy-text {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-    }
-
-    /* PROGRESS */
-    .progress-bar {
-      width: 100%;
-      height: 6px;
-      background: #e5e7eb;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 999px;
-      transition: width 0.3s ease;
-    }
-
-    .progress-fill.full {
-      background: #dc2626;
-    }
-
-    /* ACTIONS */
-    .room-actions {
-      display: flex;
-      gap: 10px;
-    }
-
-    .btn-view,
-    .btn-remove {
-      flex: 1;
-      padding: 8px 10px;
-      border-radius: 10px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-    }
-
-    /* VIEW */
-    .btn-view {
-      background: #f3f4f6;
-      color: var(--text-primary);
-    }
-
-    .btn-view:hover {
-      background: #e5e7eb;
-    }
-
-    /* DELETE */
-    .btn-remove {
-      background: #fee2e2;
-      color: #dc2626;
-    }
-
-    .btn-remove:hover {
-      background: #f8caca;
-    }
-
     .modal-table {
       width: 100%;
       border-collapse: collapse;
@@ -426,6 +320,38 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
       font-size: 0.78rem;
       color: var(--text-secondary);
     }
+
+    .ann-search input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 13.5px;
+      color: var(--text-primary);
+      width: 100%;
+    }
+
+    .ann-search input::placeholder {
+      color: #b0b3c6;
+    }
+
+    .ann-wrap {
+      background: var(--bg-card);
+      border-radius: 16px;
+      border: 0.5px solid var(--border, #e8e9f0);
+      overflow: hidden;
+    }
+
+    .ann-topbar {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: none;
+    }
+
+    .room-grid {
+      padding: 0 20px 20px;
+      padding-top: 16px;
+    }
   </style>
 </head>
 
@@ -437,23 +363,24 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <div class="layout">
     <div class="main">
 
-      <button class="add-res-btn" onclick="openModal('addModal')">
+      <button class="add-res-btn" onclick="openModal('addModal')" style="margin-bottom: 20px;">
         <i class="bi bi-plus-lg"></i> Add Room
       </button>
 
-      <div class="card">
+      <!-- 🔎 SEARCH BAR (NEW - INSIDE CARD) -->
+      <div class="ann-wrap">
+        <div class="ann-topbar">
+          <div class="search">
+            <i class="bi bi-search"></i>
+            <input type="text" id="roomSearch" placeholder="Search room number or type..." />
+          </div>
+        </div>
 
-        <div class="room-grid">
+        <!-- ROOMS GRID -->
+        <div class="room-grid" id="roomGrid">
 
           <?php if (empty($rooms)): ?>
-            <div style="
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 50px 20px;
-      color: #9e9a9a;
-      font-size: 0.98rem;
-      border-radius: 16px;
-    ">
+            <div style="grid-column: 1 / -1; text-align:center; padding:50px 20px; color:#9e9a9a;">
               No rooms available yet.
             </div>
           <?php else: ?>
@@ -464,7 +391,9 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
               $percent = ($cap > 0) ? ($occupied / $cap) * 100 : 0;
               $full = $occupied >= $cap;
               ?>
-              <div class="room-card">
+
+              <div class="room-card room-item" data-room="<?php echo strtolower($r['room_number']); ?>"
+                data-type="<?php echo strtolower($r['room_type']); ?>">
 
                 <div class="room-icon">
                   <i class="bi bi-door-open"></i>
@@ -496,218 +425,241 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
               </div>
+
             <?php endforeach; ?>
 
           <?php endif; ?>
+
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ADD MODAL -->
-  <div class="modal-overlay" id="addModal">
-    <div class="modal-box">
-      <h2><i class="bi bi-plus-lg" style="color:var(--accent);margin-right:8px;"></i>Add Room</h2>
+    <!-- ADD MODAL -->
+    <div class="modal-overlay" id="addModal">
+      <div class="modal-box">
+        <h2><i class="bi bi-plus-lg" style="color:var(--accent);margin-right:8px;"></i>Add Room</h2>
 
-      <?php if ($addError): ?>
-        <div style="font-size:0.82rem; color:#dc2626; background:#fff5f5; border:1px solid #fecaca;
+        <?php if ($addError): ?>
+          <div style="font-size:0.82rem; color:#dc2626; background:#fff5f5; border:1px solid #fecaca;
                   border-radius:8px; padding:8px 12px; margin-bottom:4px;">
-          <?= htmlspecialchars($addError) ?>
+            <?= htmlspecialchars($addError) ?>
+          </div>
+        <?php endif; ?>
+
+        <form method="POST">
+          <input type="hidden" name="action" value="add_room">
+
+          <label>Room Number</label>
+          <input name="room_number" required value="<?= $addError ? htmlspecialchars($_POST['room_number']) : '' ?>">
+
+          <label>Room Type</label>
+          <select name="room_type" id="room_type_select" onchange="handleRoomTypeChange(this)">
+            <option value="Single" <?= ($addError && ($_POST['room_type'] ?? '') === 'Single') ? 'selected' : '' ?>>Single
+            </option>
+            <option value="Shared" <?= ($addError && ($_POST['room_type'] ?? '') === 'Shared') ? 'selected' : '' ?>>Shared
+            </option>
+          </select>
+
+          <label>Capacity</label>
+          <input type="number" name="max_capacity" id="capacity_input" min="1" required
+            value="<?= $addError ? (int) $_POST['max_capacity'] : '1' ?>">
+
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" onclick="closeModal('addModal')">Cancel</button>
+            <button class="btn-save">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- VIEW MODAL -->
+    <div class="modal-overlay" id="viewModal">
+      <div class="modal-box">
+        <h2>
+          <i class="bi bi-door-open" style="color:var(--accent);margin-right:8px;"></i>
+          Room Residents
+        </h2>
+
+        <!-- Header -->
+        <div class="view-header">
+          <div class="view-avatar">
+            <i class="bi bi-house-door"></i>
+          </div>
+          <div class="view-title">
+            <strong id="view_room_name">Room —</strong>
+            <small id="view_room_type">—</small>
+          </div>
         </div>
-      <?php endif; ?>
 
-      <form method="POST">
-        <input type="hidden" name="action" value="add_room">
-
-        <label>Room Number</label>
-        <input name="room_number" required value="<?= $addError ? htmlspecialchars($_POST['room_number']) : '' ?>">
-
-        <label>Room Type</label>
-        <select name="room_type" id="room_type_select" onchange="handleRoomTypeChange(this)">
-          <option value="Single" <?= ($addError && ($_POST['room_type'] ?? '') === 'Single') ? 'selected' : '' ?>>Single
-          </option>
-          <option value="Shared" <?= ($addError && ($_POST['room_type'] ?? '') === 'Shared') ? 'selected' : '' ?>>Shared
-          </option>
-        </select>
-
-        <label>Capacity</label>
-        <input type="number" name="max_capacity" id="capacity_input" min="1" required
-          value="<?= $addError ? (int) $_POST['max_capacity'] : '1' ?>">
+        <!-- TABLE -->
+        <table class="modal-table">
+          <thead>
+            <tr>
+              <th>Resident Name</th>
+            </tr>
+          </thead>
+          <tbody id="residentTableBody">
+            <tr>
+              <td style="text-align:center; color:#9e9a9a;">No residents</td>
+            </tr>
+          </tbody>
+        </table>
 
         <div class="modal-actions">
-          <button type="button" class="btn-cancel" onclick="closeModal('addModal')">Cancel</button>
-          <button class="btn-save">Save</button>
+          <button class="btn-cancel" onclick="closeModal('viewModal')">Close</button>
         </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- VIEW MODAL -->
-  <div class="modal-overlay" id="viewModal">
-    <div class="modal-box">
-      <h2>
-        <i class="bi bi-door-open" style="color:var(--accent);margin-right:8px;"></i>
-        Room Residents
-      </h2>
-
-      <!-- Header -->
-      <div class="view-header">
-        <div class="view-avatar">
-          <i class="bi bi-house-door"></i>
-        </div>
-        <div class="view-title">
-          <strong id="view_room_name">Room —</strong>
-          <small id="view_room_type">—</small>
-        </div>
-      </div>
-
-      <!-- TABLE -->
-      <table class="modal-table">
-        <thead>
-          <tr>
-            <th>Resident Name</th>
-          </tr>
-        </thead>
-        <tbody id="residentTableBody">
-          <tr>
-            <td style="text-align:center; color:#9e9a9a;">No residents</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal('viewModal')">Close</button>
       </div>
     </div>
-  </div>
 
-  <!-- DELETE MODAL -->
-  <div class="modal-overlay" id="deleteModal">
-    <div class="confirm-box">
-      <div class="confirm-icon" style="font-size:2.4rem; color:#dc2626; margin-bottom:12px;">
-        <i class="bi bi-trash"></i>
-      </div>
-      <h2 style="font-size:1.1rem; font-weight:700; margin-bottom:8px; color:var(--text-primary);">Remove Room</h2>
+    <!-- DELETE MODAL -->
+    <div class="modal-overlay" id="deleteModal">
+      <div class="confirm-box">
+        <div class="confirm-icon" style="font-size:2.4rem; color:#dc2626; margin-bottom:12px;">
+          <i class="bi bi-trash"></i>
+        </div>
+        <h2 style="font-size:1.1rem; font-weight:700; margin-bottom:8px; color:var(--text-primary);">Remove Room</h2>
 
-      <!-- Error message (shown dynamically) -->
-      <div id="deleteErrorBox" style="display:none; font-size:0.82rem; color:#dc2626; background:#fff5f5;
+        <!-- Error message (shown dynamically) -->
+        <div id="deleteErrorBox" style="display:none; font-size:0.82rem; color:#dc2626; background:#fff5f5;
           border:1px solid #fecaca; border-radius:8px; padding:8px 12px; margin-bottom:12px;"></div>
 
-      <p id="delete_room_msg" style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:22px;">
-        Are you sure you want to remove this room? This action cannot be undone.
-      </p>
+        <p id="delete_room_msg" style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:22px;">
+          Are you sure you want to remove this room? This action cannot be undone.
+        </p>
 
-      <input type="hidden" id="delete_room_id" value="">
+        <input type="hidden" id="delete_room_id" value="">
 
-      <div class="modal-actions" style="justify-content:center;">
-        <button type="button" class="btn-cancel" onclick="closeModal('deleteModal')">Cancel</button>
-        <button type="button" class="btn-delete-confirm" onclick="submitDeleteRoom()">Yes, Remove</button>
+        <div class="modal-actions" style="justify-content:center;">
+          <button type="button" class="btn-cancel" onclick="closeModal('deleteModal')">Cancel</button>
+          <button type="button" class="btn-delete-confirm" onclick="submitDeleteRoom()">Yes, Remove</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    function openModal(id) {
-      document.getElementById(id).classList.add('active');
-    }
+    <script>
+      /* =========================
+             SEARCH FUNCTION (NEW)
+          ========================= */
+      const searchInput = document.getElementById('roomSearch');
 
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('active');
-    }
+      searchInput.addEventListener('input', function () {
+        const value = this.value.toLowerCase().trim();
+        const rooms = document.querySelectorAll('.room-item');
 
-    function openDeleteModal(roomId, roomNumber) {
-      document.getElementById('delete_room_id').value = roomId;
-      document.getElementById('delete_room_msg').textContent =
-        `Are you sure you want to remove Room ${roomNumber}? This action cannot be undone.`;
+        rooms.forEach(room => {
+          const roomNumber = room.dataset.room;
+          const roomType = room.dataset.type;
 
-      // Clear any previous error
-      const errBox = document.getElementById('deleteErrorBox');
-      errBox.style.display = 'none';
-      errBox.textContent = '';
+          const match =
+            roomNumber.includes(value) ||
+            roomType.includes(value);
 
-      openModal('deleteModal');
-    }
-
-    function submitDeleteRoom() {
-      const roomId = document.getElementById('delete_room_id').value;
-      const errBox = document.getElementById('deleteErrorBox');
-
-      const formData = new FormData();
-      formData.append('action', 'delete_room');
-      formData.append('room_id', roomId);
-
-      fetch(window.location.pathname, { method: 'POST', body: formData })
-        .then(res => res.json())
-        .then(data => {
-          if (data.error) {
-            // Show error inside modal — stay open
-            errBox.textContent = data.error;
-            errBox.style.display = 'block';
-          } else {
-            // Success — close modal and reload
-            closeModal('deleteModal');
-            window.location.reload();
-          }
-        })
-        .catch(() => {
-          errBox.textContent = 'Something went wrong. Please try again.';
-          errBox.style.display = 'block';
+          room.style.display = match ? "flex" : "none";
         });
-    }
+      });
 
-    function handleRoomTypeChange(select) {
-      const capacityInput = document.getElementById('capacity_input');
-      if (select.value === 'Single') {
-        capacityInput.value = 1;
-        capacityInput.readOnly = true;
-        capacityInput.style.background = '#f9fafb';
-        capacityInput.style.cursor = 'not-allowed';
-      } else {
-        capacityInput.readOnly = false;
-        capacityInput.style.background = '';
-        capacityInput.style.cursor = '';
-        if (capacityInput.value <= 1) capacityInput.value = 2;
+
+      function openModal(id) {
+        document.getElementById(id).classList.add('active');
       }
-    }
 
-    function viewRoom(id) {
-      fetch("?ajax_view=1&id=" + encodeURIComponent(id))
-        .then(res => res.json())
-        .then(data => {
-          if (data.error) {
-            alert(data.error);
-            return;
-          }
+      function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+      }
 
-          document.getElementById('view_room_name').textContent = "Room " + data.room.room_number;
-          document.getElementById('view_room_type').textContent = data.room.room_type;
+      function openDeleteModal(roomId, roomNumber) {
+        document.getElementById('delete_room_id').value = roomId;
+        document.getElementById('delete_room_msg').textContent =
+          `Are you sure you want to remove Room ${roomNumber}? This action cannot be undone.`;
 
-          const tbody = document.getElementById('residentTableBody');
+        // Clear any previous error
+        const errBox = document.getElementById('deleteErrorBox');
+        errBox.style.display = 'none';
+        errBox.textContent = '';
 
-          if (!data.residents.length) {
-            tbody.innerHTML = `<tr><td style="text-align:center; color:#9e9a9a;">No residents</td></tr>`;
-          } else {
-            tbody.innerHTML = data.residents
-              .map(r => `<tr><td>${r.first_name} ${r.last_name}</td></tr>`)
-              .join('');
-          }
+        openModal('deleteModal');
+      }
 
-          openModal('viewModal');
-        })
-        .catch(() => {
-          alert("Failed to load room data.");
-        });
-    }
+      function submitDeleteRoom() {
+        const roomId = document.getElementById('delete_room_id').value;
+        const errBox = document.getElementById('deleteErrorBox');
 
-    // Auto-open modals on server-side error
-    <?php if ($addError): ?>
-      openModal('addModal');
-    <?php endif; ?>
+        const formData = new FormData();
+        formData.append('action', 'delete_room');
+        formData.append('room_id', roomId);
+
+        fetch(window.location.pathname, { method: 'POST', body: formData })
+          .then(res => res.json())
+          .then(data => {
+            if (data.error) {
+              // Show error inside modal — stay open
+              errBox.textContent = data.error;
+              errBox.style.display = 'block';
+            } else {
+              // Success — close modal and reload
+              closeModal('deleteModal');
+              window.location.reload();
+            }
+          })
+          .catch(() => {
+            errBox.textContent = 'Something went wrong. Please try again.';
+            errBox.style.display = 'block';
+          });
+      }
+
+      function handleRoomTypeChange(select) {
+        const capacityInput = document.getElementById('capacity_input');
+        if (select.value === 'Single') {
+          capacityInput.value = 1;
+          capacityInput.readOnly = true;
+          capacityInput.style.background = '#f9fafb';
+          capacityInput.style.cursor = 'not-allowed';
+        } else {
+          capacityInput.readOnly = false;
+          capacityInput.style.background = '';
+          capacityInput.style.cursor = '';
+          if (capacityInput.value <= 1) capacityInput.value = 2;
+        }
+      }
+
+      function viewRoom(id) {
+        fetch("?ajax_view=1&id=" + encodeURIComponent(id))
+          .then(res => res.json())
+          .then(data => {
+            if (data.error) {
+              alert(data.error);
+              return;
+            }
+
+            document.getElementById('view_room_name').textContent = "Room " + data.room.room_number;
+            document.getElementById('view_room_type').textContent = data.room.room_type;
+
+            const tbody = document.getElementById('residentTableBody');
+
+            if (!data.residents.length) {
+              tbody.innerHTML = `<tr><td style="text-align:center; color:#9e9a9a;">No residents</td></tr>`;
+            } else {
+              tbody.innerHTML = data.residents
+                .map(r => `<tr><td>${r.first_name} ${r.last_name}</td></tr>`)
+                .join('');
+            }
+
+            openModal('viewModal');
+          })
+          .catch(() => {
+            alert("Failed to load room data.");
+          });
+      }
+
+      // Auto-open modals on server-side error
+      <?php if ($addError): ?>
+        openModal('addModal');
+      <?php endif; ?>
 
 
-    // Init capacity field on page load
-    handleRoomTypeChange(document.getElementById('room_type_select'));
-  </script>
+      // Init capacity field on page load
+      handleRoomTypeChange(document.getElementById('room_type_select'));
+    </script>
 </body>
 
 </html>

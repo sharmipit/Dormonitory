@@ -7,13 +7,37 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || !isset($_
   exit();
 }
 
-// Fetch admin name from database
+// Fetch admin name
 $stmt = $pdo->prepare("SELECT first_name, last_name FROM admin WHERE admin_id = ?");
 $stmt->execute([$_SESSION['admin_id']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
 $fullname = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Admin';
 
+// ── STAT 1: Total residents ───────────────────────────────────────────────────
+$stmt = $pdo->query("SELECT COUNT(*) FROM resident");
+$totalResidents = (int) $stmt->fetchColumn();
+
+// ── STAT 2: Occupancy % ───────────────────────────────────────────────────────
+$stmt = $pdo->query("SELECT SUM(max_capacity) FROM room");
+$totalCapacity = (int) $stmt->fetchColumn();
+
+$stmt = $pdo->query("SELECT COUNT(*) FROM resident WHERE room_id IS NOT NULL");
+$totalAssigned = (int) $stmt->fetchColumn();
+
+$occupancyPct = $totalCapacity > 0
+  ? round(($totalAssigned / $totalCapacity) * 100)
+  : 0;
+
+if ($occupancyPct >= 90)
+  $occupancyBadge = 'Near full';
+elseif ($occupancyPct >= 70)
+  $occupancyBadge = 'Stable';
+else
+  $occupancyBadge = 'Available slots';
+
+// ── STAT 3: Total visitors today ─────────────────────────────────────────────
+$stmt = $pdo->query("SELECT COUNT(*) FROM visitor_log WHERE visit_date = CURDATE()");
+$totalVisitors = (int) $stmt->fetchColumn();
 ?>
 
 <!doctype html>
@@ -65,16 +89,16 @@ $fullname = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Admin';
               <div class="icon-placeholder">
                 <i class="bi bi-person-badge-fill"></i>
               </div>
-              Manage Visitors
+              View Visitor Log
             </button>
           </a>
 
           <a href="announcements.php" class="quick-action-link">
             <button class="action-btn">
               <div class="icon-placeholder">
-                <i class="bi bi-megaphone"></i>
+                <i class="bi bi-file-earmark-text"></i>
               </div>
-              Post Updates
+              Generate Report
             </button>
           </a>
         </div>
@@ -88,11 +112,13 @@ $fullname = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Admin';
               <span class="stat-label">Total<br />Residents</span>
             </div>
             <div class="stat-bottom">
-              <div class="stat-value">143</div>
+              <div class="stat-value">
+                <?php echo $totalResidents; ?>
+              </div>
             </div>
           </div>
           <i class="bi bi-people stat-deco"></i>
-          <div class="stat-badge">+12% vs last month</div>
+          <div class="stat-badge">Registered residents</div>
         </div>
 
         <div class="stat-card">
@@ -102,11 +128,17 @@ $fullname = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Admin';
               <span class="stat-label">Current<br />Occupancy</span>
             </div>
             <div class="stat-bottom">
-              <div class="stat-value">88%</div>
+              <div class="stat-value">
+                <?php echo $occupancyPct; ?>%
+              </div>
             </div>
           </div>
           <i class="bi bi-door-open stat-deco"></i>
-          <div class="stat-badge">Stable</div>
+          <div class="stat-badge">
+            <?php echo $occupancyBadge; ?> ·
+            <?php echo $totalAssigned; ?>/
+            <?php echo $totalCapacity; ?> beds
+          </div>
         </div>
 
         <div class="stat-card">
@@ -116,23 +148,24 @@ $fullname = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Admin';
               <span class="stat-label">Total<br />Visitors</span>
             </div>
             <div class="stat-bottom">
-              <div class="stat-value">58</div>
+              <div class="stat-value">
+                <?php echo $totalVisitors; ?>
+              </div>
             </div>
           </div>
           <i class="bi bi-person stat-deco"></i>
-          <div class="stat-badge">Peak hours</div>
+          <div class="stat-badge">Today</div>
         </div>
 
+        <!-- Security Alerts — keep as-is -->
         <div class="stat-card">
           <div class="stat-left">
             <div class="stat-top">
-              <div class="stat-icon">
-                <i class="bi bi-exclamation-circle"></i>
-              </div>
+              <div class="stat-icon"><i class="bi bi-exclamation-circle"></i></div>
               <span class="stat-label">Security<br />Alerts</span>
             </div>
             <div class="stat-bottom">
-              <div class="stat-value">3</div>
+              <div class="stat-value">10</div>
             </div>
           </div>
           <i class="bi bi-exclamation-circle stat-deco"></i>

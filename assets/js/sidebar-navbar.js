@@ -1,7 +1,10 @@
 const pageTitles = {
   "home.html": "Resident Web Portal",
+  "home.php": "Resident Web Portal",
   "digital-key.html": "Digital Key",
+  "digital-key.php": "Digital Key",
   "invite-visitor.html": "Visitor Management",
+  "invite-visitor.php": "Visitor Management",
   "dashboard.html": "Admin Web Portal",
   "dashboard.php": "Admin Web Portal",
   "resident-management.html": "Resident Management",
@@ -36,7 +39,7 @@ fetch(sidebarFile)
     };
 
     const currentPage = window.location.pathname.split("/").pop();
-    const pageTitle = pageTitles[currentPage] ?? "Hey G@ys^^";
+    const pageTitle = pageTitles[currentPage] ?? "Unable to load title pages.";
     document.querySelector(".navbar-title").textContent = pageTitle;
 
     // Auto highlight active sidebar link

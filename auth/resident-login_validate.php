@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['email']     = $resident['email'];
         $_SESSION['firstname'] = $resident['first_name'];
 
-        header('Location: ../resident/home.html');
+        header('Location: ../resident/home.php');
         exit;
     } else {
         $_SESSION['error'] = "Invalid email or password.";

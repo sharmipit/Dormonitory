@@ -1,5 +1,6 @@
 const pageTitles = {
   "home.html": "Resident Web Portal",
+  "home.php": "Resident Web Portal",
   "digital-key.html": "Digital Key",
   "invite-visitor.html": "Visitor Management",
   "dashboard.html": "Admin Web Portal",

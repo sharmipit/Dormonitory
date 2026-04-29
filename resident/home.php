@@ -1,3 +1,26 @@
+<?php
+session_start();
+include('../config/db.php');
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: ../auth/login-resident-portal.php');
+    exit();
+}
+
+// JOIN resident and room, get name and room no.
+$stmt = $pdo->prepare("
+    SELECT r.first_name, r.last_name, ro.room_number 
+    FROM resident r
+    LEFT JOIN room ro ON r.room_id = ro.room_id
+    WHERE r.resident_id = ?
+");
+$stmt->execute([$_SESSION['id']]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$fullname    = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Resident';
+$room_number = $user && $user['room_number'] ? 'Room ' . $user['room_number'] : 'No Room Assigned';
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -19,8 +42,8 @@
       <div class="main">
         <header class="welcome-banner">
           <div class="user-info">
-            <h1>Hi, James Abobo!</h1>
-            <p><i class="bi bi-geo-alt-fill"></i> Room 101 • Rubia Dormitory</p>
+            <h1>Hi, <?php echo htmlspecialchars($fullname); ?>!</h1>
+            <p><i class="bi bi-geo-alt-fill"></i> <?php echo htmlspecialchars($room_number); ?> • Rubia Dormitory</p>
           </div>
           <div class="status-badge">
             <span class="label">CURRENT STATUS</span>

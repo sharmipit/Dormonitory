@@ -1,9 +1,27 @@
 <?php
 
 session_start();
+
+require_once __DIR__ . '/../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
 require '../config/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    //reCAPTCHA verification
+    $recaptchaSecret   = $_ENV['RECAPTCHA_SECRET_KEY'];
+    $recaptchaResponse = $_POST['g-recaptcha-response'];
+
+    $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$recaptchaResponse}");
+    $captchaSuccess = json_decode($verify);
+
+    if (!$captchaSuccess->success) {
+        $_SESSION['error'] = "Captcha Verification Failed. Try Again.";
+        header('Location: login-resident-portal.php');
+        exit;
+    }
 
     $email    = trim($_POST['email']);
     $password = $_POST['password'];

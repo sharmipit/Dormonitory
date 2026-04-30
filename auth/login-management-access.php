@@ -1,6 +1,12 @@
 <?php
 
 session_start();
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+$siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
 
 ?>
 
@@ -80,6 +86,11 @@ session_start();
                         <a href="forgot-password.php" class="forgot-link">Forgot Password?</a>
                     </div>
 
+                    <!-- reCAPTCHA form display-->
+                    <div class="mb-3 text-center"> 
+                        <div class="g-recaptcha" data-sitekey="<?= htmlspecialchars($siteKey) ?>"></div>
+                    </div>
+
                     <button type="submit" class="btn-auth-primary w-100">Login</button>
 
                     <div class="auth-divider">
@@ -113,6 +124,31 @@ session_start();
             }, false)
           })
         })()
+
+        // reCAPTCHA form display
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+
+                // reCAPTCHA check
+                const recaptchaResponse = grecaptcha.getResponse();
+                if (recaptchaResponse.length === 0) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    alert('Please complete the reCAPTCHA.');
+                    return;
+                }
+
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
     </script>
+
+    <!-- reCAPTCHA form display-->
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
 </body>
 </html>

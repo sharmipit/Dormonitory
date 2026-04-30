@@ -50,6 +50,118 @@ $totalVisitors = (int) $stmt->fetchColumn();
   <link rel="stylesheet" href="/Dormonitory/assets/css/sidebar-navbar-styles.css" />
   <link rel="stylesheet" href="/Dormonitory/assets/css/admin-styles.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <style>
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      width: 420px;
+      max-width: 95vw;
+      box-shadow: 0 8px 40px rgba(48, 48, 182, 0.18);
+      animation: pop 0.18s ease-out;
+      font-family: var(--font-main);
+    }
+
+    @keyframes pop {
+      from {
+        transform: translateY(10px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-box h2 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+    }
+
+    .modal-box label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      margin-top: 14px;
+    }
+
+    .modal-box select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      font-family: var(--font-main);
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: border 0.2s;
+      box-sizing: border-box;
+    }
+
+    .modal-box select:focus {
+      border-color: var(--accent);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .btn-cancel {
+      padding: 9px 22px;
+      border-radius: 10px;
+      border: 1.5px solid #e5e7eb;
+      background: #fff;
+      cursor: pointer;
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      transition: background 0.2s;
+    }
+
+    .btn-cancel:hover {
+      background: #f1f2f6;
+    }
+
+    .btn-save {
+      padding: 9px 22px;
+      border-radius: 10px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn-save:hover {
+      background: #2525a0;
+    }
+  </style>
 </head>
 
 <body>
@@ -93,14 +205,12 @@ $totalVisitors = (int) $stmt->fetchColumn();
             </button>
           </a>
 
-          <a href="announcements.php" class="quick-action-link">
-            <button class="action-btn">
-              <div class="icon-placeholder">
-                <i class="bi bi-file-earmark-text"></i>
-              </div>
-              Generate Report
-            </button>
-          </a>
+          <button class="action-btn" onclick="openReportModal()">
+            <div class="icon-placeholder">
+              <i class="bi bi-file-earmark-text"></i>
+            </div>
+            Generate Report
+          </button>
         </div>
       </div>
 
@@ -312,7 +422,55 @@ $totalVisitors = (int) $stmt->fetchColumn();
     </div>
   </div>
 
+  <!-- REPORT MODAL -->
+  <div class="modal-overlay" id="reportModal">
+    <div class="modal-box">
+      <h2>
+        <i class="bi bi-file-earmark-text" style="color:var(--accent);margin-right:8px;"></i>
+        Generate Report
+      </h2>
+
+      <form method="GET" action="/Dormonitory/admin/generate-report.php">
+        <label>Report Type</label>
+        <select name="type" required>
+          <option value="">— Select Report —</option>
+          <option value="daily">Daily Report</option>
+          <option value="weekly">Weekly Report</option>
+          <option value="monthly">Monthly Report</option>
+          <option value="yearly">Yearly Report</option>
+        </select>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" onclick="closeModal('reportModal')">Cancel</button>
+          <button type="submit" class="btn-save">Generate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openReportModal() {
+      document.getElementById('reportModal').classList.add('active');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    // click outside close
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.addEventListener('click', function (e) {
+          if (e.target === this) {
+            this.classList.remove('active');
+          }
+        });
+      });
+    });
+  </script>
+
   <script src="/Dormonitory/assets/js/sidebar-navbar.js"></script>
+
 </body>
 
 </html>

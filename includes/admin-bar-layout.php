@@ -65,9 +65,9 @@
 
   <div class="sidebar-bottom">
     <div class="divider-bottom"></div>
-    <a href="/Dormonitory/index.html" class="signout-btn">
+    <a href="/Dormonitory/index.html" class="signout-btn" onclick="return confirm('Are you sure you want to log out?')">
       <i class="bi bi-box-arrow-right"></i>
       <span>Sign Out</span>
-    </a>
+    </a>˝
   </div>
 </aside>

@@ -5,7 +5,7 @@ const pageTitles = {
   "dashboard.php": "Admin Web Portal",
   "resident-management.php": "Resident Management",
   "room-management.php": "Room Management",
-  "visitor-management.php": "Visitor Management",
+  "visitor-management.php": "Visitor Log",
   "announcements.php": "Announcements",
   "security-center.php": "Security Center",
 };

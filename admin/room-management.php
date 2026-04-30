@@ -379,6 +379,11 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- ROOMS GRID -->
         <div class="room-grid" id="roomGrid">
 
+          <div id="noRoomsFound"
+            style="grid-column: 1 / -1; text-align:center; padding:50px 20px; color:#9e9a9a; display:none;">
+            No rooms found.
+          </div>
+
           <?php if (empty($rooms)): ?>
             <div style="grid-column: 1 / -1; text-align:center; padding:50px 20px; color:#9e9a9a;">
               No rooms available yet.
@@ -541,10 +546,13 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
              SEARCH FUNCTION (NEW)
           ========================= */
       const searchInput = document.getElementById('roomSearch');
+      const noRoomsFound = document.getElementById('noRoomsFound');
 
       searchInput.addEventListener('input', function () {
         const value = this.value.toLowerCase().trim();
         const rooms = document.querySelectorAll('.room-item');
+
+        let visibleCount = 0;
 
         rooms.forEach(room => {
           const roomNumber = room.dataset.room;
@@ -555,7 +563,12 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
             roomType.includes(value);
 
           room.style.display = match ? "flex" : "none";
+
+          if (match) visibleCount++;
         });
+
+        // show / hide fallback text
+        noRoomsFound.style.display = visibleCount === 0 ? "block" : "none";
       });
 
 

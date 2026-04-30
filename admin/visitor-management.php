@@ -1,10 +1,80 @@
+<?php
+// ─── DB CONNECTION ───────────────────────────────────────────
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+require_once '../config/db.php';
+
+// ─── SEARCH + PAGINATION ─────────────────────────────────────
+$perPage = 8;
+$page = max(1, (int) ($_GET['page'] ?? 1));
+$search = trim($_GET['search'] ?? '');
+$searchLike = "%$search%";
+
+$totalRows = 0;
+$totalPages = 1;
+$visitors = [];
+
+try {
+
+  // COUNT
+  $countStmt = $pdo->prepare("
+    SELECT COUNT(*)
+    FROM visitor_log vl
+    LEFT JOIN resident r ON r.resident_id = vl.resident_id
+    WHERE vl.visitor_name LIKE ?
+       OR vl.contact_number LIKE ?
+       OR CONCAT(r.first_name,' ',r.last_name) LIKE ?
+  ");
+
+  $countStmt->execute([$searchLike, $searchLike, $searchLike]);
+  $totalRows = (int) $countStmt->fetchColumn();
+
+  $totalPages = max(1, (int) ceil($totalRows / $perPage));
+  $page = min($page, $totalPages);
+  $offset = ($page - 1) * $perPage;
+
+  // FETCH
+  $stmt = $pdo->prepare("
+  SELECT 
+    vl.log_id,
+    vl.visitor_name,
+    vl.contact_number,
+    vl.visit_date,
+    vl.created_at,
+    vl.qr_token,
+    vl.resident_id,
+    CONCAT(r.first_name,' ',r.last_name) AS resident_name
+  FROM visitor_log vl
+  LEFT JOIN resident r ON r.resident_id = vl.resident_id
+  WHERE vl.visitor_name LIKE ?
+     OR vl.contact_number LIKE ?
+     OR CONCAT(r.first_name,' ',r.last_name) LIKE ?
+  ORDER BY vl.created_at DESC
+  LIMIT ? OFFSET ?
+");
+
+  $stmt->bindValue(1, $searchLike);
+  $stmt->bindValue(2, $searchLike);
+  $stmt->bindValue(3, $searchLike);
+  $stmt->bindValue(4, $perPage, PDO::PARAM_INT);
+  $stmt->bindValue(5, $offset, PDO::PARAM_INT);
+
+  $stmt->execute();
+  $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+  die("Database Error: " . $e->getMessage());
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dormitory</title>
+  <title>Visitor Management</title>
+
   <link rel="stylesheet" href="/Dormonitory/assets/css/sidebar-navbar-styles.css" />
   <link rel="stylesheet" href="/Dormonitory/assets/css/admin-styles.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
@@ -16,129 +86,103 @@
 
   <div class="layout">
     <div class="main">
-      <!--
-        <button class="add-res-btn">
-          <i class="bi bi-plus-lg"></i> Add New Resident
-        </button>
-        -->
+
       <div class="card">
+
+        <!-- SEARCH -->
         <div class="top-bar">
-          <div class="search">
+          <form method="GET" class="search">
             <i class="bi bi-search"></i>
-            <input type="text" placeholder="Search visitor, resident, or contact..." />
-          </div>
+            <input type="text" name="search" placeholder="Search visitor, resident, contact..."
+              value="<?= htmlspecialchars($search) ?>" />
+          </form>
         </div>
 
+        <!-- TABLE -->
         <table class="visitor-table">
           <thead>
             <tr>
               <th>Visitor</th>
               <th>Resident Visiting</th>
               <th>Contact Number</th>
-              <th></th>
+              <th>Visit Date</th>
             </tr>
           </thead>
 
           <tbody>
-            <tr>
-              <td>
-                <div class="user">
-                  <div class="avatar"><i class="bi bi-person"></i></div>
-                  <div class="user-info">
-                    Joshua Defensor
-                    <small>Log ID: L10058</small>
-                  </div>
-                </div>
-              </td>
-              <td>James Abobo (RM10001)</td>
-              <td>+63 912 345 6789</td>
-              <td class="actions">
-                <i class="bi bi-pencil-square edit-btn"></i>
-                <i class="bi bi-trash delete-btn"></i>
-              </td>
-            </tr>
+            <?php if (empty($visitors)): ?>
+              <tr>
+                <td colspan="4" style="text-align:center;padding:40px;color:#9e9a9a;">
+                  No visitors found.
+                </td>
+              </tr>
+            <?php else: ?>
+              <?php foreach ($visitors as $v): ?>
+                <tr>
+                  <td>
+                    <div class="user">
+                      <div class="avatar"><i class="bi bi-person"></i></div>
+                      <div class="user-info">
+                        <?= htmlspecialchars($v['visitor_name']) ?>
+                        <small style="display:block; color:#9e9a9a; font-size:0.75rem;">
+                          LOG ID: <?= htmlspecialchars($v['log_id']) ?>
+                        </small>
+                      </div>
+                    </div>
+                  </td>
 
-            <tr>
-              <td>
-                <div class="user">
-                  <div class="avatar"><i class="bi bi-person"></i></div>
-                  <div class="user-info">
-                    Joshua Golosino
-                    <small>Log ID: L10057</small>
-                  </div>
-                </div>
-              </td>
-              <td>Hazel Ann Carillo (RM10002)</td>
-              <td>+63 917 888 1234</td>
-              <td class="actions">
-                <i class="bi bi-pencil-square edit-btn"></i>
-                <i class="bi bi-trash delete-btn"></i>
-              </td>
-            </tr>
+                  <td><?= htmlspecialchars($v['resident_name'] ?? '—') ?></td>
 
-            <tr>
-              <td>
-                <div class="user">
-                  <div class="avatar"><i class="bi bi-person"></i></div>
-                  <div class="user-info">
-                    Shinellah Gamboa
-                    <small>Log ID: L10056</small>
-                  </div>
-                </div>
-              </td>
-              <td>Sharmagne Gamboa (RM10003)</td>
-              <td>+63 905 222 9090</td>
-              <td class="actions">
-                <i class="bi bi-pencil-square edit-btn"></i>
-                <i class="bi bi-trash delete-btn"></i>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="user">
-                  <div class="avatar"><i class="bi bi-person"></i></div>
-                  <div class="user-info">
-                    Carole Ann Abobo
-                    <small>Log ID: L10055</small>
-                  </div>
-                </div>
-              </td>
-              <td>James Abobo (RM10001)</td>
-              <td>+63 912 345 6789</td>
-              <td class="actions">
-                <i class="bi bi-pencil-square edit-btn"></i>
-                <i class="bi bi-trash delete-btn"></i>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="user">
-                  <div class="avatar"><i class="bi bi-person"></i></div>
-                  <div class="user-info">
-                    Papa James Abobo
-                    <small>Log ID: L10054</small>
-                  </div>
-                </div>
-              </td>
-              <td>James Abobo (RM10001)</td>
-              <td>+63 912 345 6789</td>
-              <td class="actions">
-                <i class="bi bi-pencil-square edit-btn"></i>
-                <i class="bi bi-trash delete-btn"></i>
-              </td>
-            </tr>
+                  <td><?= htmlspecialchars($v['contact_number'] ?? '—') ?></td>
+
+                  <td>
+                    <?= htmlspecialchars($v['visit_date'] ?? '—') ?>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php endif; ?>
           </tbody>
         </table>
 
+        <!-- FOOTER -->
         <div class="footer">
-          <div>Showing 5 of 58 visitors</div>
-          <div class="pagination">
-            <span>Previous</span>
-            <div class="page active">1</div>
-            <div class="page">2</div>
-            <span>Next</span>
+          <div>
+            Showing <?= count($visitors) ?> of <?= $totalRows ?> visitors
+          </div>
+
+          <div class="ann-pagination">
+
+            <button class="page-nav" <?= $page <= 1 ? 'disabled' : '' ?> onclick="window.location='?<?= http_build_query([
+                       'page' => $page - 1,
+                       'search' => $search
+                     ]) ?>'">
+              Previous
+            </button>
+
+            <?php
+            $start = max(1, $page - 2);
+            $end = min($totalPages, $page + 2);
+
+            for ($p = $start; $p <= $end; $p++):
+              ?>
+              <button class="page-btn <?= $p === $page ? 'active' : '' ?>" onclick="window.location='?<?= http_build_query([
+                        'page' => $p,
+                        'search' => $search
+                      ]) ?>'">
+                <?= $p ?>
+              </button>
+            <?php endfor; ?>
+
+            <button class="page-nav" <?= $page >= $totalPages ? 'disabled' : '' ?> onclick="window.location='?<?= http_build_query([
+                       'page' => $page + 1,
+                       'search' => $search
+                     ]) ?>'">
+              Next
+            </button>
+
           </div>
         </div>
+
       </div>
     </div>
   </div>

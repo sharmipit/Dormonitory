@@ -73,7 +73,7 @@ try {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visitor Management</title>
+  <title>Visitor Log | Dormonitory</title>
 
   <link rel="stylesheet" href="/Dormonitory/assets/css/sidebar-navbar-styles.css" />
   <link rel="stylesheet" href="/Dormonitory/assets/css/admin-styles.css" />

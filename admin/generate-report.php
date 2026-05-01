@@ -2,59 +2,77 @@
 require '../vendor/autoload.php';
 include('../config/db.php');
 
+date_default_timezone_set('Asia/Manila');
+
 use Dompdf\Dompdf;
 
 $type = $_GET['type'] ?? 'daily';
 
-$where = "";
-
+/* ─── DATE FILTERS ───────────────────────────── */
 switch ($type) {
   case 'daily':
-    $where = "DATE(log_time) = CURDATE()";
+    $logWhere = "rl.log_time >= CURDATE() AND rl.log_time < CURDATE() + INTERVAL 1 DAY";
+    $visitorWhere = "visit_date >= CURDATE() AND visit_date < CURDATE() + INTERVAL 1 DAY";
     break;
 
   case 'weekly':
-    $where = "YEARWEEK(log_time, 1) = YEARWEEK(CURDATE(), 1)";
+    $logWhere = "YEARWEEK(rl.log_time, 1) = YEARWEEK(CURDATE(), 1)";
+    $visitorWhere = "YEARWEEK(visit_date, 1) = YEARWEEK(CURDATE(), 1)";
     break;
 
   case 'monthly':
-    $where = "MONTH(log_time) = MONTH(CURDATE()) AND YEAR(log_time) = YEAR(CURDATE())";
+    $logWhere = "MONTH(rl.log_time) = MONTH(CURDATE()) AND YEAR(rl.log_time) = YEAR(CURDATE())";
+    $visitorWhere = "MONTH(visit_date) = MONTH(CURDATE()) AND YEAR(visit_date) = YEAR(CURDATE())";
     break;
 
   case 'yearly':
-    $where = "YEAR(log_time) = YEAR(CURDATE())";
+    $logWhere = "YEAR(rl.log_time) = YEAR(CURDATE())";
+    $visitorWhere = "YEAR(visit_date) = YEAR(CURDATE())";
     break;
+
+  default:
+    $logWhere = "1";
+    $visitorWhere = "1";
 }
 
-// ─── FETCH RESIDENT LOGS ─────────────────────────
-$stmt = $pdo->query("
+/* ─── FETCH RESIDENT LOGS ───────────────────── */
+$stmt = $pdo->prepare("
   SELECT r.first_name, r.last_name, rm.room_number, rl.log_type, rl.log_time
   FROM resident_log rl
   JOIN resident r ON rl.resident_id = r.resident_id
   JOIN room rm ON rl.room_id = rm.room_id
-  WHERE $where
+  WHERE $logWhere
   ORDER BY rl.log_time DESC
 ");
-
+$stmt->execute();
 $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// ─── FETCH VISITORS ──────────────────────────────
-$visitorWhere = str_replace("log_time", "visit_date", $where);
-
-$stmt = $pdo->query("
+/* ─── FETCH VISITOR LOGS ───────────────────── */
+$stmt = $pdo->prepare("
   SELECT v.visitor_name, r.first_name, r.last_name, v.visit_date
   FROM visitor_log v
   JOIN resident r ON v.resident_id = r.resident_id
   WHERE $visitorWhere
+  ORDER BY v.visit_date DESC
 ");
-
+$stmt->execute();
 $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// ─── SUMMARY ─────────────────────────────────────
+/* ─── SUMMARY CALCULATIONS ─────────────────── */
 $totalLogs = count($logs);
 $totalVisitors = count($visitors);
 
-// ─── HTML TEMPLATE ───────────────────────────────
+$inside = 0;
+$outside = 0;
+
+foreach ($logs as $log) {
+  if ($log['log_type'] === 'inside')
+    $inside++;
+  if ($log['log_type'] === 'outside')
+    $outside++;
+}
+
+/* ─── HTML TEMPLATE ────────────────────────── */
 $html = "
 <style>
   body {
@@ -68,7 +86,13 @@ $html = "
     font-size: 16px;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+  }
+
+  .meta {
+    text-align: center;
+    font-size: 10px;
+    margin-bottom: 15px;
   }
 
   h3 {
@@ -76,11 +100,6 @@ $html = "
     font-weight: 600;
     margin-top: 15px;
     margin-bottom: 8px;
-  }
-
-  p {
-    font-size: 11px;
-    margin: 4px 0;
   }
 
   ul {
@@ -108,55 +127,83 @@ $html = "
     background: #f2f2f2;
     font-weight: 600;
   }
+
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 10px;
+    color: #555;
+  }
 </style>
 
-<h1>Dormitory Report (" . strtoupper($type) . ")</h1>
+<h1>Dormonitory Report (" . strtoupper($type) . ")</h1>
+<div class='meta'>
+  Generated on: " . date("F d, Y h:i A") . "
+</div>
 
 <h3>Summary</h3>
 <ul>
   <li>Total Resident Logs: <b>$totalLogs</b></li>
+  <li>Inside Count: <b>$inside</b></li>
+  <li>Outside Count: <b>$outside</b></li>
   <li>Total Visitors: <b>$totalVisitors</b></li>
 </ul>
 
 <h3>Resident Activity</h3>
 <table>
-  <tr>
-    <th>Name</th>
-    <th>Room</th>
-    <th>Type</th>
-    <th>Time</th>
-  </tr>";
-
-foreach ($logs as $log) {
-  $html .= "<tr>
-    <td>{$log['first_name']} {$log['last_name']}</td>
-    <td>{$log['room_number']}</td>
-    <td>{$log['log_type']}</td>
-    <td>{$log['log_time']}</td>
-  </tr>";
-}
-
-$html .= "</table>";
-
-$html .= "<h3>Visitor Logs</h3>
-<table border='1' width='100%' cellpadding='5'>
 <tr>
-<th>Visitor</th>
-<th>Visited Resident</th>
-<th>Date</th>
+  <th>Name</th>
+  <th>Room</th>
+  <th>Type</th>
+  <th>Time</th>
 </tr>";
 
-foreach ($visitors as $v) {
-  $html .= "<tr>
-    <td>{$v['visitor_name']}</td>
-    <td>{$v['first_name']} {$v['last_name']}</td>
-    <td>{$v['visit_date']}</td>
-  </tr>";
+if (empty($logs)) {
+  $html .= "<tr><td colspan='4'>No records found</td></tr>";
+} else {
+  foreach ($logs as $log) {
+    $time = date("M d, Y h:i A", strtotime($log['log_time']));
+    $html .= "<tr>
+      <td>{$log['first_name']} {$log['last_name']}</td>
+      <td>{$log['room_number']}</td>
+      <td>{$log['log_type']}</td>
+      <td>{$time}</td>
+    </tr>";
+  }
 }
 
 $html .= "</table>";
 
-// ─── GENERATE PDF ───────────────────────────────
+$html .= "
+<h3>Visitor Logs</h3>
+<table>
+<tr>
+  <th>Visitor</th>
+  <th>Visited Resident</th>
+  <th>Date</th>
+</tr>";
+
+if (empty($visitors)) {
+  $html .= "<tr><td colspan='3'>No records found</td></tr>";
+} else {
+  foreach ($visitors as $v) {
+    $date = date("M d, Y", strtotime($v['visit_date']));
+    $html .= "<tr>
+      <td>{$v['visitor_name']}</td>
+      <td>{$v['first_name']} {$v['last_name']}</td>
+      <td>{$date}</td>
+    </tr>";
+  }
+}
+
+$html .= "</table>
+
+<div class='footer'>
+  End of Report
+</div>
+";
+
+/* ─── GENERATE PDF ─────────────────────────── */
 $dompdf = new Dompdf();
 $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'portrait');

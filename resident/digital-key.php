@@ -6,6 +6,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: ../auth/login-resident-portal.php');
     exit();
 }
+
+// Load existing active key for this resident
+$stmt = $pdo->prepare("SELECT * FROM resident_qr WHERE resident_id = ? AND status = 'Active' AND expires_at > NOW() ORDER BY created_at DESC LIMIT 1");
+$stmt->execute([$_SESSION['id']]);
+$activeKey = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$qrUrl     = $activeKey ? "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($activeKey['qr_code']) : null;
+$expiresAt = $activeKey ? $activeKey['expires_at'] : null;
 ?>
 
 <!doctype html>
@@ -28,7 +36,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             <div class="key-card-container">
                 <div class="key-card">
                     <div id="activeKeyDisplay" class="qr-main-wrapper">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=RESIDENT_SECURE_TOKEN_01"
+                        <img src="<?= $qrUrl ?? 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=NO_KEY' ?>" 
                             alt="Digital Entry Key" id="mainQrImage">
                     </div>
                     <div class="key-info-header">
@@ -58,6 +66,24 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
     <script src="../assets/js/sidebar-navbar.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script>
+        document.getElementById('btnGenerateKey').addEventListener('click', async () => {
+            const btn = document.getElementById('btnGenerateKey');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating...';
+
+            const response = await fetch('generate-key.php');
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById('mainQrImage').src = data.qr_url;
+                document.getElementById('keyTimer').textContent = 'in 01h 00m';
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Generate New Key';
+        });
+    </script>
 </body>
 
 </html>

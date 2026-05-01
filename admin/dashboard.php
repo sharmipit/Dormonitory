@@ -38,6 +38,57 @@ else
 // ── STAT 3: Total visitors today ─────────────────────────────────────────────
 $stmt = $pdo->query("SELECT COUNT(*) FROM visitor_log WHERE visit_date = CURDATE()");
 $totalVisitors = (int) $stmt->fetchColumn();
+
+// ── STAT 4: Available beds ────────────────────────────────────────────────────
+$availableBeds = $totalCapacity - $totalAssigned;
+
+// ── CHART: 7-day ins and outs ─────────────────────────────────────────────────
+$stmt = $pdo->query("
+  SELECT 
+    DATE(log_time) AS day,
+    SUM(log_type = 'inside') AS ins,
+    SUM(log_type = 'outside') AS outs
+  FROM resident_log
+  WHERE log_time >= CURDATE() - INTERVAL 6 DAY
+  GROUP BY DATE(log_time)
+  ORDER BY day ASC
+");
+$rawTrend = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$trendData = [];
+for ($i = 6; $i >= 0; $i--) {
+  $date = date('Y-m-d', strtotime("-$i days"));
+  $trendData[] = [
+    'label' => date('D', strtotime($date)),
+    'date' => $date,
+    'ins' => 0,
+    'outs' => 0,
+  ];
+}
+foreach ($rawTrend as $row) {
+  foreach ($trendData as &$point) {
+    if ($point['date'] === $row['day']) {
+      $point['ins'] = (int) $row['ins'];
+      $point['outs'] = (int) $row['outs'];
+    }
+  }
+}
+unset($point);
+$trendJson = json_encode($trendData);
+
+// ── Live Traffic: 5 latest resident movements ─────────────────────────────────
+$stmt = $pdo->query("
+  SELECT 
+    rl.log_type,
+    rl.log_time,
+    r.first_name,
+    r.last_name
+  FROM resident_log rl
+  JOIN resident r ON rl.resident_id = r.resident_id
+  ORDER BY rl.log_time DESC
+  LIMIT 5
+");
+$liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!doctype html>
@@ -46,7 +97,7 @@ $totalVisitors = (int) $stmt->fetchColumn();
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard</title>
+  <title>Dashboard | Dormonitory</title>
   <link rel="stylesheet" href="/Dormonitory/assets/css/sidebar-navbar-styles.css" />
   <link rel="stylesheet" href="/Dormonitory/assets/css/admin-styles.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
@@ -161,6 +212,17 @@ $totalVisitors = (int) $stmt->fetchColumn();
     .btn-save:hover {
       background: #2525a0;
     }
+
+    /* Match chart canvas height to traffic card */
+    .chart-wrap {
+      position: relative;
+      height: 260px;
+    }
+
+    .chart-wrap canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
   </style>
 </head>
 
@@ -170,8 +232,9 @@ $totalVisitors = (int) $stmt->fetchColumn();
 
   <div class="layout">
     <div class="main">
+
       <div class="greeting-card">
-        <h1>Hi, <?php echo htmlspecialchars($fullname); ?></h1> <!-- DISPLAYS NAME FROM DATABASE -->
+        <h1>Hi, <?php echo htmlspecialchars($fullname); ?></h1>
         <p>Here's what's happening with your property today.</p>
       </div>
 
@@ -180,41 +243,31 @@ $totalVisitors = (int) $stmt->fetchColumn();
         <div class="actions-grid">
           <a href="resident-management.php" class="quick-action-link">
             <button class="action-btn">
-              <div class="icon-placeholder">
-                <i class="bi bi-person"></i>
-              </div>
+              <div class="icon-placeholder"><i class="bi bi-person"></i></div>
               Manage Residents
             </button>
           </a>
-
           <a href="room-management.php" class="quick-action-link">
             <button class="action-btn">
-              <div class="icon-placeholder">
-                <i class="bi bi-door-open"></i>
-              </div>
+              <div class="icon-placeholder"><i class="bi bi-door-open"></i></div>
               Manage Rooms
             </button>
           </a>
-
           <a href="visitor-management.php" class="quick-action-link">
             <button class="action-btn">
-              <div class="icon-placeholder">
-                <i class="bi bi-person-badge-fill"></i>
-              </div>
+              <div class="icon-placeholder"><i class="bi bi-person-badge-fill"></i></div>
               View Visitor Log
             </button>
           </a>
-
           <button class="action-btn" onclick="openReportModal()">
-            <div class="icon-placeholder">
-              <i class="bi bi-file-earmark-text"></i>
-            </div>
+            <div class="icon-placeholder"><i class="bi bi-file-earmark-text"></i></div>
             Generate Report
           </button>
         </div>
       </div>
 
       <div class="stat-grid">
+
         <div class="stat-card">
           <div class="stat-left">
             <div class="stat-top">
@@ -222,9 +275,7 @@ $totalVisitors = (int) $stmt->fetchColumn();
               <span class="stat-label">Total<br />Residents</span>
             </div>
             <div class="stat-bottom">
-              <div class="stat-value">
-                <?php echo $totalResidents; ?>
-              </div>
+              <div class="stat-value"><?php echo $totalResidents; ?></div>
             </div>
           </div>
           <i class="bi bi-people stat-deco"></i>
@@ -238,134 +289,62 @@ $totalVisitors = (int) $stmt->fetchColumn();
               <span class="stat-label">Current<br />Occupancy</span>
             </div>
             <div class="stat-bottom">
-              <div class="stat-value">
-                <?php echo $occupancyPct; ?>%
-              </div>
+              <div class="stat-value"><?php echo $occupancyPct; ?>%</div>
             </div>
           </div>
           <i class="bi bi-door-open stat-deco"></i>
           <div class="stat-badge">
             <?php echo $occupancyBadge; ?> ·
-            <?php echo $totalAssigned; ?>/
-            <?php echo $totalCapacity; ?> beds
+            <?php echo $totalAssigned; ?>/<?php echo $totalCapacity; ?> beds
           </div>
         </div>
 
         <div class="stat-card">
           <div class="stat-left">
             <div class="stat-top">
-              <div class="stat-icon"><i class="bi bi-person"></i></div>
+              <div class="stat-icon"><i class="bi bi-person-badge-fill"></i></div>
               <span class="stat-label">Total<br />Visitors</span>
             </div>
             <div class="stat-bottom">
-              <div class="stat-value">
-                <?php echo $totalVisitors; ?>
-              </div>
+              <div class="stat-value"><?php echo $totalVisitors; ?></div>
             </div>
           </div>
-          <i class="bi bi-person stat-deco"></i>
+          <i class="bi bi-person-badge-fill stat-deco"></i>
           <div class="stat-badge">Today</div>
         </div>
 
-        <!-- Security Alerts — keep as-is -->
         <div class="stat-card">
           <div class="stat-left">
             <div class="stat-top">
-              <div class="stat-icon"><i class="bi bi-exclamation-circle"></i></div>
-              <span class="stat-label">Security<br />Alerts</span>
+              <div class="stat-icon"><i class="bi bi-door-closed"></i></div>
+              <span class="stat-label">Available<br />Beds</span>
             </div>
             <div class="stat-bottom">
-              <div class="stat-value">10</div>
+              <div class="stat-value"><?php echo $availableBeds; ?></div>
             </div>
           </div>
-          <i class="bi bi-exclamation-circle stat-deco"></i>
-          <div class="stat-badge">Requires attention</div>
+          <i class="bi bi-door-closed stat-deco"></i>
+          <div class="stat-badge">Open slots</div>
         </div>
+
       </div>
 
       <div class="main-grid">
+
+        <!-- CHART CARD -->
         <div class="chart-card">
           <div class="chart-header">
             <div>
-              <div class="chart-title">Building Occupancy Trends</div>
-              <div class="chart-subtitle">7-day movement analysis</div>
+              <div class="chart-title">Resident Movement Trends</div>
+              <div class="chart-subtitle">Ins &amp; outs — last 7 days</div>
             </div>
-            <button class="range-btn">
-              Last Seven Days
-              <svg viewBox="0 0 24 24">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
           </div>
           <div class="chart-wrap">
-            <svg class="chart" viewBox="0 0 620 240" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#4646d6" stop-opacity="0.18" />
-                  <stop offset="100%" stop-color="#4646d6" stop-opacity="0.01" />
-                </linearGradient>
-              </defs>
-              <line x1="44" y1="20" x2="610" y2="20" class="grid-line" />
-              <line x1="44" y1="80" x2="610" y2="80" class="grid-line" />
-              <line x1="44" y1="140" x2="610" y2="140" class="grid-line" />
-              <line x1="44" y1="200" x2="610" y2="200" class="grid-line" />
-
-              <text x="36" y="24" class="y-label" text-anchor="end">400</text>
-              <text x="36" y="84" class="y-label" text-anchor="end">300</text>
-              <text x="36" y="144" class="y-label" text-anchor="end">
-                200
-              </text>
-              <text x="36" y="204" class="y-label" text-anchor="end">
-                100
-              </text>
-              <text x="36" y="230" class="y-label" text-anchor="end">0</text>
-
-              <path class="area-path" d="
-                  M 92,110
-                  C 130,120 155,130 183,132.5
-                  C 210,135 230,138 275,140
-                  C 295,141 310,150 348,168.5
-                  C 375,172 410,165 440,155
-                  C 470,145 490,130 525,120
-                  C 555,112 575,60 608,20
-                  L 608,230 L 92,230 Z
-                " />
-
-              <path class="line-path" d="
-                  M 92,110
-                  C 130,120 155,130 183,132.5
-                  C 210, 135 230,138 275,140
-                  C 295,141 310,150 348,168.5
-                  C 375,172 410,165 440,155
-                  C 470,145 490,130 525,120
-                  C 555,112 575,60 608,20
-                " />
-
-              <g class="tooltip-box">
-                <rect x="310" y="115" width="96" height="44" rx="9" fill="#2e2e9e" />
-                <text x="358" y="133" text-anchor="middle" fill="#fff" font-size="12" font-weight="700"
-                  font-family="'Inter',sans-serif">
-                  Thursday
-                </text>
-                <text x="358" y="150" text-anchor="middle" fill="rgba(255,255,255,0.78)" font-size="11"
-                  font-family="'Inter',sans-serif">
-                  Count: 102
-                </text>
-                <line x1="348" y1="159" x2="348" y2="178" stroke="#2e2e9e" stroke-width="1.5" />
-                <circle cx="348" cy="168.5" r="5" fill="#fff" stroke="#4646d6" stroke-width="2" />
-              </g>
-
-              <text x="92" y="230" class="x-label">Mon</text>
-              <text x="183" y="230" class="x-label">Tue</text>
-              <text x="275" y="230" class="x-label">Wed</text>
-              <text x="348" y="230" class="x-label">Thu</text>
-              <text x="440" y="230" class="x-label">Fri</text>
-              <text x="525" y="230" class="x-label">Sat</text>
-              <text x="608" y="230" class="x-label">Sun</text>
-            </svg>
+            <canvas id="occupancyChart"></canvas>
           </div>
         </div>
 
+        <!-- LIVE TRAFFIC CARD -->
         <div class="traffic-card">
           <div class="traffic-header">
             <div class="traffic-title">Live Traffic Monitor</div>
@@ -373,51 +352,34 @@ $totalVisitors = (int) $stmt->fetchColumn();
           </div>
 
           <div class="traffic-list">
-            <div class="traffic-item">
-              <div class="person-avatar">
-                <i class="bi bi-person-fill" style="color: white"></i>
-              </div>
-              <div class="person-info">
-                <div class="person-name">Erin Zoe Regalado</div>
-                <div class="person-meta">10:45 AM</div>
-              </div>
-              <span class="status-tag status-inside">INSIDE</span>
-            </div>
-
-            <div class="traffic-item">
-              <div class="person-avatar">
-                <i class="bi bi-person-fill" style="color: white"></i>
-              </div>
-              <div class="person-info">
-                <div class="person-name">Sharmagne Gamboa</div>
-                <div class="person-meta">08:27 AM</div>
-              </div>
-              <span class="status-tag status-outside">OUTSIDE</span>
-            </div>
-
-            <div class="traffic-item">
-              <div class="person-avatar">
-                <i class="bi bi-person-fill" style="color: white"></i>
-              </div>
-              <div class="person-info">
-                <div class="person-name">Gwyneth Miasco</div>
-                <div class="person-meta">09:04 AM</div>
-              </div>
-              <span class="status-tag status-inside">INSIDE</span>
-            </div>
-
-            <div class="traffic-item">
-              <div class="person-avatar">
-                <i class="bi bi-person-fill" style="color: white"></i>
-              </div>
-              <div class="person-info">
-                <div class="person-name">Hazel Ann Carillo</div>
-                <div class="person-meta">01:43 PM</div>
-              </div>
-              <span class="status-tag status-inside">INSIDE</span>
-            </div>
+            <?php if (empty($liveTraffic)): ?>
+              <p style="color:var(--text-secondary);font-size:0.85rem;text-align:center;padding:12px 0;">
+                No movement logs yet.
+              </p>
+            <?php else: ?>
+              <?php foreach ($liveTraffic as $entry): ?>
+                <?php
+                $name = htmlspecialchars($entry['first_name'] . ' ' . $entry['last_name']);
+                $time = date('h:i A', strtotime($entry['log_time']));
+                $type = strtolower($entry['log_type']);
+                $badgeClass = $type === 'inside' ? 'status-inside' : 'status-outside';
+                $badgeText = strtoupper($type);
+                ?>
+                <div class="traffic-item">
+                  <div class="person-avatar">
+                    <i class="bi bi-person-fill" style="color:white"></i>
+                  </div>
+                  <div class="person-info">
+                    <div class="person-name"><?= $name ?></div>
+                    <div class="person-meta"><?= $time ?></div>
+                  </div>
+                  <span class="status-tag <?= $badgeClass ?>"><?= $badgeText ?></span>
+                </div>
+              <?php endforeach; ?>
+            <?php endif; ?>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -429,7 +391,6 @@ $totalVisitors = (int) $stmt->fetchColumn();
         <i class="bi bi-file-earmark-text" style="color:var(--accent);margin-right:8px;"></i>
         Generate Report
       </h2>
-
       <form method="GET" action="/Dormonitory/admin/generate-report.php">
         <label>Report Type</label>
         <select name="type" required>
@@ -439,7 +400,6 @@ $totalVisitors = (int) $stmt->fetchColumn();
           <option value="monthly">Monthly Report</option>
           <option value="yearly">Yearly Report</option>
         </select>
-
         <div class="modal-actions">
           <button type="button" class="btn-cancel" onclick="closeModal('reportModal')">Cancel</button>
           <button type="submit" class="btn-save">Generate</button>
@@ -448,7 +408,71 @@ $totalVisitors = (int) $stmt->fetchColumn();
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script>
+    const trendData = <?= $trendJson ?>;
+
+    new Chart(document.getElementById('occupancyChart').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: trendData.map(d => d.label),
+        datasets: [
+          {
+            label: 'Ins',
+            data: trendData.map(d => d.ins),
+            fill: true,
+            tension: 0.4,
+            borderColor: '#4646d6',
+            backgroundColor: 'rgba(70,70,214,0.10)',
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#4646d6',
+            pointBorderWidth: 2,
+            pointRadius: 5,
+          },
+          {
+            label: 'Outs',
+            data: trendData.map(d => d.outs),
+            fill: true,
+            tension: 0.4,
+            borderColor: '#e55353',
+            backgroundColor: 'rgba(229,83,83,0.08)',
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#e55353',
+            pointBorderWidth: 2,
+            pointRadius: 5,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            labels: { color: '#64748b', font: { family: 'Inter', size: 12 } }
+          },
+          tooltip: {
+            backgroundColor: '#2e2e9e',
+            titleColor: '#fff',
+            bodyColor: 'rgba(255,255,255,0.8)',
+            padding: 10,
+            cornerRadius: 9,
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { color: '#94a3b8', font: { family: 'Inter', size: 12 } }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: { color: '#94a3b8', stepSize: 1, font: { family: 'Inter', size: 12 } },
+            grid: { color: 'rgba(0,0,0,0.05)' }
+          }
+        }
+      }
+    });
+
     function openReportModal() {
       document.getElementById('reportModal').classList.add('active');
     }
@@ -457,16 +481,16 @@ $totalVisitors = (int) $stmt->fetchColumn();
       document.getElementById(id).classList.remove('active');
     }
 
-    // click outside close
     document.addEventListener("DOMContentLoaded", function () {
       document.querySelectorAll('.modal-overlay').forEach(modal => {
         modal.addEventListener('click', function (e) {
-          if (e.target === this) {
-            this.classList.remove('active');
-          }
+          if (e.target === this) this.classList.remove('active');
         });
       });
     });
+
+    // Auto-refresh every 30s for live traffic
+    setTimeout(() => location.reload(), 30000);
   </script>
 
   <script src="/Dormonitory/assets/js/sidebar-navbar.js"></script>

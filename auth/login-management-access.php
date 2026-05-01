@@ -97,10 +97,10 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
                         <span>or Log In with</span>
                     </div>
 
-                    <button type="button" class="btn-google-auth w-100">
-                        <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google Logo">
+                    <a href="../googleAuth/google-login.php" class="btn-google-auth w-100" style="display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;">
+                        <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google Logo" style="width: 20px;">
                         Continue with Google
-                    </button>
+                    </a>
                 </form>
 
                 <div class="login-redirect mt-4 text-center">

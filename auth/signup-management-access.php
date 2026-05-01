@@ -105,10 +105,10 @@ session_start();
                         <span>or Sign Up with</span>
                     </div>
 
-                    <button type="button" class="btn-google-auth w-100">
+                    <a href="../googleAuth/google-login.php" class="btn-google-auth w-100" style="display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;">
                         <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google Logo" style="width: 20px;">
                         Continue with Google
-                    </button>
+                    </a>
                 </form>
 
                 <div class="login-redirect mt-4 text-center">
@@ -119,36 +119,19 @@ session_start();
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const contactInput = document.getElementById('contactNumber');
-            const forms = document.querySelectorAll('.needs-validation');
-
-            // 1. Force numeric input only for the contact field
-            contactInput.addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/\D/g, '');
-            });
-
-            // 2. Handle Form Validation
+        (() => {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
             Array.from(forms).forEach(form => {
                 form.addEventListener('submit', event => {
-                    
-                    if (contactInput.value.length > 0 && !contactInput.value.startsWith('09')) {
-                        contactInput.setCustomValidity('Invalid');
-                    } else if (contactInput.value.length !== 11) {
-                        contactInput.setCustomValidity('Invalid');
-                    } else {
-                        contactInput.setCustomValidity('');
-                    }
-
                     if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
+                        event.preventDefault()
+                        event.stopPropagation()
                     }
-                    
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        });
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
     </script>
 </body>
 </html>

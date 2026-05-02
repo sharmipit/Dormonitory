@@ -9,7 +9,7 @@
   --navbar-h: 68px;
   --icon-size: 20px;
   /* Softened the icon color to match the guide's muted look */
-  --icon-color: rgba(221, 224, 255, 0.7); 
+  --icon-color: rgba(221, 224, 255, 0.7);
   --icon-active-color: #fff;
 }
 
@@ -47,7 +47,7 @@ nav a i {
   font-size: var(--icon-size);
   color: var(--icon-color);
   /* Ensures the thin icons don't look too bold */
-  -webkit-text-stroke: 0.2px; 
+  -webkit-text-stroke: 0.2px;
 }
 
 * {
@@ -353,7 +353,7 @@ body.sidebar-closed .main {
 
 .profile-modal {
   position: absolute;
-  top: calc(var(--navbar-h) - 5px); 
+  top: calc(var(--navbar-h) - 5px);
   right: 24px;
   width: 300px;
   background: #fff;
@@ -367,13 +367,17 @@ body.sidebar-closed .main {
   font-family: var(--font-main);
 }
 
-.profile-modal.active { display: flex; }
+.profile-modal.active {
+  display: flex;
+}
 
 /* Header Section */
-.modal-header { margin-bottom: 20px; }
+.modal-header {
+  margin-bottom: 20px;
+}
 .modal-header small {
   display: block;
-  font-size: 12px; 
+  font-size: 12px;
   font-weight: 700;
   color: #9e9a9a;
   text-transform: uppercase;
@@ -397,10 +401,10 @@ body.sidebar-closed .main {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 16px; 
+  padding: 16px;
   border-radius: 14px;
   text-decoration: none;
-  font-size: 15px; 
+  font-size: 15px;
   font-weight: 600;
   transition: all 0.2s ease;
   border: none;
@@ -411,27 +415,36 @@ body.sidebar-closed .main {
 
 /* My Profile */
 .btn-profile {
-  background: #f0f2ff; 
-  color: #3030b6 !important; 
+  background: #f0f2ff;
+  color: #3030b6 !important;
 }
-.btn-profile i { font-size: 18px; }
-.btn-profile:hover { background: #e0e4ff; transform: translateY(-1px); }
+.btn-profile i {
+  font-size: 18px;
+}
+.btn-profile:hover {
+  background: #e0e4ff;
+  transform: translateY(-1px);
+}
 
 /* Sign Out */
 .btn-signout {
   background: transparent;
-  color: #dc2626 !important; 
+  color: #dc2626 !important;
 }
-.btn-signout:hover { background: #fff5f5; color: #b91c1c !important; }
-
+.btn-signout:hover {
+  background: #fff5f5;
+  color: #b91c1c !important;
+}
 
 /* --- SIGN OUT CONFIRMATION MODAL --- */
 .signout-modal-overlay {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(15, 23, 42, 0.6); 
-  backdrop-filter: blur(4px); 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
   display: none;
   justify-content: center;
   align-items: center;
@@ -440,23 +453,23 @@ body.sidebar-closed .main {
 
 .signout-modal-content {
   background: white;
-  padding: 48px 40px; 
-  border-radius: 28px; 
+  padding: 48px 40px;
+  border-radius: 28px;
   text-align: center;
-  width: 450px; 
+  width: 450px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   font-family: var(--font-main);
 }
 
 .signout-modal-content h3 {
-  font-size: 24px; 
+  font-size: 24px;
   font-weight: 700;
   color: #1e293b;
   margin: 20px 0 12px;
 }
 
 .signout-modal-content p {
-  font-size: 16px; 
+  font-size: 16px;
   color: #64748b;
   line-height: 1.6;
   margin-bottom: 32px;
@@ -474,14 +487,19 @@ body.sidebar-closed .main {
   margin-bottom: 0;
 }
 
-.confirm-btn { 
-  background: #dc2626; 
-  color: white !important; 
+.confirm-btn {
+  background: #dc2626;
+  color: white !important;
 }
-.confirm-btn:hover { background: #b91c1c; transform: translateY(-2px); }
+.confirm-btn:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
+}
 
-.cancel-btn { 
-  background: #f1f5f9; 
-  color: #475569 !important; 
+.cancel-btn {
+  background: #f1f5f9;
+  color: #475569 !important;
 }
-.cancel-btn:hover { background: #e2e8f0; }
+.cancel-btn:hover {
+  background: #e2e8f0;
+}

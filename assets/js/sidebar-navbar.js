@@ -41,7 +41,6 @@ gi-comment lang nako ang old script just in case, i-delete ra ni if okay na tana
 
 */
 
-
 const pageTitles = {
   "home.php": "Resident Web Portal",
   "digital-key.php": "Digital Key",
@@ -53,7 +52,7 @@ const pageTitles = {
   "visitor-management.php": "Visitor Log",
   "announcements.php": "Announcements",
   "security-center.php": "Security Center",
-  "admin-profile.php": "Admin Profile" 
+  "admin-profile.php": "Admin Profile",
 };
 
 const isAdmin = window.location.pathname.includes("/admin/");
@@ -69,7 +68,7 @@ fetch(sidebarFile)
     // --- 1. SIDEBAR HAMBURGER LOGIC ---
     const btn = document.getElementById("hamburger");
     const sidebar = document.getElementById("sidebar");
-    
+
     if (btn && sidebar) {
       btn.onclick = () => {
         sidebar.classList.toggle("closed");
@@ -83,7 +82,7 @@ fetch(sidebarFile)
 
     if (profileTrigger && profileModal) {
       profileTrigger.onclick = (e) => {
-        e.stopPropagation(); 
+        e.stopPropagation();
         profileModal.classList.toggle("active");
       };
     }
@@ -91,13 +90,15 @@ fetch(sidebarFile)
     // --- 3. CUSTOM SIGN OUT MODAL LOGIC ---
     const signoutModal = document.getElementById("signout-modal");
     const cancelBtn = document.getElementById("cancel-signout");
-    const signoutButtons = document.querySelectorAll(".signout-btn, .btn-signout");
+    const signoutButtons = document.querySelectorAll(
+      ".signout-btn, .btn-signout",
+    );
 
-    signoutButtons.forEach(btn => {
+    signoutButtons.forEach((btn) => {
       btn.onclick = (e) => {
-        e.preventDefault(); 
-        if (profileModal) profileModal.classList.remove("active"); 
-        if (signoutModal) signoutModal.style.display = "flex"; 
+        e.preventDefault();
+        if (profileModal) profileModal.classList.remove("active");
+        if (signoutModal) signoutModal.style.display = "flex";
       };
     });
 
@@ -109,7 +110,11 @@ fetch(sidebarFile)
 
     // --- 4. CLICK OUTSIDE TO CLOSE LOGIC ---
     document.addEventListener("click", (e) => {
-      if (profileModal && !profileModal.contains(e.target) && e.target !== profileTrigger) {
+      if (
+        profileModal &&
+        !profileModal.contains(e.target) &&
+        e.target !== profileTrigger
+      ) {
         profileModal.classList.remove("active");
       }
       if (signoutModal && e.target === signoutModal) {
@@ -118,12 +123,12 @@ fetch(sidebarFile)
     });
 
     // --- 5. PAGE TITLE & ACTIVE LINK LOGIC ---
-   
+
     const pathParts = window.location.pathname.split("/");
     const currentPage = pathParts[pathParts.length - 1] || "dashboard.php";
-    
+
     const pageTitle = pageTitles[currentPage] ?? "Dormonitory";
-    
+
     const titleElement = document.querySelector(".navbar-title");
     if (titleElement) {
       titleElement.textContent = pageTitle;
@@ -140,4 +145,4 @@ fetch(sidebarFile)
       }
     });
   })
-  .catch(err => console.error("Error loading sidebar:", err));
+  .catch((err) => console.error("Error loading sidebar:", err));

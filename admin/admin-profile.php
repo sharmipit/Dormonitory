@@ -1,13 +1,13 @@
 <?php
 session_start();
-include('../config/db.php'); 
+include('../config/db.php');
 
 if (!isset($_SESSION['admin_id'])) {
     header("Location: /Dormonitory/index.html");
     exit();
 }
 
-$search_id = $_SESSION['admin_id']; 
+$search_id = $_SESSION['admin_id'];
 $firstName = $lastName = $email = "";
 
 try {
@@ -18,8 +18,8 @@ try {
 
     if ($adminData) {
         $firstName = $adminData['first_name'];
-        $lastName  = $adminData['last_name'];
-        $email     = $adminData['email'];
+        $lastName = $adminData['last_name'];
+        $email = $adminData['email'];
     }
 } catch (PDOException $e) {
     error_log("Database Error: " . $e->getMessage());
@@ -27,7 +27,7 @@ try {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $newFirstName = trim($_POST['first_name']);
-    $newLastName  = trim($_POST['last_name']);
+    $newLastName = trim($_POST['last_name']);
 
     try {
         $updateQuery = "UPDATE admin SET first_name = :fname, last_name = :lname WHERE admin_id = :id";
@@ -35,10 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         $stmt->execute([
             'fname' => $newFirstName,
             'lname' => $newLastName,
-            'id'    => $search_id
+            'id' => $search_id
         ]);
-        
-        $_SESSION['firstname'] = $newFirstName; 
+
+        $_SESSION['firstname'] = $newFirstName;
         header("Location: admin-profile.php?success=1");
         exit();
     } catch (PDOException $e) {
@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,8 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         .signout-modal-overlay {
             display: none;
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
@@ -69,10 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         }
 
         .modal-header-flex {
-        display: flex;
-        align-items: flex-start;
-        gap: 15px;
-        margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 10px;
         }
 
         .modal-icon-box {
@@ -88,29 +91,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 
         .modal-icon-box i {
             font-size: 1.4rem;
-            color: #FFFFFF; 
+            color: #FFFFFF;
         }
 
         .modal-title-group {
-        padding-top: 2px; 
+            padding-top: 2px;
         }
 
         .modal-title-group h3 {
-        margin: 0;
-        line-height: 1.2;
-        font-weight: 700;
-        color: #1a1a3d;
+            margin: 0;
+            line-height: 1.2;
+            font-weight: 700;
+            color: #1a1a3d;
         }
 
         .modal-sub-text {
-            font-size: 0.9rem; 
-            color: #666; 
-            margin: 0; 
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
             line-height: 1.1;
-            margin-top: 4px; 
+            margin-top: 4px;
         }
     </style>
 </head>
+
 <body class="admin-body">
 
     <div id="sidebar-navbar"></div>
@@ -121,9 +125,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
                 <div class="profile-cover"></div>
                 <div class="profile-content">
                     <div class="profile-avatar-wrapper">
-                        <img src="/Dormonitory/assets/img/cute-duck-for-good-luck.jpeg" alt="Admin Avatar" class="profile-avatar-big">
+                        <img src="/Dormonitory/assets/img/cute-duck-for-good-luck.jpeg" alt="Admin Avatar"
+                            class="profile-avatar-big">
                     </div>
-                    
+
                     <div class="profile-info-header">
                         <h2 style="font-weight: 800; color: #1a1a3d; margin-bottom: 5px;">
                             <?php echo htmlspecialchars($firstName . " " . $lastName); ?>
@@ -157,7 +162,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     </main>
 
     <div class="signout-modal-overlay" id="edit-profile-modal">
-        <div class="signout-modal-content" style="text-align: left; width: 500px; background: white; padding: 30px; border-radius: 12px;">
+        <div class="signout-modal-content"
+            style="text-align: left; width: 500px; background: white; padding: 30px; border-radius: 12px;">
             <div class="modal-header-flex">
                 <div class="modal-icon-box">
                     <i class="bi bi-person-gear"></i>
@@ -167,47 +173,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
                     <p class="modal-sub-text">Update your name details below.</p>
                 </div>
             </div>
-            
+
             <form id="profile-edit-form">
                 <div class="info-group" style="margin-bottom: 15px;">
                     <label>First Name</label>
-                    <input type="text" id="input-first-name" name="first_name" value="<?php echo htmlspecialchars($firstName); ?>" 
-                           style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" required>
+                    <input type="text" id="input-first-name" name="first_name"
+                        value="<?php echo htmlspecialchars($firstName); ?>"
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" required>
                 </div>
                 <div class="info-group" style="margin-bottom: 15px;">
                     <label>Last Name</label>
-                    <input type="text" id="input-last-name" name="last_name" value="<?php echo htmlspecialchars($lastName); ?>" 
-                           style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" required>
+                    <input type="text" id="input-last-name" name="last_name"
+                        value="<?php echo htmlspecialchars($lastName); ?>"
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" required>
                 </div>
                 <div class="info-group" style="margin-bottom: 25px;">
                     <label>Email Address (Cannot be changed)</label>
-                    <input type="email" value="<?php echo htmlspecialchars($email); ?>" 
-                           style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #eee; background-color: #f9f9f9; color: #888;" readonly>
+                    <input type="email" value="<?php echo htmlspecialchars($email); ?>"
+                        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #eee; background-color: #f9f9f9; color: #888;"
+                        readonly>
                 </div>
-                
+
                 <div class="modal-actions">
                     <button type="button" class="modal-btn cancel-btn" id="close-edit-modal">Cancel</button>
-                    <button type="button" class="modal-btn confirm-btn" id="open-confirm-modal" style="background: #3030b6; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer;">Update</button>
+                    <button type="button" class="modal-btn confirm-btn" id="open-confirm-modal"
+                        style="background: #3030b6; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer;">Update</button>
                 </div>
             </form>
         </div>
     </div>
 
     <div class="signout-modal-overlay" id="confirm-changes-modal" style="z-index: 1001;">
-        <div class="signout-modal-content" style="text-align: center; background: white; padding: 30px; border-radius: 12px;">
-            <div style="background: #3030b6; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+        <div class="signout-modal-content"
+            style="text-align: center; background: white; padding: 30px; border-radius: 12px;">
+            <div
+                style="background: #3030b6; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
                 <i class="bi bi-question-lg" style="font-size: 2rem; color: #FFFF;"></i>
             </div>
             <h3>Save Changes?</h3>
             <p>Are you sure you want to update your profile information?</p>
-            
+
             <form method="POST" action="">
                 <input type="hidden" name="first_name" id="hidden-first-name">
                 <input type="hidden" name="last_name" id="hidden-last-name">
-                
+
                 <div class="modal-actions">
                     <button type="button" class="modal-btn cancel-btn" id="close-confirm-modal">Cancel</button>
-                    <button type="submit" name="update_profile" class="modal-btn confirm-btn" style="background: #3030b6; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer;">Yes, Save</button>
+                    <button type="submit" name="update_profile" class="modal-btn confirm-btn"
+                        style="background: #3030b6; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer;">Yes,
+                        Save</button>
                 </div>
             </form>
         </div>
@@ -215,11 +229,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 
     <script src="/Dormonitory/assets/js/sidebar-navbar.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const editBtn = document.querySelector('.edit-btn');
             const editModal = document.getElementById('edit-profile-modal');
             const closeEditBtn = document.getElementById('close-edit-modal');
-            
+
             const confirmModal = document.getElementById('confirm-changes-modal');
             const openConfirmBtn = document.getElementById('open-confirm-modal');
             const closeConfirmBtn = document.getElementById('close-confirm-modal');
@@ -239,9 +253,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
                 confirmModal.style.display = 'flex';
             });
 
-            closeConfirmBtn.addEventListener('click', () => { 
-                confirmModal.style.display = 'none'; 
-                editModal.style.display = 'flex'; 
+            closeConfirmBtn.addEventListener('click', () => {
+                confirmModal.style.display = 'none';
+                editModal.style.display = 'flex';
             });
 
             window.addEventListener('click', (e) => {
@@ -254,4 +268,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         });
     </script>
 </body>
+
 </html>

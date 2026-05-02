@@ -92,7 +92,6 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
                         <a href="forgot-password.php" class="forgot-link">Forgot Password?</a>
                     </div>
 
-                    <!-- reCAPTCHA form display-->
                     <div class="mb-3 text-center">
                         <div class="g-recaptcha" data-sitekey="<?= htmlspecialchars($siteKey) ?>"></div>
                     </div>

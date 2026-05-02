@@ -23,8 +23,6 @@ a {
   padding: 1.5rem 2.5rem;
 }
 
-/* --- Resident Home Page --- */
-
 .welcome-banner {
   background: white;
   padding: 2rem 2.5rem;
@@ -49,7 +47,6 @@ a {
   font-size: 0.95rem;
 }
 
-/* Status Badge Alignment */
 .status-badge {
   text-align: right;
   display: flex;
@@ -75,7 +72,6 @@ a {
   border: 1px solid rgba(5, 205, 153, 0.2);
 }
 
-/* Original Home Grid Layout */
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1.2fr 2fr;
@@ -112,7 +108,6 @@ a {
   font-weight: 700;
 }
 
-/* Activity Items */
 .activity-item {
   display: flex;
   flex-direction: column;
@@ -175,7 +170,6 @@ a {
   gap: 6px;
 }
 
-/* Announcement Items */
 .announcement-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -216,7 +210,6 @@ a {
   margin-bottom: 15px;
 }
 
-/* Filter Buttons */
 .btn-filter {
   border: none;
   background: #f4f7fe;
@@ -232,8 +225,6 @@ a {
   background: var(--primary-blue);
   color: white;
 }
-
-/* --- Announcement Modal Container --- */
 
 .image-container {
   position: relative;
@@ -355,8 +346,6 @@ a {
   color: #555;
 }
 
-/* --- Activity Modal Container --- */
-
 .modal-container {
   position: relative;
   background: #fff;
@@ -368,7 +357,6 @@ a {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Announcement Buttons */
 .close-modal,
 .back-modal {
   position: absolute;
@@ -399,7 +387,6 @@ a {
   background: #d1d6eb;
 }
 
-/* --- List View Header (Recent Activities) --- */
 .modal-header-simple {
   padding: 30px 40px 30px;
   display: flex;
@@ -453,7 +440,6 @@ a {
   margin: 0;
 }
 
-/* --- Detail View (Specific Activity) --- */
 .modal-detail-wrapper {
   padding: 60px 30px 40px;
   position: relative;
@@ -539,7 +525,6 @@ a {
   gap: 5px;
 }
 
-/* --- List Body & Info Grid --- */
 .modal-list-body {
   padding: 0 20px 25px;
   max-height: 65vh;
@@ -583,8 +568,6 @@ a {
   justify-content: center;
   gap: 5px;
 }
-
-/* --- Hover Effects --- */
 
 .activity-item {
   transition:
@@ -643,8 +626,6 @@ a {
   color: var(--primary-blue);
 }
 
-/* --- Global Responsiveness --- */
-
 @media (max-width: 992px) {
   .dashboard-grid {
     grid-template-columns: 1fr !important;
@@ -701,8 +682,6 @@ a {
   }
 }
 
-/* --- Visitor Management Page Styles --- */
-
 .dashboard-grid.visitor-page-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -746,7 +725,6 @@ a {
   box-shadow: 0 4px 12px rgba(48, 48, 182, 0.15);
 }
 
-/* Invite Content Layout */
 .invite-content-wrapper {
   display: flex;
   gap: 3rem;
@@ -754,7 +732,6 @@ a {
   width: 100%;
 }
 
-/* Form Styling */
 .portal-form {
   flex: 1.5;
   display: flex;
@@ -828,7 +805,6 @@ a {
   opacity: 0.9;
 }
 
-/* QR Code Section */
 .qr-display-section {
   flex: 1;
   max-width: 350px;
@@ -889,7 +865,6 @@ a {
   color: #e74c3c;
 }
 
-/* Visitor History Section */
 .history-card .card-header {
   display: flex;
   justify-content: space-between;
@@ -925,8 +900,6 @@ a {
   background-color: #e2e8f0;
   color: var(--primary-blue);
 }
-
-/* --- Responsive --- */
 
 @media (max-width: 1024px) {
   .dashboard-grid.visitor-page-grid {
@@ -984,8 +957,6 @@ a {
   }
 }
 
-/* --- Digital Key Page Specific Styles --- */
-
 .key-card-container {
   display: flex;
   justify-content: center;
@@ -1039,7 +1010,6 @@ a {
   margin: 0;
 }
 
-/* Status and Timer Grid */
 .key-status-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1085,7 +1055,6 @@ a {
   color: #1b2559;
 }
 
-/* Button Styling */
 .btn-generate-primary {
   background: #3030b6;
   color: white;
@@ -1116,8 +1085,6 @@ a {
   gap: 6px;
   margin-top: 5px;
 }
-
-/* --- Responsiveness --- */
 
 @media (max-width: 480px) {
   .key-card {

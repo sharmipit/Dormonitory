@@ -111,7 +111,6 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
   <style>
-    /* Modal overlay — hidden by default, shown when .active is added */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -126,7 +125,6 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
       display: flex;
     }
 
-    /* Modal container styles */
     .modal-box {
       background: #fff;
       border-radius: 20px;
@@ -138,7 +136,6 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
       font-family: var(--font-main);
     }
 
-    /* Modal entrance animation */
     @keyframes pop {
       from {
         transform: translateY(10px);
@@ -184,7 +181,6 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
       border-color: var(--accent);
     }
 
-    /* Modal action buttons row */
     .modal-actions {
       display: flex;
       justify-content: flex-end;
@@ -225,7 +221,6 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
       background: #2525a0;
     }
 
-    /* Match chart canvas height to traffic card */
     .chart-wrap {
       position: relative;
       height: 260px;
@@ -235,52 +230,46 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
       width: 100% !important;
       height: 100% !important;
     }
-    
-/* --- Dashboard Specific Overrides --- */
 
-.greeting-card, 
-.quick-actions-card, 
-.chart-card, 
-.traffic-card {
-  border-radius: 25px !important; 
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.03) !important;
-  padding: 2rem !important;
-}
+    .greeting-card,
+    .quick-actions-card,
+    .chart-card,
+    .traffic-card {
+      border-radius: 25px !important;
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.03) !important;
+      padding: 2rem !important;
+    }
 
-.greeting-card h1 {
-  font-size: 1.75rem !important;
-  letter-spacing: -0.5px;
-}
+    .greeting-card h1 {
+      font-size: 1.75rem !important;
+      letter-spacing: -0.5px;
+    }
 
-.greeting-card p, 
-.chart-subtitle {
-  color: #a3aed0 !important; 
-  font-size: 0.95rem !important;
-}
+    .greeting-card p,
+    .chart-subtitle {
+      color: #a3aed0 !important;
+      font-size: 0.95rem !important;
+    }
 
-.stat-card {
-  border-radius: 20px !important;
-  height: 130px !important;
-}
+    .stat-card {
+      border-radius: 20px !important;
+      height: 130px !important;
+    }
 
-.stat-value {
-  font-size: 2.2rem !important;
-  letter-spacing: -1px;
-}
+    .stat-value {
+      font-size: 2.2rem !important;
+      letter-spacing: -1px;
+    }
 
-.traffic-item {
-  border-radius: 20px !important;
-  background: #f8faff !important; 
-  border: 1px solid #f1f4f9;
-}
-
-
-
+    .traffic-item {
+      border-radius: 20px !important;
+      background: #f8faff !important;
+      border: 1px solid #f1f4f9;
+    }
   </style>
 </head>
 
 <body>
-
   <!-- Sidebar and navbar injected here via JS -->
   <div id="sidebar-navbar"></div>
 
@@ -417,7 +406,6 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php else: ?>
               <?php foreach ($liveTraffic as $entry): ?>
                 <?php
-                // Format each traffic entry's name, time, and status badge
                 $name = htmlspecialchars($entry['first_name'] . ' ' . $entry['last_name']);
                 $time = date('h:i A', strtotime($entry['log_time']));
                 $type = strtolower($entry['log_type']);
@@ -450,7 +438,6 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <i class="bi bi-file-earmark-text" style="color:var(--accent);margin-right:8px;"></i>
         Generate Report
       </h2>
-      <!-- Submits report type as GET param to generate-report.php -->
       <form method="GET" action="/Dormonitory/admin/generate-report.php">
         <label>Report Type</label>
         <select name="type" required>

@@ -1,13 +1,53 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
 
+/* Update these specific sections in your CSS */
+
 :root {
   --w: 260px;
   --bg: #3030b6;
   --t: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   --navbar-h: 68px;
   --icon-size: 20px;
-  --icon-color: #dde0ff;
+  /* Softened the icon color to match the guide's muted look */
+  --icon-color: rgba(221, 224, 255, 0.7); 
   --icon-active-color: #fff;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px; /* Slightly more horizontal padding */
+  border-radius: 12px;
+  text-decoration: none;
+  color: rgba(221, 224, 255, 0.8); /* Muted text */
+  font-family: "Inter", sans-serif;
+  font-weight: 500; /* Medium weight looks cleaner with thin icons */
+  transition: 0.2s ease;
+}
+
+/* Updated Active State to match the image_ce3e00.png blue-tinted highlight */
+nav li.active a {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-weight: 700;
+}
+
+nav li.active a i {
+  color: #fff;
+}
+
+/* Hover state remains subtle */
+nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+nav a i {
+  font-size: var(--icon-size);
+  color: var(--icon-color);
+  /* Ensures the thin icons don't look too bold */
+  -webkit-text-stroke: 0.2px; 
 }
 
 * {
@@ -308,3 +348,140 @@ body.sidebar-closed .main {
     left: 0;
   }
 }
+
+/* --- Profile Dropdown Card --- */
+
+.profile-modal {
+  position: absolute;
+  top: calc(var(--navbar-h) - 5px); 
+  right: 24px;
+  width: 300px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(48, 48, 182, 0.12);
+  padding: 24px;
+  display: none;
+  flex-direction: column;
+  z-index: 1000;
+  border: 1px solid #f0f1f8;
+  font-family: var(--font-main);
+}
+
+.profile-modal.active { display: flex; }
+
+/* Header Section */
+.modal-header { margin-bottom: 20px; }
+.modal-header small {
+  display: block;
+  font-size: 12px; 
+  font-weight: 700;
+  color: #9e9a9a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.modal-header h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+.modal-header .access-tag {
+  font-size: 12px;
+  font-weight: 700;
+  color: #3030b6;
+}
+
+/* Modal Buttons */
+.modal-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px; 
+  border-radius: 14px;
+  text-decoration: none;
+  font-size: 15px; 
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* My Profile */
+.btn-profile {
+  background: #f0f2ff; 
+  color: #3030b6 !important; 
+}
+.btn-profile i { font-size: 18px; }
+.btn-profile:hover { background: #e0e4ff; transform: translateY(-1px); }
+
+/* Sign Out */
+.btn-signout {
+  background: transparent;
+  color: #dc2626 !important; 
+}
+.btn-signout:hover { background: #fff5f5; color: #b91c1c !important; }
+
+
+/* --- SIGN OUT CONFIRMATION MODAL --- */
+.signout-modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(15, 23, 42, 0.6); 
+  backdrop-filter: blur(4px); 
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.signout-modal-content {
+  background: white;
+  padding: 48px 40px; 
+  border-radius: 28px; 
+  text-align: center;
+  width: 450px; 
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  font-family: var(--font-main);
+}
+
+.signout-modal-content h3 {
+  font-size: 24px; 
+  font-weight: 700;
+  color: #1e293b;
+  margin: 20px 0 12px;
+}
+
+.signout-modal-content p {
+  font-size: 16px; 
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.modal-actions .modal-btn {
+  justify-content: center;
+  padding: 18px;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.confirm-btn { 
+  background: #dc2626; 
+  color: white !important; 
+}
+.confirm-btn:hover { background: #b91c1c; transform: translateY(-2px); }
+
+.cancel-btn { 
+  background: #f1f5f9; 
+  color: #475569 !important; 
+}
+.cancel-btn:hover { background: #e2e8f0; }

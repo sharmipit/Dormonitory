@@ -66,25 +66,25 @@
 
   <script>
     const ALL_DATA = [
-      { id: 1, img: '../assets/img/announcements-maintenance-notice.png', title: 'Maintenance Notice', desc: 'Elevator maintenance scheduled for tomorrow between 9AM and 12PM.', category: 'maintenance', date: '2 hours ago', sortDate: '2026-04-29T12:00:00' },
+      { id: 1, img: '../assets/img/img1.png', title: 'Maintenance Notice', desc: 'Elevator maintenance scheduled for tomorrow between 9AM and 12PM.', category: 'maintenance', date: '2 hours ago', sortDate: '2026-04-29T12:00:00' },
 
-      { id: 8, img: '../assets/img/announcements-fire-drill.jpg', title: 'Fire Drill Schedule', desc: 'A mandatory fire drill will be conducted this Friday at 10:00 AM. All residents must participate.', category: 'maintenance', date: 'Today', sortDate: '2026-04-29T09:00:00' },
+      { id: 8, img: '../assets/img/img5.png', title: 'Fire Drill Schedule', desc: 'A mandatory fire drill will be conducted this Friday at 10:00 AM. All residents must participate.', category: 'maintenance', date: 'Today', sortDate: '2026-04-29T09:00:00' },
 
-      { id: 9, img: '../assets/img/announcements-internet-maintenance.jpg', title: 'Internet Maintenance', desc: 'Temporary internet downtime will occur tonight from 12AM to 3AM due to system upgrades.', category: 'maintenance', date: 'Today', sortDate: '2026-04-29T00:00:00' },
+      { id: 9, img: '../assets/img/img6.png', title: 'Internet Maintenance', desc: 'Temporary internet downtime will occur tonight from 12AM to 3AM due to system upgrades.', category: 'maintenance', date: 'Today', sortDate: '2026-04-29T00:00:00' },
 
-      { id: 2, img: '../assets/img/announcements-community-event.png', title: 'Community Event', desc: 'Rooftop BBQ this Friday at 6:00 PM. Bring your own drinks!', category: 'community', date: '2 days ago', sortDate: '2026-04-27T18:00:00' },
+      { id: 2, img: '../assets/img/img2.png', title: 'Community Event', desc: 'Rooftop BBQ this Friday at 6:00 PM. Bring your own drinks!', category: 'community', date: '2 days ago', sortDate: '2026-04-27T18:00:00' },
 
-      { id: 3, img: '../assets/img/announcements-gym-equipment.png', title: 'New Gym Equipment', desc: 'We have just installed new treadmills and weight benches in the gym.', category: 'community', date: '3 days ago', sortDate: '2026-04-26T10:00:00' },
+      { id: 3, img: '../assets/img/img3.png', title: 'New Gym Equipment', desc: 'We have just installed new treadmills and weight benches in the gym.', category: 'community', date: '3 days ago', sortDate: '2026-04-26T10:00:00' },
 
-      { id: 10, img: '../assets/img/announcements-visitor-policy.jpg', title: 'Updated Visitor Policy', desc: 'All visitors must now register at the front desk and present valid ID before entry.', category: 'security', date: 'Yesterday', sortDate: '2026-04-28T08:00:00' },
+      { id: 10, img: '../assets/img/img9.png', title: 'Updated Visitor Policy', desc: 'All visitors must now register at the front desk and present valid ID before entry.', category: 'security', date: 'Yesterday', sortDate: '2026-04-28T08:00:00' },
 
-      { id: 4, img: '../assets/img/announcements-security-update.png', title: 'Security Update', desc: 'Following a recent security review, we would like to remind all residents to always secure their rooms and report suspicious activity.', category: 'security', date: 'April 02, 2026', sortDate: '2026-04-02T09:00:00' },
+      { id: 4, img: '../assets/img/img4.png', title: 'Security Update', desc: 'Following a recent security review, we would like to remind all residents to always secure their rooms and report suspicious activity.', category: 'security', date: 'April 02, 2026', sortDate: '2026-04-02T09:00:00' },
 
-      { id: 5, img: '../assets/img/announcements-water-supply.jpg', title: 'Water Supply Notice', desc: 'Water supply will be interrupted on Saturday from 8AM to 2PM.', category: 'maintenance', date: 'April 01, 2026', sortDate: '2026-04-01T08:00:00' },
+      { id: 5, img: '../assets/img/img10.png', title: 'Water Supply Notice', desc: 'Water supply will be interrupted on Saturday from 8AM to 2PM.', category: 'maintenance', date: 'April 01, 2026', sortDate: '2026-04-01T08:00:00' },
 
-      { id: 6, img: '../assets/img/announcements-new-residents.jpeg', title: 'Welcome New Residents', desc: 'Please join us in welcoming the new families who moved in this week.', category: 'community', date: 'March 30, 2026', sortDate: '2026-03-30T10:00:00' },
+      { id: 6, img: '../assets/img/img7.png', title: 'Welcome New Residents', desc: 'Please join us in welcoming the new families who moved in this week.', category: 'community', date: 'March 30, 2026', sortDate: '2026-03-30T10:00:00' },
 
-      { id: 7, img: '../assets/img/announcements-parking-reminder.jpg', title: 'Parking Reminder', desc: 'Please ensure your vehicles are parked in designated spots only.', category: 'security', date: 'March 28, 2026', sortDate: '2026-03-28T08:00:00' }
+      { id: 7, img: '../assets/img/img8.png', title: 'Parking Reminder', desc: 'Please ensure your vehicles are parked in designated spots only.', category: 'security', date: 'March 28, 2026', sortDate: '2026-03-28T08:00:00' }
     ];
 
     const PER_PAGE = 5;

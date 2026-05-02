@@ -235,6 +235,47 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
       width: 100% !important;
       height: 100% !important;
     }
+    
+/* --- Dashboard Specific Overrides --- */
+
+.greeting-card, 
+.quick-actions-card, 
+.chart-card, 
+.traffic-card {
+  border-radius: 25px !important; 
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.03) !important;
+  padding: 2rem !important;
+}
+
+.greeting-card h1 {
+  font-size: 1.75rem !important;
+  letter-spacing: -0.5px;
+}
+
+.greeting-card p, 
+.chart-subtitle {
+  color: #a3aed0 !important; 
+  font-size: 0.95rem !important;
+}
+
+.stat-card {
+  border-radius: 20px !important;
+  height: 130px !important;
+}
+
+.stat-value {
+  font-size: 2.2rem !important;
+  letter-spacing: -1px;
+}
+
+.traffic-item {
+  border-radius: 20px !important;
+  background: #f8faff !important; 
+  border: 1px solid #f1f4f9;
+}
+
+
+
   </style>
 </head>
 

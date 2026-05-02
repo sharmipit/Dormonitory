@@ -82,6 +82,83 @@ try {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 </head>
 
+<style>
+.avatar, .alert-inline-icon, .actions i, .ann-menu-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;  
+    height: 40px !important;=
+    font-size: 1.25rem !important;
+    border-radius: 10px !important;
+    flex-shrink: 0 !important;
+}
+
+html {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px; 
+    }
+    
+    .main {
+        padding: 15px !important;
+    }
+
+    .ann-topbar, .top-bar {
+        flex-direction: column !important;
+        gap: 15px !important;
+        align-items: stretch !important;
+    }
+
+    .search, .ann-filter {
+        width: 100% !important;
+    }
+
+    .card, .ann-wrap {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table, .ann-table-head, .ann-row {
+        min-width: 600px; 
+    }
+
+    .footer, .ann-footer {
+        flex-direction: column !important;
+        gap: 20px !important;
+        text-align: center !important;
+    }
+
+    .ann-pagination {
+        justify-content: center !important;
+        width: 100% !important;
+    }
+    
+    .modal-box, .confirm-box {
+        width: 90% !important;
+        padding: 20px !important;
+    }
+}
+
+.actions {
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center;
+}
+
+.actions i {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.actions i:hover {
+    transform: scale(1.1);
+}
+</style>
+
 <body>
   <!-- Sidebar and navbar injected here via JS -->
   <div id="sidebar-navbar"></div>

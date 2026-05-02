@@ -68,16 +68,16 @@ $display_name = $_SESSION['firstname'] ?? "Admin User";
         </a>
       </li>
 
-      <li>
-        <a href="/Dormonitory/admin/room-management.php">
-          <i class="bi bi-door-open"></i><span>Rooms</span>
-        </a>
-      </li>
-
       <!-- Visitor Log -->
       <li>
         <a href="/Dormonitory/admin/visitor-management.php">
           <i class="bi bi-person-badge"></i><span>Visitor Log</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="/Dormonitory/admin/room-management.php">
+          <i class="bi bi-door-open"></i><span>Rooms</span>
         </a>
       </li>
 

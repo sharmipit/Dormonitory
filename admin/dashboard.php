@@ -266,6 +266,101 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
       background: #f8faff !important;
       border: 1px solid #f1f4f9;
     }
+
+    
+/* --- RESPONSIVE OVERRIDES FOR STAT CARDS --- */
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    height: auto !important;
+    min-height: 130px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.25rem !important;
+}
+
+
+@media (max-width: 1200px) {
+    .stat-deco {
+        font-size: 4rem !important;
+        opacity: 0.05 !important;
+    }
+    
+    .stat-value {
+        font-size: 1.8rem !important; 
+    }
+}
+
+@media (max-width: 768px) {
+    .stat-grid {
+        grid-template-columns: 1fr; 
+    }
+
+    .stat-card {
+        padding: 1rem !important;
+    }
+
+    .stat-label {
+        font-size: 0.85rem !important;
+        line-height: 1.2;
+    }
+
+    .stat-value {
+        font-size: 2rem !important;
+    }
+
+    .stat-deco {
+        display: none;
+    }
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.action-btn {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- RESPONSIVE CHART & TRAFFIC LAYOUT --- */
+
+.main-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.chart-card {
+    min-width: 0; 
+    width: 100%;
+}
+
+.chart-wrap {
+    position: relative;
+    height: 320px !important; 
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .main-grid {
+        grid-template-columns: 1fr; 
+    }
+}
   </style>
 </head>
 
@@ -456,94 +551,137 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script>
+<script>
     // Pass PHP trend data to JS
     const trendData = <?= $trendJson ?>;
 
     // Initialize the 7-day ins/outs line chart
-    new Chart(document.getElementById('occupancyChart').getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: trendData.map(d => d.label),
-        datasets: [
-          {
-            label: 'Ins',
-            data: trendData.map(d => d.ins),
-            fill: true,
-            tension: 0.4,
-            borderColor: '#4646d6',
-            backgroundColor: 'rgba(70,70,214,0.10)',
-            pointBackgroundColor: '#fff',
-            pointBorderColor: '#4646d6',
-            pointBorderWidth: 2,
-            pointRadius: 5,
-          },
-          {
-            label: 'Outs',
-            data: trendData.map(d => d.outs),
-            fill: true,
-            tension: 0.4,
-            borderColor: '#e55353',
-            backgroundColor: 'rgba(229,83,83,0.08)',
-            pointBackgroundColor: '#fff',
-            pointBorderColor: '#e55353',
-            pointBorderWidth: 2,
-            pointRadius: 5,
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true,
-            labels: { color: '#64748b', font: { family: 'Inter', size: 12 } }
-          },
-          tooltip: {
-            backgroundColor: '#2e2e9e',
-            titleColor: '#fff',
-            bodyColor: 'rgba(255,255,255,0.8)',
-            padding: 10,
-            cornerRadius: 9,
-          }
+    const ctx = document.getElementById('occupancyChart').getContext('2d');
+
+    // Create modern gradients for the reveal effect
+    const insGradient = ctx.createLinearGradient(0, 0, 0, 400);
+    insGradient.addColorStop(0, 'rgba(70, 70, 214, 0.3)');
+    insGradient.addColorStop(1, 'rgba(70, 70, 214, 0)');
+
+    const outsGradient = ctx.createLinearGradient(0, 0, 0, 400);
+    outsGradient.addColorStop(0, 'rgba(229, 83, 83, 0.25)');
+    outsGradient.addColorStop(1, 'rgba(229, 83, 83, 0)');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: trendData.map(d => d.label),
+            datasets: [
+                {
+                    // VVV The Fix: Adding spaces before the text to create a gap VVV
+                    label: '     Entries', 
+                    data: trendData.map(d => d.ins),
+                    fill: true,
+                    backgroundColor: insGradient,
+                    borderColor: '#4646d6',
+                    borderWidth: 3,
+                    tension: 0.45,
+                    pointRadius: 4,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 3,
+                },
+                {
+
+                    label: '     Exits', 
+                    data: trendData.map(d => d.outs),
+                    fill: true,
+                    backgroundColor: outsGradient,
+                    borderColor: '#e55353',
+                    borderWidth: 3,
+                    tension: 0.45,
+                    pointRadius: 4,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 3,
+                }
+            ]
         },
-        scales: {
-          x: {
-            grid: { display: false },
-            ticks: { color: '#94a3b8', font: { family: 'Inter', size: 12 } }
-          },
-          y: {
-            beginAtZero: true,
-            ticks: { color: '#94a3b8', stepSize: 1, font: { family: 'Inter', size: 12 } },
-            grid: { color: 'rgba(0,0,0,0.05)' }
-          }
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    align: 'end',
+                    labels: {
+                        boxWidth: 8,
+                        padding: 30, 
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        font: { family: 'Inter', size: 12, weight: '600' }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: '#1e1e2d', 
+                    titleColor: '#ffffff',
+                    titleFont: { family: 'Inter', size: 14, weight: 'bold' },
+                    bodyFont: { family: 'Inter', size: 13 },
+                    bodySpacing: 8,
+                    padding: 15,
+                    cornerRadius: 12,
+                    displayColors: true,
+                    usePointStyle: true,
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    borderWidth: 1,
+                    callbacks: {
+                        label: function(context) {
+                            let label = (context.dataset.label || '').trim();
+                            if (label) { label += ': '; }
+                            label += context.parsed.y + ' residents';
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8', font: { family: 'Inter' } }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(0,0,0,0.03)', drawBorder: false },
+                    ticks: { 
+                        color: '#94a3b8',
+                        stepSize: 1, 
+                        font: { family: 'Inter' } 
+                    }
+                }
+            }
         }
-      }
     });
 
-    // Opens the report modal
+    // Modal Control Functions
     function openReportModal() {
-      document.getElementById('reportModal').classList.add('active');
+        document.getElementById('reportModal').classList.add('active');
     }
 
-    // Closes any modal by ID
     function closeModal(id) {
-      document.getElementById(id).classList.remove('active');
+        document.getElementById(id).classList.remove('active');
     }
 
-    // Close modal when clicking outside the modal box
+    // Modal behavior setup
     document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll('.modal-overlay').forEach(modal => {
-        modal.addEventListener('click', function (e) {
-          if (e.target === this) this.classList.remove('active');
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function (e) {
+                if (e.target === this) this.classList.remove('active');
+            });
         });
-      });
     });
 
-    // Auto-refresh every 30s for live traffic
+    // Auto-refresh every 30s for live traffic update
     setTimeout(() => location.reload(), 30000);
-  </script>
+</script>
 
   <script src="/Dormonitory/assets/js/sidebar-navbar.js"></script>
 

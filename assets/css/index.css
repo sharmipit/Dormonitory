@@ -513,6 +513,74 @@ body {
   margin: 0;
 }
 
+
+
+/* --- Animation Keyframes --- */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.logo-area {
+  animation: fadeInUp 1s ease-out forwards;
+  opacity: 0; 
+}
+
+.content-area {
+  animation: fadeInUp 1s ease-out 0.4s forwards;
+  opacity: 0; 
+}
+
+.image-wrapper {
+  animation: scaleIn 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.col-md-4:nth-child(2) .feature-card-centered { transition-delay: 0.1s; }
+.col-md-4:nth-child(3) .feature-card-centered { transition-delay: 0.2s; }
+.col-md-4:nth-child(4) .feature-card-centered { transition-delay: 0.3s; }
+
+
+
 /* --- Size Responsiveness --- */
 
 @media (max-width: 992px) {

@@ -51,6 +51,80 @@
       background: #ede9fe;
       color: #3030b6;
     }
+
+.alert-inline-icon, .ann-thumb {
+    width: 45px !important;
+    height: 45px !important;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.ann-badge {
+    display: inline-flex;
+    padding: 4px 12px !important;
+    font-size: 0.75rem !important;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .ann-table-head {
+        display: none !important;
+    }
+
+    .ann-row {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 20px !important;
+        gap: 12px !important;
+        border-bottom: 1px solid #eee !important;
+        align-items: flex-start !important;
+    }
+
+    .ann-item {
+        width: 100% !important;
+        margin-bottom: 5px;
+    }
+
+    .ann-title {
+        font-size: 1.1rem !important;
+        margin-bottom: 4px;
+        white-space: normal !important;
+    }
+
+    .ann-desc {
+        font-size: 0.9rem !important;
+        color: #666;
+        line-height: 1.4;
+    }
+
+    .ann-row > div:nth-child(2) { 
+        order: -1; 
+    }
+
+    .ann-date {
+        font-size: 0.85rem !important;
+        color: #9e9a9a;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .ann-topbar {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .search, .ann-filter {
+        width: 100% !important;
+    }
+
+    .add-res-btn, .alert-top-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
   </style>
 </head>
 

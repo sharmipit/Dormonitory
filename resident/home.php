@@ -188,79 +188,68 @@ if ($latestLog && $latestLog['log_type'] === 'inside') {
               <button class="btn-filter">Maintenance</button>
             </div>
           </div>
-          <div class="announcement-grid">
-            <article class="announcement-item">
-              <div class="image-container">
-                <img src="../assets/img/img1.png" alt="Maintenance">
-                <span class="category-badge-inline">MAINTENANCE</span>
-              </div>
-              <div class="item-body">
-                <h3>Maintenance Notice</h3>
-                <p>Dear Residents, please be informed that the main elevators in Block...</p>
-                <div class="item-footer">
-                  <span>About 2 hours ago</span>
-                  <a href="javascript:void(0)" class="read-more announcement-btn" data-title="Maintenance Notice"
-                    data-category="MAINTENANCE" data-date="April 2, 2026" data-img="../assets/img/img1.png"
-                    data-content="Dear Residents, please be informed that the main elevators in Block B will be undergoing essential maintenance tomorrow, April 2nd, from 10:00 AM to 2:00 PM. During this period, the elevators will be completely out of service. We recommend using the service stairs or planning your movements accordingly. We apologize for any inconvenience this may cause and thank you for your cooperation in keeping our facilities in top condition.">
-                    Read More <i class="bi bi-arrow-right"></i></a>
-                </div>
-              </div>
-            </article>
+          
+<div class="announcement-grid">
+  <article class="announcement-item" data-category="MAINTENANCE">
+    <div class="image-container">
+      <img src="../assets/img/img1.png" alt="Maintenance">
+      <span class="category-badge-inline">MAINTENANCE</span>
+    </div>
+    <div class="item-body">
+      <h3>Maintenance Notice</h3>
+      <p>Dear Residents, please be informed that the main elevators in Block...</p>
+      <div class="item-footer">
+        <span>About 2 hours ago</span>
+        <a href="javascript:void(0)" class="read-more announcement-btn" data-title="Maintenance Notice" data-category="MAINTENANCE" data-date="April 2, 2026" data-img="../assets/img/img1.png" data-content="Dear Residents, please be informed that the main elevators in Block B will be undergoing essential maintenance tomorrow, April 2nd, from 10:00 AM to 2:00 PM. During this period, the elevators will be completely out of service. We recommend using the service stairs or planning your movements accordingly. We apologize for any inconvenience this may cause and thank you for your cooperation in keeping our facilities in top condition.">Read More <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
 
-            <article class="announcement-item">
-              <div class="image-container">
-                <img src="../assets/img/img2.png" alt="Community">
-                <span class="category-badge-inline">COMMUNITY</span>
-              </div>
-              <div class="item-body">
-                <h3>Community Event</h3>
-                <p>Get ready for our monthly Rooftop BBQ! Join your fellow residents this Friday...</p>
-                <div class="item-footer">
-                  <span>Posted 2 days ago</span>
-                  <a href="javascript:void(0)" class="read-more announcement-btn" data-title="Community Event"
-                    data-category="COMMUNITY" data-date="April 4, 2026" data-img="../assets/img/img2.png"
-                    data-content="Get ready for our monthly Rooftop BBQ! Join your fellow residents this Friday at 6:00 PM on the Level 15 terrace. We will provide the grills, charcoal, and a selection of meats and vegetarian options. Please bring your own beverages and any specific side dishes you would like to share. It is a great opportunity to meet your neighbors and enjoy the sunset. See you there!">
-                    Read More <i class="bi bi-arrow-right"></i></a>
-                </div>
-              </div>
-            </article>
+  <article class="announcement-item" data-category="COMMUNITY">
+    <div class="image-container">
+      <img src="../assets/img/img2.png" alt="Community">
+      <span class="category-badge-inline">COMMUNITY</span>
+    </div>
+    <div class="item-body">
+      <h3>Community Event</h3>
+      <p>Get ready for our monthly Rooftop BBQ! Join your fellow residents this Friday...</p>
+      <div class="item-footer">
+        <span>Posted 2 days ago</span>
+        <a href="javascript:void(0)" class="read-more announcement-btn" data-title="Community Event" data-category="COMMUNITY" data-date="April 4, 2026" data-img="../assets/img/img2.png" data-content="Get ready for our monthly Rooftop BBQ! Join your fellow residents this Friday at 6:00 PM on the Level 15 terrace. We will provide the grills, charcoal, and a selection of meats and vegetarian options. Please bring your own beverages and any specific side dishes you would like to share. It is a great opportunity to meet your neighbors and enjoy the sunset. See you there!">Read More <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
 
-            <article class="announcement-item">
-              <div class="image-container">
-                <img src="../assets/img/img3.png" alt="Gym">
-                <span class="category-badge-inline">COMMUNITY</span>
-              </div>
-              <div class="item-body">
-                <h3>New Gym Equipment</h3>
-                <p>We are excited to announce that the BukSU Fitness Center has received new gear...</p>
-                <div class="item-footer">
-                  <span>Posted 4 days ago</span>
-                  <a href="javascript:void(0)" class="read-more announcement-btn" data-title="New Gym Equipment"
-                    data-category="COMMUNITY" data-date="April 5, 2026" data-img="../assets/img/img3.png"
-                    data-content="We are excited to announce that the BukSU Fitness Center has been upgraded with state-of-the-art equipment! We have added three new high-performance treadmills with built-in entertainment screens and two adjustable weight benches. These additions are part of our ongoing commitment to providing the best amenities for our residents. Please remember to wipe down the equipment after use and follow all posted safety guidelines.">
-                    Read More <i class="bi bi-arrow-right"></i></a>
-                </div>
-              </div>
-            </article>
+  <article class="announcement-item" data-category="COMMUNITY">
+    <div class="image-container">
+      <img src="../assets/img/img3.png" alt="Gym">
+      <span class="category-badge-inline">COMMUNITY</span>
+    </div>
+    <div class="item-body">
+      <h3>New Gym Equipment</h3>
+      <p>We are excited to announce that the BukSU Fitness Center has received new gear...</p>
+      <div class="item-footer">
+        <span>Posted 4 days ago</span>
+        <a href="javascript:void(0)" class="read-more announcement-btn" data-title="New Gym Equipment" data-category="COMMUNITY" data-date="April 5, 2026" data-img="../assets/img/img3.png" data-content="We are excited to announce that the BukSU Fitness Center has been upgraded with state-of-the-art equipment! We have added three new high-performance treadmills with built-in entertainment screens and two adjustable weight benches. These additions are part of our ongoing commitment to providing the best amenities for our residents. Please remember to wipe down the equipment after use and follow all posted safety guidelines.">Read More <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
 
-            <article class="announcement-item">
-              <div class="image-container">
-                <img src="../assets/img/img4.png" alt="Security">
-                <span class="category-badge-inline">SECURITY</span>
-              </div>
-              <div class="item-body">
-                <h3>Security Update</h3>
-                <p>Following a recent security review, we would like to implement new lobby access...</p>
-                <div class="item-footer">
-                  <span>Posted 1 week ago</span>
-                  <a href="javascript:void(0)" class="read-more announcement-btn" data-title="Security Update"
-                    data-category="SECURITY" data-date="April 6, 2026" data-img="../assets/img/img4.png"
-                    data-content="Following a recent security review, we would like to remind all residents of the importance of maintaining building security. Please ensure your unit door is locked at all times, even when you are inside. Do not share your digital access keys or visitor codes with unauthorized individuals. If you notice any suspicious activity or unauthorized persons in the building, please contact the 24/7 security desk immediately at extension 99. Thank you for helping us keep our community safe.">
-                    Read More <i class="bi bi-arrow-right"></i></a>
-                </div>
-              </div>
-            </article>
-          </div>
+  <article class="announcement-item" data-category="SECURITY">
+    <div class="image-container">
+      <img src="../assets/img/img4.png" alt="Security">
+      <span class="category-badge-inline">SECURITY</span>
+    </div>
+    <div class="item-body">
+      <h3>Security Update</h3>
+      <p>Following a recent security review, we would like to implement new lobby access...</p>
+      <div class="item-footer">
+        <span>Posted 1 week ago</span>
+        <a href="javascript:void(0)" class="read-more announcement-btn" data-title="Security Update" data-category="SECURITY" data-date="April 6, 2026" data-img="../assets/img/img4.png" data-content="Following a recent security review, we would like to remind all residents of the importance of maintaining building security. Please ensure your unit door is locked at all times, even when you are inside. Do not share your digital access keys or visitor codes with unauthorized individuals. If you notice any suspicious activity or unauthorized persons in the building, please contact the 24/7 security desk immediately at extension 99. Thank you for helping us keep our community safe.">Read More <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </article>
+</div>
         </section>
       </div>
     </div>
@@ -321,5 +310,34 @@ if ($latestLog && $latestLog['log_type'] === 'inside') {
   <script src="/Dormonitory/assets/js/sidebar-navbar.js?v=2"></script>
   <script src="/Dormonitory/assets/js/main.js"></script>
 </body>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.btn-filter');
+    const announcementItems = document.querySelectorAll('.announcement-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const filterValue = button.textContent.toUpperCase();
+
+            announcementItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                
+                if (filterValue === 'ALL' || itemCategory === filterValue) {
+                    item.style.display = 'block'; 
+                    item.style.opacity = '0';
+                    setTimeout(() => { item.style.opacity = '1'; item.style.transition = 'opacity 0.3s'; }, 10);
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
 
 </html>

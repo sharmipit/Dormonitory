@@ -803,6 +803,20 @@ body {
   color: #adb5bd;
 }
 
+/* --- reCAPTCHA --- */
+
+.g-recaptcha {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.mb-3.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 /* --- Size Responsiveness --- */
 
 @media (max-width: 992px) {

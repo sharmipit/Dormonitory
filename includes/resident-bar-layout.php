@@ -23,7 +23,7 @@ $display_name = $_SESSION['firstname'] ?? "Resident";
       <div class="modal-header">
         <small>Signed in as</small>
         <h4 id="user-name-display"><?php echo htmlspecialchars($display_name); ?></h4>
-        <span class="access-tag" style="background: #eef2ff; color: #3030b6; padding: 4px 8px; border-radius: 4px; font-size: 10px;">Resident Access</span>
+        <span class="access-tag">Resident Access</span>
       </div>
       <div class="modal-divider"></div>
       <a href="/Dormonitory/resident/resident-profile.php" class="modal-btn btn-profile">

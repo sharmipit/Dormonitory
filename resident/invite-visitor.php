@@ -7,14 +7,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit();
 }
 
-$stmt = $pdo->prepare("SELECT * FROM visitor_log WHERE resident_id = ? ORDER BY created_at DESC LIMIT 10");
+$stmt = $pdo->prepare("SELECT * FROM visitor_log WHERE resident_id = ? ORDER BY created_at DESC LIMIT 5");
 $stmt->execute([$_SESSION['id']]);
 $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $stmtActive = $pdo->prepare("
     SELECT * FROM visitor_log 
     WHERE resident_id = ? 
-    AND DATE_ADD(created_at, INTERVAL 1 DAY) > NOW()
+    AND DATE_ADD(created_at, INTERVAL 30 MINUTE) > NOW()
     ORDER BY created_at DESC 
     LIMIT 1
 ");
@@ -22,12 +22,14 @@ $stmtActive = $pdo->prepare("
 $stmtActive->execute([$_SESSION['id']]);
 $activePass = $stmtActive->fetch(PDO::FETCH_ASSOC);
 
-$activeQrUrl  = $activePass ? "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($activePass['qr_token']) : null;
-$activeExpiry = $activePass ? date('m/d/y H:i:s', strtotime($activePass['created_at'] . ' +1 day')) : null;
-?>
+$activeQrUrl = $activePass ? "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($activePass['qr_token']) : null;
+$activeExpiry = $activePass
+    ? date('m/d/y H:i:s', strtotime($activePass['created_at'] . ' +30 minutes'))
+    : null; ?>
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,6 +41,7 @@ $activeExpiry = $activePass ? date('m/d/y H:i:s', strtotime($activePass['created
     <link rel="stylesheet" href="../assets/css/resident-styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 </head>
+
 <body>
     <div id="sidebar-navbar"></div>
     <div class="layout">
@@ -66,7 +69,8 @@ $activeExpiry = $activePass ? date('m/d/y H:i:s', strtotime($activePass['created
 
                             <div class="form-group">
                                 <label for="contactNumber">Contact Number</label>
-                                <input type="tel" id="contactNumber" placeholder="09XXXXXXXXX" required pattern="[0-9]{11}">
+                                <input type="tel" id="contactNumber" placeholder="09XXXXXXXXX" required
+                                    pattern="[0-9]{11}">
                                 <span class="error-msg" id="contactError">Please enter a valid 11-digit number.</span>
                             </div>
 
@@ -85,8 +89,8 @@ $activeExpiry = $activePass ? date('m/d/y H:i:s', strtotime($activePass['created
 
                             <div class="qr-expiry" id="qrExpiry">
                                 <p>Pass Expires in: <span id="expiryTimestamp">
-                                    <?= $activeExpiry ? '--:--:--' : '--/--/-- --:--' ?>
-                                </span></p>
+                                        <?= $activeExpiry ? '--:--:--' : '--/--/-- --:--' ?>
+                                    </span></p>
                             </div>
                         </div>
                     </div>
@@ -94,25 +98,25 @@ $activeExpiry = $activePass ? date('m/d/y H:i:s', strtotime($activePass['created
 
                 <section class="card history-card">
                     <div class="card-header">
-                        <h2><i class="bi bi-clock"></i> Visitor History</h2>
+                        <h2><i class="bi bi-clock"></i> Recent Visitors</h2>
                     </div>
                     <div class="activity-list" id="visitorHistoryList">
                         <?php if (empty($visitors)): ?>
                             <p class="text-center text-muted mt-3">No visitor history yet.</p>
                         <?php else: ?>
                             <?php foreach ($visitors as $v): ?>
-                            <div class="activity-item history-item">
-                                <div class="item-top">
-                                    <div class="icon-box"><i class="bi bi-person-fill"></i></div>
-                                    <div class="item-content">
-                                        <h3><?= htmlspecialchars($v['visitor_name']) ?></h3>
-                                        <p>
-                                            <?= date('M d, Y', strtotime($v['visit_date'])) ?> • 
-                                            <?= date('h:i A', strtotime($v['created_at'])) ?>
-                                        </p>
+                                <div class="activity-item history-item">
+                                    <div class="item-top">
+                                        <div class="icon-box"><i class="bi bi-person-fill"></i></div>
+                                        <div class="item-content">
+                                            <h3><?= htmlspecialchars($v['visitor_name']) ?></h3>
+                                            <p>
+                                                <?= date('M d, Y', strtotime($v['visit_date'])) ?> •
+                                                <?= date('h:i A', strtotime($v['created_at'])) ?>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
@@ -132,32 +136,33 @@ $activeExpiry = $activePass ? date('m/d/y H:i:s', strtotime($activePass['created
         document.getElementById('visitorForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const name    = document.getElementById('visitorName').value.trim();
+            const name = document.getElementById('visitorName').value.trim();
             const contact = document.getElementById('contactNumber').value.trim();
 
-            if (!name) { 
-                document.getElementById('nameError').style.display = 'block'; 
-                return; 
+            if (!name) {
+                document.getElementById('nameError').style.display = 'block';
+                return;
             }
-            if (!/^[0-9]{11}$/.test(contact)) { 
-                document.getElementById('contactError').style.display = 'block'; 
-                return; 
+            if (!/^[0-9]{11}$/.test(contact)) {
+                document.getElementById('contactError').style.display = 'block';
+                return;
             }
 
             document.getElementById('nameError').style.display = 'none';
             document.getElementById('contactError').style.display = 'none';
 
             const formData = new FormData();
-            formData.append('visitor_name',   name);
+            formData.append('visitor_name', name);
             formData.append('contact_number', contact);
 
             const response = await fetch('invite-visitor-save.php', {
                 method: 'POST',
-                body:   formData
+                body: formData
             });
             const data = await response.json();
 
             if (data.success) {
+                alert('Visitor pass generated for ' + data.visitor_name + '!');
                 window.location.reload();
             } else {
                 alert(data.message || 'Something went wrong.');
@@ -197,4 +202,5 @@ $activeExpiry = $activePass ? date('m/d/y H:i:s', strtotime($activePass['created
         }
     </script>
 </body>
+
 </html>

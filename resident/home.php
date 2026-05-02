@@ -53,8 +53,6 @@ if ($latestLog && $latestLog['log_type'] === 'inside') {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Relative path (safest) -->
   <link rel="stylesheet" href="/Dormonitory/assets/css/sidebar-navbar-styles.css" />
   <link rel="stylesheet" href="/Dormonitory/assets/css/resident-styles.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
@@ -62,19 +60,16 @@ if ($latestLog && $latestLog['log_type'] === 'inside') {
   <style>
     .status-box.status-inside {
       background-color: #16a34a;
-      /* green */
       color: #fff;
     }
 
     .status-box.status-outside {
       background-color: #dc2626;
-      /* red */
       color: #fff;
     }
 
     .status-box.status-unknown {
       background-color: #6b7280;
-      /* gray */
       color: #fff;
     }
   </style>

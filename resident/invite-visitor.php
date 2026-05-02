@@ -7,15 +7,27 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit();
 }
 
-// Fetch visitor history for this resident
 $stmt = $pdo->prepare("SELECT * FROM visitor_log WHERE resident_id = ? ORDER BY created_at DESC LIMIT 10");
 $stmt->execute([$_SESSION['id']]);
 $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$stmtActive = $pdo->prepare("
+    SELECT * FROM visitor_log 
+    WHERE resident_id = ? 
+    AND DATE_ADD(created_at, INTERVAL 1 DAY) > NOW()
+    ORDER BY created_at DESC 
+    LIMIT 1
+");
+
+$stmtActive->execute([$_SESSION['id']]);
+$activePass = $stmtActive->fetch(PDO::FETCH_ASSOC);
+
+$activeQrUrl  = $activePass ? "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($activePass['qr_token']) : null;
+$activeExpiry = $activePass ? date('m/d/y H:i:s', strtotime($activePass['created_at'] . ' +1 day')) : null;
 ?>
 
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,7 +39,6 @@ $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="../assets/css/resident-styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 </head>
-
 <body>
     <div id="sidebar-navbar"></div>
     <div class="layout">
@@ -55,8 +66,7 @@ $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                             <div class="form-group">
                                 <label for="contactNumber">Contact Number</label>
-                                <input type="tel" id="contactNumber" placeholder="09XXXXXXXXX" required
-                                    pattern="[0-9]{11}">
+                                <input type="tel" id="contactNumber" placeholder="09XXXXXXXXX" required pattern="[0-9]{11}">
                                 <span class="error-msg" id="contactError">Please enter a valid 11-digit number.</span>
                             </div>
 
@@ -65,11 +75,18 @@ $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="qr-display-section">
                             <div class="qr-placeholder" id="qrContainer">
-                                <i class="bi bi-qr-code"></i>
-                                <p class="qr-instruction">Fill the form to generate QR</p>
+                                <?php if ($activeQrUrl): ?>
+                                    <img src="<?= htmlspecialchars($activeQrUrl) ?>" alt="Visitor QR" style="width:200px;">
+                                <?php else: ?>
+                                    <i class="bi bi-qr-code"></i>
+                                    <p class="qr-instruction">Fill the form to generate QR</p>
+                                <?php endif; ?>
                             </div>
+
                             <div class="qr-expiry" id="qrExpiry">
-                                <p>Pass Expires: <span id="expiryTimestamp">--/--/-- --:--</span></p>
+                                <p>Pass Expires in: <span id="expiryTimestamp">
+                                    <?= $activeExpiry ? '--:--:--' : '--/--/-- --:--' ?>
+                                </span></p>
                             </div>
                         </div>
                     </div>
@@ -78,9 +95,7 @@ $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <section class="card history-card">
                     <div class="card-header">
                         <h2><i class="bi bi-clock"></i> Visitor History</h2>
-                        <a href="#" class="view-all">View All</a>
                     </div>
-
                     <div class="activity-list" id="visitorHistoryList">
                         <?php if (empty($visitors)): ?>
                             <p class="text-center text-muted mt-3">No visitor history yet.</p>
@@ -91,9 +106,11 @@ $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <div class="icon-box"><i class="bi bi-person-fill"></i></div>
                                     <div class="item-content">
                                         <h3><?= htmlspecialchars($v['visitor_name']) ?></h3>
-                                        <p><?= date('M d, Y', strtotime($v['visit_date'])) ?> • <?= htmlspecialchars($v['contact_number']) ?></p>
+                                        <p>
+                                            <?= date('M d, Y', strtotime($v['visit_date'])) ?> • 
+                                            <?= date('h:i A', strtotime($v['created_at'])) ?>
+                                        </p>
                                     </div>
-                                    <div class="chevron"><i class="bi bi-chevron-right"></i></div>
                                 </div>
                             </div>
                             <?php endforeach; ?>
@@ -118,11 +135,16 @@ $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
             const name    = document.getElementById('visitorName').value.trim();
             const contact = document.getElementById('contactNumber').value.trim();
 
-            // Basic validation
-            if (!name) { document.getElementById('nameError').style.display = 'block'; return; }
-            if (!/^[0-9]{11}$/.test(contact)) { document.getElementById('contactError').style.display = 'block'; return; }
+            if (!name) { 
+                document.getElementById('nameError').style.display = 'block'; 
+                return; 
+            }
+            if (!/^[0-9]{11}$/.test(contact)) { 
+                document.getElementById('contactError').style.display = 'block'; 
+                return; 
+            }
 
-            document.getElementById('nameError').style.display    = 'none';
+            document.getElementById('nameError').style.display = 'none';
             document.getElementById('contactError').style.display = 'none';
 
             const formData = new FormData();
@@ -136,38 +158,43 @@ $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
             const data = await response.json();
 
             if (data.success) {
-                // Show QR code
-                const qrContainer = document.getElementById('qrContainer');
-                qrContainer.innerHTML = `<img src="${data.qr_url}" alt="Visitor QR" style="width:200px;">`;
-
-                // Show expiry
-                const today = new Date();
-                today.setDate(today.getDate() + 1);
-                document.getElementById('expiryTimestamp').textContent = today.toLocaleString();
-                document.getElementById('qrExpiry').style.display = 'block';
-
-                // Add to history list dynamically
-                const historyList = document.getElementById('visitorHistoryList');
-                const newItem = document.createElement('div');
-                newItem.className = 'activity-item history-item';
-                newItem.innerHTML = `
-                    <div class="item-top">
-                        <div class="icon-box"><i class="bi bi-person-fill"></i></div>
-                        <div class="item-content">
-                            <h3>${data.visitor_name}</h3>
-                            <p>Today • ${new Date().toLocaleTimeString()}</p>
-                        </div>
-                        <div class="chevron"><i class="bi bi-chevron-right"></i></div>
-                    </div>`;
-                historyList.prepend(newItem);
-
-                // Reset form
-                document.getElementById('visitorForm').reset();
+                window.location.reload();
             } else {
                 alert(data.message || 'Something went wrong.');
             }
         });
+
+        // Countdown Timer for Visitor Pass
+        const expiryTime = "<?= $activeExpiry ?? '' ?>";
+
+        if (expiryTime) {
+            const countdownEl = document.getElementById('expiryTimestamp');
+
+            const timer = setInterval(() => {
+                const distance = new Date(expiryTime).getTime() - Date.now();
+
+                if (distance <= 0) {
+                    clearInterval(timer);
+                    countdownEl.textContent = 'Expired';
+                    countdownEl.style.color = '#ff4d4f';
+
+                    // Replace QR with placeholder
+                    const qrContainer = document.getElementById('qrContainer');
+                    qrContainer.innerHTML = `
+                        <i class="bi bi-qr-code"></i>
+                        <p class="qr-instruction">Pass expired. Generate a new one.</p>
+                    `;
+                    return;
+                }
+
+                const h = Math.floor(distance / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownEl.textContent =
+                    `${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+            }, 1000);
+        }
     </script>
 </body>
-
 </html>

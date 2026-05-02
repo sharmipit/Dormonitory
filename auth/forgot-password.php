@@ -1,4 +1,16 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+echo "autoload loaded<br>";
+
+if (class_exists(\PHPMailer\PHPMailer\PHPMailer::class)) {
+    echo "PHPMailer is working";
+} else {
+    echo "PHPMailer NOT found";
+}
 
 session_start();
 require '../config/db.php';

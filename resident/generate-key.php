@@ -9,24 +9,22 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $resident_id = $_SESSION['id'];
 
-// Revoke any existing active keys for this resident
+// Revoke any existing active keys
 $revoke = $pdo->prepare("UPDATE resident_qr SET status = 'Revoked' WHERE resident_id = ? AND status = 'Active'");
 $revoke->execute([$resident_id]);
 
 // Generate a unique token
 $token = bin2hex(random_bytes(32));
 
-// Set expiry to 1 hour from now
-$expires_at = date('Y-m-d H:i:s', strtotime('+1 hour'));
+// Save to database — let MySQL handle the time so timezone doesn't cause issues
+$stmt = $pdo->prepare("
+    INSERT INTO resident_qr (resident_id, qr_code, status, expires_at, created_at) 
+    VALUES (?, ?, 'Active', DATE_ADD(NOW(), INTERVAL 24 HOUR), NOW())");
+$stmt->execute([$resident_id, $token]);
 
-// Save to database
-$stmt = $pdo->prepare("INSERT INTO resident_qr (resident_id, qr_code, status, expires_at) VALUES (?, ?, 'Active', ?)");
-$stmt->execute([$resident_id, $token, $expires_at]);
-
-// Return JSON response to JavaScript
+// Return JSON response
 echo json_encode([
-    'success'    => true,
-    'token'      => $token,
-    'expires_at' => $expires_at,
-    'qr_url'     => "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($token)
+    'success' => true,
+    'token' => $token,
+    'qr_url' => "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($token)
 ]);

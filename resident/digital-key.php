@@ -7,12 +7,18 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit();
 }
 
-// Load existing active key for this resident
-$stmt = $pdo->prepare("SELECT * FROM resident_qr WHERE resident_id = ? AND status = 'Active' AND expires_at > NOW() ORDER BY created_at DESC LIMIT 1");
+$stmt = $pdo->prepare("
+    SELECT * FROM resident_qr 
+    WHERE resident_id = ? 
+      AND status = 'Active' 
+      AND expires_at > NOW() 
+    ORDER BY created_at DESC 
+    LIMIT 1
+");
 $stmt->execute([$_SESSION['id']]);
 $activeKey = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$qrUrl     = $activeKey ? "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($activeKey['qr_code']) : null;
+$qrUrl = $activeKey ? "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($activeKey['qr_code']) : null;
 $expiresAt = $activeKey ? $activeKey['expires_at'] : null;
 ?>
 
@@ -29,6 +35,7 @@ $expiresAt = $activeKey ? $activeKey['expires_at'] : null;
 </head>
 
 <body>
+    <input type="hidden" id="keyExpiresAt" value="<?= $expiresAt ?? '' ?>">
 
     <div id="sidebar-navbar"></div>
     <div class="layout">
@@ -36,7 +43,7 @@ $expiresAt = $activeKey ? $activeKey['expires_at'] : null;
             <div class="key-card-container">
                 <div class="key-card">
                     <div id="activeKeyDisplay" class="qr-main-wrapper">
-                        <img src="<?= $qrUrl ?? 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=NO_KEY' ?>" 
+                        <img src="<?= $qrUrl ?? 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=NO_KEY' ?>"
                             alt="Digital Entry Key" id="mainQrImage">
                     </div>
                     <div class="key-info-header">
@@ -65,19 +72,67 @@ $expiresAt = $activeKey ? $activeKey['expires_at'] : null;
     </div>
 
     <script src="../assets/js/sidebar-navbar.js"></script>
-    <script src="../assets/js/main.js"></script>
     <script>
+        let countdownInterval = null;
+
+        function startTimer(expiresAt) {
+            clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                const distance = new Date(expiresAt).getTime() - Date.now();
+
+                if (distance <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('keyTimer').textContent = 'Expired';
+                    const statusPill = document.querySelector('.status-pill');
+                    if (statusPill) {
+                        statusPill.textContent = 'EXPIRED';
+                        statusPill.style.background = '#fff1f0';
+                        statusPill.style.color = '#ff4d4f';
+                    }
+                    return;
+                }
+
+                const h = Math.floor(distance / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('keyTimer').textContent =
+                    `in ${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+            }, 1000);
+        }
+
+        const expiresAt = "<?= $expiresAt ?>";
+        if (expiresAt) {
+            startTimer(expiresAt);
+        } else {
+            const statusPill = document.querySelector('.status-pill');
+            if (statusPill) {
+                statusPill.textContent = 'INACTIVE';
+                statusPill.style.background = '#f4f7fe';
+                statusPill.style.color = '#a3aed0';
+            }
+            document.getElementById('keyTimer').textContent = 'No active key';
+        }
+
         document.getElementById('btnGenerateKey').addEventListener('click', async () => {
             const btn = document.getElementById('btnGenerateKey');
             btn.disabled = true;
             btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating...';
 
-            const response = await fetch('generate-key.php');
-            const data = await response.json();
+            const res = await fetch('generate-key.php');
+            const data = await res.json();
 
             if (data.success) {
                 document.getElementById('mainQrImage').src = data.qr_url;
-                document.getElementById('keyTimer').textContent = 'in 01h 00m';
+
+                const statusPill = document.querySelector('.status-pill');
+                if (statusPill) {
+                    statusPill.textContent = 'ACTIVE';
+                    statusPill.style.background = '#e6fff9';
+                    statusPill.style.color = '#05cd99';
+                }
+
+                startTimer(new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString());
             }
 
             btn.disabled = false;

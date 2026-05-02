@@ -18,6 +18,29 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $fullname = $user ? $user['first_name'] . ' ' . $user['last_name'] : 'Resident';
 $room_number = $user && $user['room_number'] ? 'Room ' . $user['room_number'] : 'No Room Assigned';
+
+// Fetch the latest log entry for this resident
+$logStmt = $pdo->prepare("
+    SELECT log_type 
+    FROM resident_log 
+    WHERE resident_id = ? 
+    ORDER BY log_time DESC 
+    LIMIT 1
+");
+$logStmt->execute([$_SESSION['id']]);
+$latestLog = $logStmt->fetch(PDO::FETCH_ASSOC);
+
+// Determine status
+if ($latestLog && $latestLog['log_type'] === 'inside') {
+  $statusLabel = 'INSIDE THE BUILDING';
+  $statusClass = 'status-inside';
+} elseif ($latestLog && $latestLog['log_type'] === 'outside') {
+  $statusLabel = 'OUTSIDE THE BUILDING';
+  $statusClass = 'status-outside';
+} else {
+  $statusLabel = 'STATUS UNKNOWN';
+  $statusClass = 'status-unknown';
+}
 ?>
 
 <!doctype html>
@@ -35,6 +58,26 @@ $room_number = $user && $user['room_number'] ? 'Room ' . $user['room_number'] : 
   <link rel="stylesheet" href="/Dormonitory/assets/css/sidebar-navbar-styles.css" />
   <link rel="stylesheet" href="/Dormonitory/assets/css/resident-styles.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <style>
+    .status-box.status-inside {
+      background-color: #16a34a;
+      /* green */
+      color: #fff;
+    }
+
+    .status-box.status-outside {
+      background-color: #dc2626;
+      /* red */
+      color: #fff;
+    }
+
+    .status-box.status-unknown {
+      background-color: #6b7280;
+      /* gray */
+      color: #fff;
+    }
+  </style>
 </head>
 
 <body>
@@ -49,7 +92,9 @@ $room_number = $user && $user['room_number'] ? 'Room ' . $user['room_number'] : 
         </div>
         <div class="status-badge">
           <span class="label">CURRENT STATUS</span>
-          <span class="status-box">INSIDE THE BUILDING</span>
+          <span class="status-box <?php echo $statusClass; ?>">
+            <?php echo $statusLabel; ?>
+          </span>
         </div>
       </header>
 

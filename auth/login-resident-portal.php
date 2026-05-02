@@ -112,7 +112,7 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
                 </form>
 
                 <div class="login-redirect mt-4">
-                    Don't have an account? <a href="signup.html" class="fw-bold">Sign Up</a>
+                    Don't have an account? <a href="signup-resident-portal.php" class="fw-bold">Sign Up</a>
                 </div>
             </div>
         </section>

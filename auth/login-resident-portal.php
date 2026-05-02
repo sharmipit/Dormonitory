@@ -12,6 +12,7 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,6 +21,7 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/auth-styles.css" />
 </head>
+
 <body>
     <main class="landing-container">
         <section class="hero-left signup-visual">
@@ -31,7 +33,8 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
                 <div class="branding-float">
                     <img src="../assets/img/primary-logo.png" alt="Dormonitory" class="signup-logo">
                     <p class="signup-description">
-                        Experience a seamless, secure, and social-first platform designed to elevate your daily living experience.
+                        Experience a seamless, secure, and social-first platform designed to elevate your daily living
+                        experience.
                     </p>
                 </div>
             </div>
@@ -58,8 +61,9 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
                 <!--PHP VALIDATION-->
                 <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger" role="alert">
-                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
-                    </div>  
+                        <?= $_SESSION['error'];
+                        unset($_SESSION['error']); ?>
+                    </div>
                 <?php endif; ?>
                 <!--END-->
 
@@ -68,7 +72,8 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
                         <label for="email" class="form-label">Email Address</label>
                         <div class="input-group-custom">
                             <i class="bi bi-envelope"></i>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="username@gmail.com" required>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="username@gmail.com" required>
                         </div>
                         <div class="invalid-feedback">Please enter a valid email address.</div>
                     </div>
@@ -77,7 +82,8 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
                         <label for="password" class="form-label">Password</label>
                         <div class="input-group-custom">
                             <i class="bi bi-lock"></i>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Enter your password" required>
                         </div>
                         <div class="invalid-feedback">Password is required.</div>
                     </div>
@@ -87,7 +93,7 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
                     </div>
 
                     <!-- reCAPTCHA form display-->
-                    <div class="mb-3 text-center"> 
+                    <div class="mb-3 text-center">
                         <div class="g-recaptcha" data-sitekey="<?= htmlspecialchars($siteKey) ?>"></div>
                     </div>
 
@@ -97,8 +103,10 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
                         <span>or Log In with</span>
                     </div>
 
-                    <a href="../googleAuth/google-login.php" class="btn-google-auth w-100" style="display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;">
-                        <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google Logo" style="width: 20px;">
+                    <a href="../googleAuth/google-login.php" class="btn-google-auth w-100"
+                        style="display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;">
+                        <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google Logo"
+                            style="width: 20px;">
                         Continue with Google
                     </a>
                 </form>
@@ -112,17 +120,17 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
 
     <script>
         (() => {
-          'use strict'
-          const forms = document.querySelectorAll('.needs-validation')
-          Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-              if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
-              }
-              form.classList.add('was-validated')
-            }, false)
-          })
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
         })()
 
         // reCAPTCHA form display
@@ -151,4 +159,5 @@ $siteKey = $_ENV['RECAPTCHA_SITE_KEY'];
     <script src="https://www.google.com/recaptcha/api.js"></script>
 
 </body>
+
 </html>

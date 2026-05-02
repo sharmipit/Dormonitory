@@ -44,7 +44,8 @@
   </nav>
   <div class="sidebar-bottom">
     <div class="divider-bottom"></div>
-    <a href="/Dormonitory/index.html" class="signout-btn" onclick="return confirm('Are you sure you want to sign out?')">
+    <a href="/Dormonitory/index.html" class="signout-btn"
+      onclick="return confirm('Are you sure you want to sign out?')">
       <i class="bi bi-box-arrow-right"></i>
       <span>Sign Out</span>
     </a>

@@ -1,853 +1,839 @@
 /* --- Global & Shared Styles --- */
 
 :root {
-    --brand-blue: #3030b6;
-    --electric-blue: #4949ff;
-    --inter: 'Inter', sans-serif;
+  --brand-blue: #3030b6;
+  --electric-blue: #4949ff;
+  --inter: "Inter", sans-serif;
 }
 
 html {
-    scroll-behavior: smooth; 
+  scroll-behavior: smooth;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: var(--inter);
-    background-color: white;
-    overflow-x: hidden; 
+  margin: 0;
+  padding: 0;
+  font-family: var(--inter);
+  background-color: white;
+  overflow-x: hidden;
 }
 
-.landing-container, .auth-container { 
-    display: flex;
-    height: 100vh; 
-    overflow: hidden;
-    position: relative;
+.landing-container,
+.auth-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
 .hero-left {
-    flex: 1;
-    background-color: var(--brand-blue);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    color: white;
-    z-index: 1;
-    overflow: hidden; 
+  flex: 1;
+  background-color: var(--brand-blue);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  color: white;
+  z-index: 1;
+  overflow: hidden;
 }
 
 .hero-right {
-    flex: 1;
-    background-color: white;
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
+  flex: 1;
+  background-color: white;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 .pattern-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../img/translucent-bg.png');
-    background-size: cover; 
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 1; 
-    z-index: -1;
-    pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../img/translucent-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  z-index: -1;
+  pointer-events: none;
 }
-
-
 
 /* ==========================================================================
    AUTENTICATION PAGE STYLES
    ========================================================================== */
 
-
-
 /* --- Login Page --- */
 
 .signup-visual {
-    flex: 1; 
-    position: relative;
-    background-color: var(--brand-blue);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    z-index: 1;
+  flex: 1;
+  position: relative;
+  background-color: var(--brand-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .pattern-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../img/translucent-bg.png'); 
-    background-size: cover; 
-    background-position: center;
-    opacity: 1; 
-    z-index: -1;
-    pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../img/translucent-bg.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .collage-wrapper {
-    position: relative;
-    top: 45px;
-    width: 510px;    
-    height: 600px; 
-    margin-right: 45px; 
-    display: block; 
+  position: relative;
+  top: 45px;
+  width: 510px;
+  height: 600px;
+  margin-right: 45px;
+  display: block;
 }
 
 .col-img {
-    position: absolute;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    cursor: pointer;
+  position: absolute;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  cursor: pointer;
 }
 
 .col-img:hover {
-    transform: translateY(-10px) scale(1.03); 
-    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.35));
-    z-index: 10; 
+  transform: translateY(-10px) scale(1.03);
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.35));
+  z-index: 10;
 }
 
 /* 1. Community Hands (Top Left) */
 .img-1 {
-    width: 200px;
-    top: 30px;
-    left: 10px;
-    z-index: 2;
+  width: 200px;
+  top: 30px;
+  left: 10px;
+  z-index: 2;
 }
 
 /* 2. Resident Smiling (Middle Right) */
 .img-2 {
-    width: 250px;
-    top: 160px;
-    right: 15px;
-    z-index: 3;
+  width: 250px;
+  top: 160px;
+  right: 15px;
+  z-index: 3;
 }
 
 /* 3. Security House (Bottom Left) */
 .img-3 {
-    width: 200px; 
-    bottom: 115px;
-    left: 10px; 
-    z-index: 2;
+  width: 200px;
+  bottom: 115px;
+  left: 10px;
+  z-index: 2;
 }
 
 /* 4. Logo */
 .branding-float {
-    position: absolute;
-    top: 20px; 
-    right: 15px;
-    width: 260px;
-    z-index: 4;
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  width: 260px;
+  z-index: 4;
 }
 
 .signup-logo {
-    width: 100%;
-    display: block;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    cursor: pointer;
+  width: 100%;
+  display: block;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  cursor: pointer;
 }
 
 .signup-logo:hover {
-    transform: translateY(-8px) scale(1.02);
-    filter: drop-shadow(0 10px 15px rgba(255, 255, 255, 0.2));
+  transform: translateY(-8px) scale(1.02);
+  filter: drop-shadow(0 10px 15px rgba(255, 255, 255, 0.2));
 }
 
 /* Text Description */
 .signup-description {
-    position: absolute; 
-    font-family: var(--inter);
-    font-size: 20px;
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0;
-    width: 220px; 
-    top: 310px; 
-    left: 7px; 
-    text-align: justify;
+  position: absolute;
+  font-family: var(--inter);
+  font-size: 20px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  width: 220px;
+  top: 310px;
+  left: 7px;
+  text-align: justify;
 }
-
-
 
 /* --- Login - Role Selection --- */
 
 .role-selection {
-    flex: 1;
-    background-color: #fcfcfc;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 60px 5% !important;
-    position: relative;
+  flex: 1;
+  background-color: #fcfcfc;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 60px 5% !important;
+  position: relative;
 }
 
 .back-nav {
-    margin-bottom: 60px;
-    align-self: flex-start; 
+  margin-bottom: 60px;
+  align-self: flex-start;
 }
 
 .btn-go-back {
-    color: #b0b0e0;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  color: #b0b0e0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .selection-box {
-    width: 100%;
-    max-width: 520px; 
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .role-title {
-    font-family: var(--inter);
-    color: var(--brand-blue);
-    font-size: 2.8rem;
-    font-weight: 800;
-    margin-bottom: 12px;
-    text-align: center;
+  font-family: var(--inter);
+  color: var(--brand-blue);
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  text-align: center;
 }
 
 .role-subtitle {
-    font-family: var(--inter);
-    color: #7d7db3;
-    font-size: 1rem;
-    text-align: center;
-    margin-bottom: 50px;
-    max-width: 400px;
+  font-family: var(--inter);
+  color: #7d7db3;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 50px;
+  max-width: 400px;
 }
 
 .role-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
 }
 
 .role-card {
-    background: #FFFFFF;
-    border: none;
-    border-radius: 25px;
-    padding: 25px 30px;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
-    transition: all 0.3s ease;
-    border: 1px solid transparent; 
+  background: #ffffff;
+  border: none;
+  border-radius: 25px;
+  padding: 25px 30px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
 }
 
 .role-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 30px rgba(48, 48, 182, 0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(48, 48, 182, 0.08);
 }
 
 .role-icon {
-    width: 60px;
-    height: 60px;
-    background: var(--brand-blue);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    margin-right: 25px;
-    flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  background: var(--brand-blue);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-right: 25px;
+  flex-shrink: 0;
 }
 
 .role-info strong {
-    display: block;
-    color: #333;
-    font-size: 1.3rem; 
+  display: block;
+  color: #333;
+  font-size: 1.3rem;
 }
 
 .role-info span {
-    color: #888;
-    font-size: 0.9rem;
+  color: #888;
+  font-size: 0.9rem;
 }
 
 .arrow-icon {
-    color: #eee;
-    font-size: 1.2rem;
-    margin-left: auto;
+  color: #eee;
+  font-size: 1.2rem;
+  margin-left: auto;
 }
 
 .login-redirect {
-    margin-top: 40px;
-    text-align: center;
-    color: #888;
+  margin-top: 40px;
+  text-align: center;
+  color: #888;
 }
 
 .login-redirect a {
-    color: var(--brand-blue);
-    font-weight: 700;
-    text-decoration: none;
+  color: var(--brand-blue);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .role-card:hover {
-    transform: translateY(-5px); 
-    background: #ffffff;
-    border-color: var(--brand-blue); 
-    box-shadow: 0 15px 35px rgba(48, 48, 182, 0.1); 
+  transform: translateY(-5px);
+  background: #ffffff;
+  border-color: var(--brand-blue);
+  box-shadow: 0 15px 35px rgba(48, 48, 182, 0.1);
 }
 
 .role-card:hover .role-icon {
-    transform: scale(1.1);
-    background: #3d3dbd; 
-    transition: all 0.3s ease;
+  transform: scale(1.1);
+  background: #3d3dbd;
+  transition: all 0.3s ease;
 }
 
 .role-card:hover .arrow-icon {
-    transform: translateX(8px);
-    color: var(--brand-blue);
-    transition: all 0.3s ease;
+  transform: translateX(8px);
+  color: var(--brand-blue);
+  transition: all 0.3s ease;
 }
-
-
 
 /* --- Signup Page --- */
 
 .signup-visual {
-    display: flex;
-    align-items: center;   
-    justify-content: center; 
-    height: 100vh;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .join-container {
-    position: relative;
-    width: 90%;           
-    max-width: 480px;      
-    margin: 0 auto;
-    z-index: 5;
-    transform: translateX(20px); 
-    transform: translateX(-10px); 
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  margin: 0 auto;
+  z-index: 5;
+  transform: translateX(20px);
+  transform: translateX(-10px);
 }
 
 .brandmark-box-img {
-    width: 100%;          
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
 }
 
 .join-content {
-    position: absolute;
-    top: 65%;               
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 85%;             
-    text-align: center;
-    z-index: 10;          
-    pointer-events: none;   
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
 }
 
 .join-title {
-    font-family: 'Inter', sans-serif;
-    color: #ffffff;
-    font-weight: 800;
-    font-size: 2.5rem;     
-    margin-bottom: 12px;
-    line-height: 1.1;
+  font-family: "Inter", sans-serif;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  line-height: 1.1;
 }
 
 .join-text {
-    font-family: 'Inter', sans-serif;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;       
-    line-height: 1.4;
-    margin: 0;
+  font-family: "Inter", sans-serif;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  line-height: 1.4;
+  margin: 0;
 }
-
-
 
 /* --- Resident Portal Login --- */
 
 .hero-right {
-    flex: 1;
-    height: 100vh;
-    overflow-y: auto; 
-    overflow-x: hidden;
-    display: block; 
-    padding: 0 40px 100px 40px; 
-    background-color: #ffffff;
-    position: relative;
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: block;
+  padding: 0 40px 100px 40px;
+  background-color: #ffffff;
+  position: relative;
 }
 
 .back-nav-fixed {
-    position: relative; 
-    width: 100%;
-    margin: 0; 
-    padding: 40px 0 20px 0; 
-    background-color: transparent; 
-    z-index: 10;
-    display: flex;
-    justify-content: center; 
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 40px 0 20px 0;
+  background-color: transparent;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
 }
 
 .btn-go-back {
-    width: 100%;
-    max-width: 600px; 
-    color: #8a94ad !important; 
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-    padding-left: 20px; 
+  width: 100%;
+  max-width: 600px;
+  color: #8a94ad !important;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  padding-left: 20px;
 }
 
 .btn-go-back:hover {
-    color: var(--brand-blue) !important;
-    transform: translateX(-8px); 
+  color: var(--brand-blue) !important;
+  transform: translateX(-8px);
 }
 
 .auth-form-panel {
-    position: relative;
-    display: block;
+  position: relative;
+  display: block;
 }
 
 .login-box {
-    width: 100%;
-    max-width: 420px;
-    margin: 40px auto 0 auto; 
-    position: relative;
-    z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  margin: 40px auto 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .portal-badge {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 30px; 
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
 }
 
 .portal-badge .badge-icon-box {
-    width: 45px;
-    height: 45px;
-    background-color: var(--brand-blue);
-    border-radius: 12px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  width: 45px;
+  height: 45px;
+  background-color: var(--brand-blue);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .portal-badge .badge-icon-box i {
-    font-size: 1.5rem;
-    color: #ffffff; 
-    line-height: 0;
+  font-size: 1.5rem;
+  color: #ffffff;
+  line-height: 0;
 }
 
 .portal-badge span {
-    font-weight: 700;
-    font-size: 1.1rem; 
-    color: var(--brand-blue);
-    text-transform: none; 
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--brand-blue);
+  text-transform: none;
 }
 
 .auth-title {
-    color: var(--brand-blue);
-    font-size: 3.2rem;
-    font-weight: 800;
-    margin-top: 10px;
-    margin-bottom: 10px;
+  color: var(--brand-blue);
+  font-size: 3.2rem;
+  font-weight: 800;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .auth-subtitle {
-    color: #7d7db3;
-    margin-bottom: 40px;
+  color: #7d7db3;
+  margin-bottom: 40px;
 }
 
 .input-group-custom {
-    position: relative;
-    display: flex;
-    align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .input-group-custom i {
-    position: absolute;
-    left: 20px;
-    color: #adb5bd;
-    font-size: 1.2rem;
+  position: absolute;
+  left: 20px;
+  color: #adb5bd;
+  font-size: 1.2rem;
 }
 
 .input-group-custom .form-control {
-    padding: 18px 20px 18px 55px;
-    background-color: #f8f9fa;
-    border: none;
-    border-radius: 15px;
-    font-family: var(--inter);
+  padding: 18px 20px 18px 55px;
+  background-color: #f8f9fa;
+  border: none;
+  border-radius: 15px;
+  font-family: var(--inter);
 }
 
-.was-validated .input-group-custom:has(.form-control:invalid) + .invalid-feedback {
-    display: block;
+.was-validated
+  .input-group-custom:has(.form-control:invalid)
+  + .invalid-feedback {
+  display: block;
 }
 
 .invalid-feedback {
-    display: none; 
-    margin-top: 8px;
-    margin-left: 5px;
-    color: #dc3545;
-    font-size: 0.85rem;
-    font-weight: 500;
+  display: none;
+  margin-top: 8px;
+  margin-left: 5px;
+  color: #dc3545;
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .form-label {
-    font-weight: 500;
-    font-size: 0.875rem;
-    color: #adb5bd;
-    margin-left: 5px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #adb5bd;
+  margin-left: 5px;
 }
 
 .forgot-link {
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.875rem;
-    color: var(--brand-blue);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--brand-blue);
 }
 
 .btn-auth-primary {
-    background-color: var(--brand-blue);
-    color: white;
-    padding: 16px;
-    border-radius: 15px;
-    border: none;
-    font-weight: 700;
-    transition: transform 0.2s;
+  background-color: var(--brand-blue);
+  color: white;
+  padding: 16px;
+  border-radius: 15px;
+  border: none;
+  font-weight: 700;
+  transition: transform 0.2s;
 }
 
 .btn-auth-primary:hover {
-    transform: translateY(-2px);
-    background-color: #2a3eb1;
+  transform: translateY(-2px);
+  background-color: #2a3eb1;
 }
 
 .btn-google-auth {
-    background-color: #ffffff;
-    border: 1px solid #dee2e6; 
-    padding: 16px;
-    border-radius: 15px;
-    font-weight: 600;
-    color: #2a3eb1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: all 0.3s ease; 
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  padding: 16px;
+  border-radius: 15px;
+  font-weight: 600;
+  color: #2a3eb1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
 }
 
 .btn-google-auth img {
-    width: 20px;
+  width: 20px;
 }
 
 .btn-google-auth:hover {
-    background-color: #ffffff; 
-    border-color: var(--brand-blue);
-    color: var(--brand-blue);
-    box-shadow: 0 0 0 0.3px var(--brand-blue), 0 4px 12px rgba(59, 78, 218, 0.1); 
-    transform: translateY(-1px);
+  background-color: #ffffff;
+  border-color: var(--brand-blue);
+  color: var(--brand-blue);
+  box-shadow:
+    0 0 0 0.3px var(--brand-blue),
+    0 4px 12px rgba(59, 78, 218, 0.1);
+  transform: translateY(-1px);
 }
 
 .auth-divider {
-    text-align: center;
-    margin: 30px 0;
-    position: relative;
+  text-align: center;
+  margin: 30px 0;
+  position: relative;
 }
 
 .auth-divider::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #dee2e6;
-    z-index: 1;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #dee2e6;
+  z-index: 1;
 }
 
 .auth-divider span {
-    background-color: white;
-    padding: 0 15px;
-    position: relative;
-    z-index: 2;
-    color: #6c757d;
-    font-size: 0.9rem;
+  background-color: white;
+  padding: 0 15px;
+  position: relative;
+  z-index: 2;
+  color: #6c757d;
+  font-size: 0.9rem;
 }
 
 .hero-right::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 .hero-right::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 .hero-right::-webkit-scrollbar-thumb {
-    background: #e0e0e0;
-    border-radius: 10px;
+  background: #e0e0e0;
+  border-radius: 10px;
 }
-
-
 
 /* --- Management Access Login --- */
 
 .portal-badge {
-    display: flex;
-    align-items: center;
-    gap: 15px; 
-    margin-bottom: 30px; 
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .portal-badge .badge-icon-box {
-    width: 48px; 
-    height: 48px;
-    background-color: var(--brand-blue);
-    border-radius: 12px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(59, 78, 218, 0.2);
+  width: 48px;
+  height: 48px;
+  background-color: var(--brand-blue);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(59, 78, 218, 0.2);
 }
 
 .portal-badge .badge-icon-box i {
-    font-size: 1.6rem;
-    color: #ffffff; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  font-size: 1.6rem;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .portal-badge span {
-    font-weight: 700;
-    font-size: 1.1rem; 
-    color: var(--brand-blue);
-    letter-spacing: 0.5px; 
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--brand-blue);
+  letter-spacing: 0.5px;
 }
-
-
 
 /* --- Forgot Password --- */
 
 .forgot-password-page .auth-title {
-    font-size: 2.8rem; 
-    font-weight: 800;
-    color: var(--brand-blue);
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    line-height: 1.2;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--brand-blue);
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  line-height: 1.2;
 }
 
 .forgot-password-page .auth-subtitle {
-    font-family: var(--inter);
-    text-align: center;      
-    display: block;
-    margin-bottom: 40px;
-    color: #7d7db3;       
+  font-family: var(--inter);
+  text-align: center;
+  display: block;
+  margin-bottom: 40px;
+  color: #7d7db3;
 }
 
 .forgot-password-page .form-label {
-    font-family: var(--inter);
-    font-weight: 500;
-    font-size: 0.875rem;
-    color: #adb5bd;         
-    margin-left: 5px;
-    text-transform: none;
+  font-family: var(--inter);
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #adb5bd;
+  margin-left: 5px;
+  text-transform: none;
 }
 
 .forgot-password-page .input-group-custom .form-control {
-    padding: 18px 20px 18px 55px;
-    background-color: #f8f9fa; 
-    border: none;         
-    border-radius: 15px;   
-    font-size: 1rem;
-    width: 100%;
+  padding: 18px 20px 18px 55px;
+  background-color: #f8f9fa;
+  border: none;
+  border-radius: 15px;
+  font-size: 1rem;
+  width: 100%;
 }
-
-
 
 /* --- Reset Confirmation --- */
 
 .verification-page .auth-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--brand-blue);
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    white-space: nowrap;
-    display: block;
-    width: max-content;   
-    margin-left: 50%;   
-    transform: translateX(-50%);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--brand-blue);
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  display: block;
+  width: max-content;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 
 .verification-page .auth-subtitle {
-    text-align: center;
-    color: #7d7db3;
-    font-size: 1rem;
-    max-width: 400px;
-    margin: 0 auto 40px auto;
+  text-align: center;
+  color: #7d7db3;
+  font-size: 1rem;
+  max-width: 400px;
+  margin: 0 auto 40px auto;
 }
 
 .verification-page .otp-container {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
 }
 
 .verification-page .otp-input {
-    width: 50px;
-    height: 65px;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    border: 1.5px solid #b0b0e0; 
-    border-radius: 12px;
-    background-color: #f0f0ff; 
-    color: var(--brand-blue);
-    transition: all 0.3s ease;
+  width: 50px;
+  height: 65px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border: 1.5px solid #b0b0e0;
+  border-radius: 12px;
+  background-color: #f0f0ff;
+  color: var(--brand-blue);
+  transition: all 0.3s ease;
 }
 
 .verification-page .otp-input:focus {
-    outline: none;
-    border-color: var(--brand-blue);
-    background-color: #ffffff;
-    box-shadow: 0 0 8px rgba(48, 48, 182, 0.2);
+  outline: none;
+  border-color: var(--brand-blue);
+  background-color: #ffffff;
+  box-shadow: 0 0 8px rgba(48, 48, 182, 0.2);
 }
 
 .verification-page .resend-text {
-    text-align: center;
-    color: #8a94ad;
-    font-size: 0.95rem;
+  text-align: center;
+  color: #8a94ad;
+  font-size: 0.95rem;
 }
 
 .was-validated .otp-input:invalid {
-    border-color: #dc3545;
+  border-color: #dc3545;
 }
 
 .verification-page .otp-input.is-invalid {
-    border-color: #dc3545 !important;
-    background-color: #fff8f8;
+  border-color: #dc3545 !important;
+  background-color: #fff8f8;
 }
 
 .verification-page #otp-error {
-    display: none; 
-    color: #dc3545;
-    font-weight: 500;
-    font-size: 0.85rem;
+  display: none;
+  color: #dc3545;
+  font-weight: 500;
+  font-size: 0.85rem;
 }
-
-
 
 /* --- New Password --- */
 
 .new-password-page .auth-title {
-    font-size: 3.2rem;
-    font-weight: 800;
-    color: var(--brand-blue);
-    margin-bottom: 10px;
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: var(--brand-blue);
+  margin-bottom: 10px;
 }
 
 .new-password-page .auth-subtitle {
-    margin-bottom: 40px;
-    color: #7d7db3;
+  margin-bottom: 40px;
+  color: #7d7db3;
 }
 
 .new-password-page .input-group-custom .toggle-password {
-    position: absolute;
-    right: 20px;
-    left: auto;
-    cursor: pointer;
-    color: #adb5bd;
-    z-index: 5;
+  position: absolute;
+  right: 20px;
+  left: auto;
+  cursor: pointer;
+  color: #adb5bd;
+  z-index: 5;
 }
 
 .new-password-page .input-group-custom .toggle-password:hover {
-    color: var(--brand-blue);
+  color: var(--brand-blue);
 }
 
 .new-password-page .input-group-custom .form-control {
-    padding-right: 50px !important;
+  padding-right: 50px !important;
 }
 
 .new-password-page .form-label {
-    font-family: var(--inter);
-    font-size: 0.875rem; 
-    font-weight: 500;
-    color: #adb5bd;
-    margin-left: 5px;
-    text-transform: none;
-    letter-spacing: normal; 
+  font-family: var(--inter);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #adb5bd;
+  margin-left: 5px;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .new-password-page .no-validate-icon {
-    background-image: none !important;
-    padding-right: 50px !important;
+  background-image: none !important;
+  padding-right: 50px !important;
 }
 
 .new-password-page .was-validated .form-control:invalid ~ .invalid-feedback {
-    display: block;
+  display: block;
 }
 
 .new-password-page .input-group-custom .toggle-password {
-    position: absolute;
-    right: 20px;
-    z-index: 5;
-    cursor: pointer;
-    color: #adb5bd;
+  position: absolute;
+  right: 20px;
+  z-index: 5;
+  cursor: pointer;
+  color: #adb5bd;
 }
-
-
 
 /* --- Size Responsiveness --- */
 
 @media (max-width: 992px) {
-    .hero-left, .signup-visual {
-        display: none;
-    }
+  .hero-left,
+  .signup-visual {
+    display: none;
+  }
 
-    .hero-right {
-        display: flex;
-        flex: 0 0 100%;
-        width: 100%;
-        height: 100vh;
-        padding: 40px 5%; 
-        overflow-y: auto;
-    }
+  .hero-right {
+    display: flex;
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100vh;
+    padding: 40px 5%;
+    overflow-y: auto;
+  }
 
-    .login-box {
-        margin: 100px auto 40px auto; 
-        padding: 0 20px;
-    }
+  .login-box {
+    margin: 100px auto 40px auto;
+    padding: 0 20px;
+  }
 
-    .back-nav-fixed {
-        position: fixed;
-        width: 100%;
-        left: 0;
-        margin: 0;
-        padding: 20px 5%;
-    }
+  .back-nav-fixed {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    margin: 0;
+    padding: 20px 5%;
+  }
 
-    .auth-title {
-        font-size: 2.2rem;
-    }
+  .auth-title {
+    font-size: 2.2rem;
+  }
 }

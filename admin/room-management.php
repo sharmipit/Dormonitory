@@ -122,10 +122,6 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-   MODALS (ROOM SYSTEM ONLY CLEAN FIX)
-   ============================================================ */
-
     .modal-overlay {
       display: none;
       position: fixed;
@@ -251,10 +247,6 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
       background: #b91c1c;
     }
 
-    /* ============================================================
-   ROOMS (ONLY CLEAN FIXES)
-   ============================================================ */
-
     .room-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -356,7 +348,7 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-
+  <!-- Sidebar and navbar injected here via JS -->
   <div id="sidebar-navbar"></div>
   <script src="/Dormonitory/assets/js/sidebar-navbar.js"></script>
 
@@ -367,7 +359,7 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <i class="bi bi-plus-lg"></i> Add Room
       </button>
 
-      <!-- 🔎 SEARCH BAR (NEW - INSIDE CARD) -->
+      <!-- SEARCH BAR -->
       <div class="ann-wrap">
         <div class="ann-topbar">
           <div class="search">
@@ -543,7 +535,7 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <script>
       /* =========================
-             SEARCH FUNCTION (NEW)
+             SEARCH FUNCTION
           ========================= */
       const searchInput = document.getElementById('roomSearch');
       const noRoomsFound = document.getElementById('noRoomsFound');
@@ -668,7 +660,6 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <?php if ($addError): ?>
         openModal('addModal');
       <?php endif; ?>
-
 
       // Init capacity field on page load
       handleRoomTypeChange(document.getElementById('room_type_select'));

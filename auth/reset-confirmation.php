@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/auth-styles.css" />
 </head>
+
 <body>
     <main class="landing-container verification-page">
         <section class="hero-left signup-visual">
@@ -41,10 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <img src="../assets/img/brandmark-box.png" alt="Join Community" class="brandmark-box-img">
                 <div class="join-content">
                     <h2 class="join-title">Don't Worry!</h2>
-                    <p class="join-text">We'll help you get back into your account in no time. Your security is our top priority.</p>
+                    <p class="join-text">We'll help you get back into your account in no time. Your security is our top
+                        priority.</p>
                 </div>
             </div>
-        </section>  
+        </section>
 
         <section class="hero-right">
             <div class="back-nav-fixed">
@@ -55,11 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="login-box">
                 <h2 class="auth-title">Enter Verification Code</h2>
-                <p class="auth-subtitle mb-5">Verify your number with the 6-digit code we just sent via email. The code expires in 5 minutes.</p>
+                <p class="auth-subtitle mb-5">Verify your number with the 6-digit code we just sent via email. The code
+                    expires in 5 minutes.</p>
 
                 <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger text-center">
-                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                        <?= $_SESSION['error'];
+                        unset($_SESSION['error']); ?>
                     </div>
                 <?php endif; ?>
 
@@ -109,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (input.value.length === 1 && index < inputs.length - 1) {
                         inputs[index + 1].focus();
                     }
-                    
+
                     // Clear error states as user types
                     input.classList.remove('is-invalid');
                     if (Array.from(inputs).every(i => i.value.length === 1)) {
@@ -141,9 +146,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!allFilled) {
                     event.preventDefault();
                     event.stopPropagation();
-                    
+
                     errorMsg.style.display = 'block';
-                    
+
                     inputs.forEach(input => {
                         if (input.value.length === 0) {
                             input.classList.add('is-invalid');
@@ -152,10 +157,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     errorMsg.style.display = 'none';
                 }
-                
+
                 form.classList.add('was-validated');
             }, false);
         })()
     </script>
 </body>
+
 </html>

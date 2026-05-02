@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
   <style>
-    /* ===== ALERT BADGE COLORS (ADDED ON TOP OF ANN STYLE) ===== */
     .ann-badge.critical {
       background: #fee2e2;
       color: #dc2626;
@@ -62,16 +61,13 @@
   <div class="layout">
     <div class="main">
 
-      <!-- TOP ACTION BUTTONS -->
       <div class="alerts-top-bar">
         <button class="alert-top-btn"><i class="bi bi-shield-check"></i>Emergency Protocol</button>
         <button class="alert-top-btn"><i class="bi bi-file-earmark-text"></i>Generate Report</button>
       </div>
 
-      <!-- CARD WRAPPER (SAME AS ANNOUNCEMENTS) -->
       <div class="ann-wrap">
 
-        <!-- SEARCH + FILTER -->
         <div class="ann-topbar">
 
           <div class="search">
@@ -97,7 +93,6 @@
 
         </div>
 
-        <!-- TABLE HEADER -->
         <div class="ann-table-head">
           <span>Alert</span>
           <span>Severity</span>
@@ -105,10 +100,8 @@
           <span>Actions</span>
         </div>
 
-        <!-- BODY -->
         <div id="alert-body"></div>
 
-        <!-- FOOTER -->
         <div class="ann-footer">
           <span class="ann-footer-info" id="alert-count"></span>
 
@@ -205,8 +198,6 @@
       });
     }
 
-    /* ========== EVENTS (ONLY ONCE) ========== */
-
     document.getElementById('alert-search').addEventListener('input', e => {
       search = e.target.value.toLowerCase().trim();
       page = 1;
@@ -260,7 +251,6 @@
       }
     });
 
-    /* FIRST LOAD */
     render();
   </script>
   <script src="/Dormonitory/assets/js/sidebar-navbar.js"></script>

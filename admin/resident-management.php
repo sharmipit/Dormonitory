@@ -6,6 +6,7 @@ require_once '../config/db.php';
 
 
 // ─── Handle DELETE ───────────────────────────────────────────
+// Removes resident and all related records (logs, QR, visitor logs)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
   try {
     $id = (int) $_POST['resident_id'];
@@ -15,12 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $pdo->prepare("DELETE FROM resident WHERE resident_id = ?")->execute([$id]);
   } catch (PDOException $e) {
   }
+  // Redirect back to the same page and search state
   header("Location: " . $_SERVER['PHP_SELF'] . "?page=" . (int) ($_GET['page'] ?? 1) . "&search=" . urlencode($_GET['search'] ?? ''));
   exit;
 }
 
 
 // ─── Handle EDIT ────────────────────────────────────
+// Validates uniqueness of contact and email, then updates resident info
 $editError = '';
 $editContactError = '';
 $editEmailError = '';
@@ -31,16 +34,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
   $contact = trim($_POST['contact_number']);
   $email = trim($_POST['email']);
 
+  // Check if contact number is already used by another resident
   $contactCheck = $pdo->prepare("SELECT COUNT(*) FROM resident WHERE contact_number = ? AND resident_id != ?");
   $contactCheck->execute([$contact, $id]);
   if ((int) $contactCheck->fetchColumn() > 0)
     $editContactError = 'That contact number is already in use by another resident.';
 
+  // Check if email is already used by another resident
   $emailCheck = $pdo->prepare("SELECT COUNT(*) FROM resident WHERE email = ? AND resident_id != ?");
   $emailCheck->execute([$email, $id]);
   if ((int) $emailCheck->fetchColumn() > 0)
     $editEmailError = 'That email is already in use by another resident.';
 
+  // Only update and redirect if no validation errors
   if (!$editContactError && !$editEmailError) {
     $pdo->prepare("UPDATE resident SET first_name=?, last_name=?, contact_number=?, email=? WHERE resident_id=?")
       ->execute([$fname, $lname, $contact, $email, $id]);
@@ -48,23 +54,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
   }
 
+  // Partial update: save name even if contact/email failed validation
   $pdo->prepare("UPDATE resident SET first_name=?, last_name=? WHERE resident_id=?")->execute([$fname, $lname, $id]);
   $editError = 'true';
 }
 
 // ─── Handle ASSIGN ROOM ──────────────────────────────────────
+// Assigns or unassigns a room to a resident; checks capacity before assigning
 $assignError = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'assign_room') {
   $id = (int) $_POST['resident_id'];
   $roomId = ($_POST['room_id'] ?? '') === '' ? null : (int) $_POST['room_id'];
 
   try {
-    // Get resident's current room first (always)
+    // Get resident's current room before making changes
     $currentStmt = $pdo->prepare("SELECT room_id FROM resident WHERE resident_id = ?");
     $currentStmt->execute([$id]);
     $currentRoom = $currentStmt->fetchColumn();
     $currentRoomNormalized = ($currentRoom === false || $currentRoom === null) ? null : (int) $currentRoom;
 
+    // Check capacity only if assigning a new/different room
     if ($roomId !== null && $currentRoomNormalized !== $roomId) {
       $capStmt = $pdo->prepare("
         SELECT r.max_capacity,
@@ -84,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
       }
     }
 
+    // Update room assignment if no errors and room actually changed
     if (!$assignError) {
       if ($currentRoomNormalized !== $roomId) {
         $pdo->prepare("UPDATE resident SET room_id = ? WHERE resident_id = ?")->execute([$roomId, $id]);
@@ -98,6 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 
 // ─── Fetch rooms for the assign modal ────────────────────────
+// Loads all rooms with their current occupancy count
 $rooms = [];
 try {
   $roomStmt = $pdo->query("
@@ -114,6 +125,7 @@ try {
 
 
 // ─── Pagination & Search ─────────────────────────────────────
+// Filters residents by name or ID, then paginates results
 $perPage = 8;
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $search = trim($_GET['search'] ?? '');
@@ -123,6 +135,7 @@ $totalPages = 1;
 $residents = [];
 
 try {
+  // Count total matching rows for pagination
   $countStmt = $pdo->prepare("
     SELECT COUNT(*) FROM resident
     WHERE CONCAT(first_name, ' ', last_name) LIKE ?
@@ -134,6 +147,7 @@ try {
   $page = min($page, $totalPages);
   $offset = ($page - 1) * $perPage;
 
+  // Fetch paginated residents with their latest status and room info
   $stmt = $pdo->prepare("
     SELECT
       r.resident_id,
@@ -183,6 +197,7 @@ try {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
   <style>
+    /* Clickable table rows */
     tbody tr.clickable-row {
       cursor: pointer;
       transition: background 0.15s;
@@ -192,6 +207,7 @@ try {
       background: #f5f6ff;
     }
 
+    /* Modal overlay — hidden by default, shown when .active is added */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -206,6 +222,7 @@ try {
       display: flex;
     }
 
+    /* Modal container */
     .modal-box {
       background: #fff;
       border-radius: 20px;
@@ -250,10 +267,12 @@ try {
       border-color: var(--accent, #3030b6);
     }
 
+    /* Red border on invalid input */
     .modal-box input.input-error {
       border-color: #dc2626;
     }
 
+    /* Inline field error message */
     .field-error {
       font-size: 0.78rem;
       color: #dc2626;
@@ -265,6 +284,7 @@ try {
       display: block;
     }
 
+    /* Modal action buttons row */
     .modal-actions {
       display: flex;
       justify-content: flex-end;
@@ -305,6 +325,7 @@ try {
       background: #2525a0;
     }
 
+    /* View modal header with avatar */
     .view-header {
       display: flex;
       align-items: center;
@@ -343,6 +364,7 @@ try {
       color: var(--text-secondary, #9e9a9a);
     }
 
+    /* Individual detail rows in the view modal */
     .detail-row {
       display: flex;
       justify-content: space-between;
@@ -370,6 +392,7 @@ try {
       text-align: right;
     }
 
+    /* Status badges for inside/outside */
     .detail-badge-inside {
       display: inline-block;
       padding: 3px 10px;
@@ -390,6 +413,7 @@ try {
       color: #dc2626;
     }
 
+    /* Delete confirmation box */
     .confirm-box {
       background: #fff;
       border-radius: 20px;
@@ -436,6 +460,7 @@ try {
       background: #b91c1c;
     }
 
+    /* Assign room error banner */
     .assign-error {
       font-size: 0.8rem;
       color: #dc2626;
@@ -483,6 +508,7 @@ try {
 </head>
 
 <body>
+  <!-- Sidebar and navbar injected here via JS -->
   <div id="sidebar-navbar"></div>
 
   <div class="layout">
@@ -519,6 +545,7 @@ try {
               </tr>
             <?php else: ?>
               <?php foreach ($residents as $r):
+                // Prepare display values for each resident row
                 $status = strtolower($r['current_status']);
                 $statusClass = $status === 'inside' ? 'resident-inside' : 'resident-outside';
                 $statusLabel = $status === 'inside' ? 'INSIDE' : 'OUTSIDE';
@@ -528,6 +555,7 @@ try {
                 $email = $r['email'] ?? '';
                 $assignedRoomId = $r['assigned_room_id'] ?? '';
                 ?>
+                <!-- Row click opens the view modal; action icons stop propagation -->
                 <tr class="clickable-row" onclick="openView(
                   <?= (int) $r['resident_id'] ?>,
                   '<?= addslashes(htmlspecialchars($r['full_name'])) ?>',
@@ -555,6 +583,7 @@ try {
                     <div class="time"><i class="bi bi-clock"></i> <?= $time ?></div>
                   </td>
                   <td class="actions">
+                    <!-- Disable assign button if no rooms exist -->
                     <?php if (empty($rooms)): ?>
                       <i class="bi bi-door-open" title="No rooms available"
                         style="opacity:0.3;cursor:not-allowed;font-size:1.05rem;" onclick="event.stopPropagation();"></i>
@@ -583,7 +612,7 @@ try {
           </tbody>
         </table>
 
-        <!-- Footer -->
+        <!-- Footer: row count and pagination controls -->
         <div class="footer">
           <div class="ann-footer-info">
             Showing <?= count($residents) ?> of <?= $totalRows ?> resident<?= $totalRows !== 1 ? 's' : '' ?>
@@ -594,6 +623,7 @@ try {
               Previous
             </button>
 
+            <!-- Numbered page buttons (windowed around current page) -->
             <?php
             $start = max(1, $page - 2);
             $end = min($totalPages, $page + 2);
@@ -653,6 +683,7 @@ try {
   <!-- ═══════════════════════════════════════════════
        EDIT MODAL
   ═══════════════════════════════════════════════ -->
+  <!-- Stays open on validation error via PHP-injected .active class -->
   <div class="modal-overlay <?= $editError ? 'active' : '' ?>" id="editModal">
     <div class="modal-box">
       <h2><i class="bi bi-pencil-square" style="color:var(--accent);margin-right:8px;"></i>Edit Resident</h2>
@@ -715,10 +746,12 @@ try {
   <!-- ═══════════════════════════════════════════════
      ASSIGN ROOM MODAL
 ═══════════════════════════════════════════════ -->
+  <!-- Stays open on assign error via PHP-injected .active class -->
   <div class="modal-overlay <?= $assignError ? 'active' : '' ?>" id="assignModal">
     <div class="modal-box">
       <h2><i class="bi bi-door-open" style="color:#16a34a;margin-right:8px;"></i>Assign Room</h2>
 
+      <!-- Error banner shown if room assignment fails -->
       <div class="assign-error <?= $assignError ? 'visible' : '' ?>" id="assign_error_msg">
         <?= htmlspecialchars($assignError) ?>
       </div>
@@ -737,6 +770,7 @@ try {
         <select name="room_id" id="assign_room_select">
           <option value="">— Remove Assignment</option>
           <?php foreach ($rooms as $rm):
+            // Build each room option with occupancy info
             $occupied = (int) $rm['occupied'];
             $capacity = (int) $rm['max_capacity'];
             $label = 'Room ' . htmlspecialchars($rm['room_number'])
@@ -763,6 +797,7 @@ try {
 
   <script>
     // ── View Modal ─────────────────────────────────────────
+    // Populates and opens the resident details modal
     function openView(id, fullName, fname, lname, contact, email, status, room, movement) {
       document.getElementById('view_name').textContent = fullName;
       document.getElementById('view_id_label').textContent = 'ID: ' + id;
@@ -778,6 +813,7 @@ try {
     }
 
     // ── Edit Modal ─────────────────────────────────────────
+    // Populates and opens the edit resident modal; clears previous errors
     function openEdit(id, fname, lname, contact, email) {
       document.getElementById('edit_id').value = id;
       document.getElementById('edit_fname').value = fname;
@@ -792,6 +828,7 @@ try {
     }
 
     // ── Delete Modal ───────────────────────────────────────
+    // Sets the resident ID and name in the delete confirmation modal
     function openDelete(id, name) {
       document.getElementById('delete_id').value = id;
       document.getElementById('delete_msg').textContent =
@@ -800,6 +837,7 @@ try {
     }
 
     // ── Assign Room Modal ──────────────────────────────────
+    // Populates the room dropdown; disables full rooms except the resident's current one
     function openAssign(id, name, currentRoomId) {
       document.getElementById('assign_resident_id').value = id;
       document.getElementById('assign_name_display').value = name;
@@ -828,7 +866,7 @@ try {
         }
       });
 
-      // Pre-select current room
+      // Pre-select the resident's current room
       select.value = currentRoomId !== null ? String(currentRoomId) : '';
       if (currentRoomId !== null && select.value !== String(currentRoomId)) {
         select.value = '';
@@ -842,7 +880,7 @@ try {
       document.getElementById(id).classList.remove('active');
     }
 
-    // Close on backdrop click
+    // Close modal when clicking the backdrop
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
       overlay.addEventListener('click', function (e) {
         if (e.target === this) this.classList.remove('active');
@@ -850,6 +888,7 @@ try {
     });
 
     // ── Debounced Search ───────────────────────────────────
+    // Auto-submits the search form 500ms after the user stops typing
     const searchInput = document.getElementById('searchInput');
     let debounceTimer;
     searchInput.addEventListener('input', function () {

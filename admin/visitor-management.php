@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 require_once '../config/db.php';
 
 // ─── SEARCH + PAGINATION ─────────────────────────────────────
+// Filters visitor logs by visitor name, contact, or resident name
 $perPage = 8;
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $search = trim($_GET['search'] ?? '');
@@ -16,7 +17,7 @@ $visitors = [];
 
 try {
 
-  // COUNT
+  // Count total matching rows for pagination
   $countStmt = $pdo->prepare("
     SELECT COUNT(*)
     FROM visitor_log vl
@@ -33,7 +34,7 @@ try {
   $page = min($page, $totalPages);
   $offset = ($page - 1) * $perPage;
 
-  // FETCH
+  // Fetch paginated visitor logs with their visited resident
   $stmt = $pdo->prepare("
   SELECT 
     vl.log_id,
@@ -82,6 +83,7 @@ try {
 </head>
 
 <body>
+  <!-- Sidebar and navbar injected here via JS -->
   <div id="sidebar-navbar"></div>
 
   <div class="layout">
@@ -144,7 +146,7 @@ try {
           </tbody>
         </table>
 
-        <!-- FOOTER -->
+        <!-- FOOTER: row count and pagination controls -->
         <div class="footer">
           <div>
             Showing <?= count($visitors) ?> of <?= $totalRows ?> visitors
@@ -159,6 +161,7 @@ try {
               Previous
             </button>
 
+            <!-- Numbered page buttons (windowed around current page) -->
             <?php
             $start = max(1, $page - 2);
             $end = min($totalPages, $page + 2);

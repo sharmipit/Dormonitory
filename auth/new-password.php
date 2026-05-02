@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -43,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/auth-styles.css" />
 </head>
+
 <body>
     <main class="landing-container new-password-page">
         <section class="hero-left signup-visual">
@@ -54,10 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="join-text">Create a new strong password to ensure your account stays safe.</p>
                 </div>
             </div>
-        </section>  
+        </section>
 
         <section class="hero-right">
-             <div class="back-nav-fixed">
+            <div class="back-nav-fixed">
                 <a href="forgot-password.php" class="btn-go-back">
                     <i class="bi bi-arrow-left"></i> Go Back
                 </a>
@@ -69,17 +71,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger">
-                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                        <?= $_SESSION['error'];
+                        unset($_SESSION['error']); ?>
                     </div>
                 <?php endif; ?>
 
                 <form action="new-password.php" method="POST" class="needs-validation" novalidate>
-                    
+
                     <div class="mb-4">
                         <label for="password" class="form-label">New Password</label>
                         <div class="input-group-custom">
                             <i class="bi bi-lock"></i>
-                            <input type="password" class="form-control no-validate-icon" id="password" name="new_password" placeholder="Enter your new password" required>
+                            <input type="password" class="form-control no-validate-icon" id="password"
+                                name="new_password" placeholder="Enter your new password" required>
                             <i class="bi bi-eye toggle-password" id="togglePassword"></i>
                         </div>
                         <div class="invalid-feedback">Please enter a new password.</div>
@@ -89,7 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="confirmPassword" class="form-label">Confirm Password</label>
                         <div class="input-group-custom">
                             <i class="bi bi-lock"></i>
-                            <input type="password" class="form-control no-validate-icon" id="confirmPassword" name="confirm_password" placeholder="Confirm your new password" required>
+                            <input type="password" class="form-control no-validate-icon" id="confirmPassword"
+                                name="confirm_password" placeholder="Confirm your new password" required>
                         </div>
                         <div id="confirmFeedback" class="invalid-feedback">Please confirm your password.</div>
                     </div>
@@ -103,51 +108,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </section>
     </main>
 
-<script>
-    (() => {
-        'use strict'
-        const form = document.querySelector('.needs-validation');
-        const p1 = document.getElementById('password');
-        const p2 = document.getElementById('confirmPassword');
-        const feedback = document.getElementById('confirmFeedback');
-        const toggleBtn = document.getElementById('togglePassword');
+    <script>
+        (() => {
+            'use strict'
+            const form = document.querySelector('.needs-validation');
+            const p1 = document.getElementById('password');
+            const p2 = document.getElementById('confirmPassword');
+            const feedback = document.getElementById('confirmFeedback');
+            const toggleBtn = document.getElementById('togglePassword');
 
-        // 1. Password Visibility Toggle 
-        toggleBtn.addEventListener('click', function () {
+            // 1. Password Visibility Toggle 
+            toggleBtn.addEventListener('click', function () {
 
-            const type = p1.getAttribute('type') === 'password' ? 'text' : 'password';
-            p1.setAttribute('type', type);
-            p2.setAttribute('type', type);
-            
-            this.classList.toggle('bi-eye');
-            this.classList.toggle('bi-eye-slash');
-        });
+                const type = p1.getAttribute('type') === 'password' ? 'text' : 'password';
+                p1.setAttribute('type', type);
+                p2.setAttribute('type', type);
 
-        // 2. Form Submission & Custom Validation 
-        form.addEventListener('submit', (event) => {
+                this.classList.toggle('bi-eye');
+                this.classList.toggle('bi-eye-slash');
+            });
 
-            p2.setCustomValidity("");
+            // 2. Form Submission & Custom Validation 
+            form.addEventListener('submit', (event) => {
 
-            if (p2.value === "") {
-                feedback.textContent = "Please confirm your password.";
-            } else if (p1.value !== p2.value) {
-                feedback.textContent = "Passwords do not match.";
-                p2.setCustomValidity("No Match"); 
-            }
+                p2.setCustomValidity("");
 
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
+                if (p2.value === "") {
+                    feedback.textContent = "Please confirm your password.";
+                } else if (p1.value !== p2.value) {
+                    feedback.textContent = "Passwords do not match.";
+                    p2.setCustomValidity("No Match");
+                }
 
-            form.classList.add('was-validated');
-        }, false);
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
 
-        // --- 3. Real-time feedback cleanup ---
-        p2.addEventListener('input', () => {
-            p2.setCustomValidity("");
-        });
-    })()
-</script>
+                form.classList.add('was-validated');
+            }, false);
+
+            // --- 3. Real-time feedback cleanup ---
+            p2.addEventListener('input', () => {
+                p2.setCustomValidity("");
+            });
+        })()
+    </script>
 </body>
+
 </html>

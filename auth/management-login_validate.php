@@ -11,7 +11,7 @@ require '../config/db.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //reCAPTCHA verification
-    $recaptchaSecret   = $_ENV['RECAPTCHA_SECRET_KEY'];
+    $recaptchaSecret = $_ENV['RECAPTCHA_SECRET_KEY'];
     $recaptchaResponse = $_POST['g-recaptcha-response'];
 
     $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$recaptchaResponse}");

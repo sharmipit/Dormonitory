@@ -2,6 +2,7 @@
 session_start();
 include('../config/db.php');
 
+// Redirect to login if not authenticated
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || !isset($_SESSION['admin_id'])) {
   header("Location: /Dormonitory/auth/login-management-access.php");
   exit();
@@ -24,10 +25,12 @@ $totalCapacity = (int) $stmt->fetchColumn();
 $stmt = $pdo->query("SELECT COUNT(*) FROM resident WHERE room_id IS NOT NULL");
 $totalAssigned = (int) $stmt->fetchColumn();
 
+// Calculate occupancy percentage; default to 0 if no capacity exists
 $occupancyPct = $totalCapacity > 0
   ? round(($totalAssigned / $totalCapacity) * 100)
   : 0;
 
+// Set occupancy status badge based on percentage thresholds
 if ($occupancyPct >= 90)
   $occupancyBadge = 'Near full';
 elseif ($occupancyPct >= 70)
@@ -55,6 +58,7 @@ $stmt = $pdo->query("
 ");
 $rawTrend = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Build a full 7-day array with default 0 values
 $trendData = [];
 for ($i = 6; $i >= 0; $i--) {
   $date = date('Y-m-d', strtotime("-$i days"));
@@ -65,6 +69,8 @@ for ($i = 6; $i >= 0; $i--) {
     'outs' => 0,
   ];
 }
+
+// Merge actual DB results into the 7-day array
 foreach ($rawTrend as $row) {
   foreach ($trendData as &$point) {
     if ($point['date'] === $row['day']) {
@@ -74,6 +80,8 @@ foreach ($rawTrend as $row) {
   }
 }
 unset($point);
+
+// Encode trend data for use in Chart.js
 $trendJson = json_encode($trendData);
 
 // ── Live Traffic: 5 latest resident movements ─────────────────────────────────
@@ -103,6 +111,7 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
   <style>
+    /* Modal overlay — hidden by default, shown when .active is added */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -117,6 +126,7 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
       display: flex;
     }
 
+    /* Modal container styles */
     .modal-box {
       background: #fff;
       border-radius: 20px;
@@ -128,6 +138,7 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
       font-family: var(--font-main);
     }
 
+    /* Modal entrance animation */
     @keyframes pop {
       from {
         transform: translateY(10px);
@@ -173,6 +184,7 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
       border-color: var(--accent);
     }
 
+    /* Modal action buttons row */
     .modal-actions {
       display: flex;
       justify-content: flex-end;
@@ -228,16 +240,19 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
 
+  <!-- Sidebar and navbar injected here via JS -->
   <div id="sidebar-navbar"></div>
 
   <div class="layout">
     <div class="main">
 
+      <!-- Greeting card with admin name -->
       <div class="greeting-card">
         <h1>Hi, <?php echo htmlspecialchars($fullname); ?></h1>
         <p>Here's what's happening with your property today.</p>
       </div>
 
+      <!-- Quick action buttons -->
       <div class="quick-actions-card">
         <h2>Quick Actions</h2>
         <div class="actions-grid">
@@ -259,6 +274,7 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
               View Visitor Log
             </button>
           </a>
+          <!-- Opens the report generation modal -->
           <button class="action-btn" onclick="openReportModal()">
             <div class="icon-placeholder"><i class="bi bi-file-earmark-text"></i></div>
             Generate Report
@@ -266,6 +282,7 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
       </div>
 
+      <!-- Stat cards: residents, occupancy, visitors, available beds -->
       <div class="stat-grid">
 
         <div class="stat-card">
@@ -359,6 +376,7 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php else: ?>
               <?php foreach ($liveTraffic as $entry): ?>
                 <?php
+                // Format each traffic entry's name, time, and status badge
                 $name = htmlspecialchars($entry['first_name'] . ' ' . $entry['last_name']);
                 $time = date('h:i A', strtotime($entry['log_time']));
                 $type = strtolower($entry['log_type']);
@@ -391,6 +409,7 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <i class="bi bi-file-earmark-text" style="color:var(--accent);margin-right:8px;"></i>
         Generate Report
       </h2>
+      <!-- Submits report type as GET param to generate-report.php -->
       <form method="GET" action="/Dormonitory/admin/generate-report.php">
         <label>Report Type</label>
         <select name="type" required>
@@ -410,8 +429,10 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script>
+    // Pass PHP trend data to JS
     const trendData = <?= $trendJson ?>;
 
+    // Initialize the 7-day ins/outs line chart
     new Chart(document.getElementById('occupancyChart').getContext('2d'), {
       type: 'line',
       data: {
@@ -473,14 +494,17 @@ $liveTraffic = $stmt->fetchAll(PDO::FETCH_ASSOC);
       }
     });
 
+    // Opens the report modal
     function openReportModal() {
       document.getElementById('reportModal').classList.add('active');
     }
 
+    // Closes any modal by ID
     function closeModal(id) {
       document.getElementById(id).classList.remove('active');
     }
 
+    // Close modal when clicking outside the modal box
     document.addEventListener("DOMContentLoaded", function () {
       document.querySelectorAll('.modal-overlay').forEach(modal => {
         modal.addEventListener('click', function (e) {

@@ -6,9 +6,11 @@ date_default_timezone_set('Asia/Manila');
 
 use Dompdf\Dompdf;
 
+// Get report type from URL param; default to 'daily'
 $type = $_GET['type'] ?? 'daily';
 
 /* ─── DATE FILTERS ───────────────────────────── */
+// Set SQL WHERE clauses based on selected report type
 switch ($type) {
   case 'daily':
     $logWhere = "rl.log_time >= CURDATE() AND rl.log_time < CURDATE() + INTERVAL 1 DAY";
@@ -36,6 +38,7 @@ switch ($type) {
 }
 
 /* ─── FETCH RESIDENT LOGS ───────────────────── */
+// Get resident movement logs filtered by date range
 $stmt = $pdo->prepare("
   SELECT r.first_name, r.last_name, rm.room_number, rl.log_type, rl.log_time
   FROM resident_log rl
@@ -48,6 +51,7 @@ $stmt->execute();
 $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 /* ─── FETCH VISITOR LOGS ───────────────────── */
+// Get visitor logs with their visited resident filtered by date range
 $stmt = $pdo->prepare("
   SELECT v.visitor_name, r.first_name, r.last_name, v.visit_date
   FROM visitor_log v
@@ -59,6 +63,7 @@ $stmt->execute();
 $visitors = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 /* ─── SUMMARY CALCULATIONS ─────────────────── */
+// Count totals and tally inside/outside movements
 $totalLogs = count($logs);
 $totalVisitors = count($visitors);
 
@@ -73,6 +78,7 @@ foreach ($logs as $log) {
 }
 
 /* ─── HTML TEMPLATE ────────────────────────── */
+// Build the PDF HTML content — styles, summary, and tables
 $html = "
 <style>
   body {
@@ -158,6 +164,7 @@ $html = "
   <th>Time</th>
 </tr>";
 
+// Populate resident activity rows; show fallback if empty
 if (empty($logs)) {
   $html .= "<tr><td colspan='4'>No records found</td></tr>";
 } else {
@@ -174,6 +181,7 @@ if (empty($logs)) {
 
 $html .= "</table>";
 
+// Visitor logs table
 $html .= "
 <h3>Visitor Logs</h3>
 <table>
@@ -183,6 +191,7 @@ $html .= "
   <th>Date</th>
 </tr>";
 
+// Populate visitor rows; show fallback if empty
 if (empty($visitors)) {
   $html .= "<tr><td colspan='3'>No records found</td></tr>";
 } else {
@@ -204,6 +213,7 @@ $html .= "</table>
 ";
 
 /* ─── GENERATE PDF ─────────────────────────── */
+// Load HTML into Dompdf, render, and stream as downloadable PDF
 $dompdf = new Dompdf();
 $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'portrait');

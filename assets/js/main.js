@@ -1,11 +1,5 @@
-/**
- * ============================================================================
- * PAGE: RESIDENT HOME (STATIC)
- * ============================================================================
- * NOTE: This section remains static as requested.
- * UI/UX: Handles announcements and activity detail modals.
- * ============================================================================
- */
+//RESIDENT HOME PAGE
+
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("universalModal");
   const container = document.getElementById("modalContainer");

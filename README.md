@@ -1,2 +1,2 @@
 # Dormonitory
-Dormonitory 
+Dormonitory was founded with a simple yet ambitious goal: to transform the way people experience shared living. We believe that technology should bridge the gap between security and community, making daily life seamless for both residents and property managers.

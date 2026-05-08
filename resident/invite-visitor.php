@@ -42,80 +42,93 @@ $activeExpiry = $activePass
     <link rel="stylesheet" href="../assets/css/resident-styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
-<style>
-    /* Modal Overlay for Success Message */
-    .modal-overlay {
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(3px);
-        align-items: center;
-        justify-content: center;
-    }
+    <style>
+        /* Modal Overlay for Success Message */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(3px);
+            align-items: center;
+            justify-content: center;
+        }
 
-    .modal-container {
-        background: #ffffff;
-        padding: 40px;
-        border-radius: 24px;
-        width: 380px;
-        max-width: 90vw;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        animation: modalFadeUp 0.3s ease-out;
-    }
+        .modal-container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 24px;
+            width: 380px;
+            max-width: 90vw;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: modalFadeUp 0.3s ease-out;
+        }
 
-    @keyframes modalFadeUp {
-        from { transform: translateY(15px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
+        @keyframes modalFadeUp {
+            from {
+                transform: translateY(15px);
+                opacity: 0;
+            }
 
-    .modal-icon {
-        font-size: 3.5rem;
-        margin-bottom: 20px;
-        display: inline-block;
-    }
-    .text-success { color: #22c55e; }
-    .text-danger { color: #ef4444; } 
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-    .modal-container h2 {
-        font-family: 'Inter', sans-serif;
-        font-weight: 700;
-        color: #1f2937;
-        margin-bottom: 12px;
-        font-size: 1.5rem;
-    }
+        .modal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
 
-    .modal-container p {
-        font-family: 'Inter', sans-serif;
-        color: #6b7280;
-        font-size: 1rem;
-        line-height: 1.5;
-        margin-bottom: 30px;
-    }
+        .text-success {
+            color: #22c55e;
+        }
 
-    .modal-btn {
-        width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: 12px;
-        background: #f3f4f6; 
-        color: #4b5563; 
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        .text-danger {
+            color: #ef4444;
+        }
 
-    .modal-btn:hover {
-        background: #e5e7eb;
-        color: #1f2937;
-    }
-</style>
+        .modal-container h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+        }
+
+        .modal-container p {
+            font-family: 'Inter', sans-serif;
+            color: #6b7280;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: #f3f4f6;
+            color: #4b5563;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-btn:hover {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+    </style>
 </head>
 
 <body>
@@ -208,122 +221,112 @@ $activeExpiry = $activePass
 
     <script src="../assets/js/sidebar-navbar.js"></script>
     <script src="../assets/js/main.js"></script>
-<script>
-    /**
-     * MODAL LOGIC
-     * Handles the display of the success/error messages
-     */
-    function showModal(title, message, isSuccess = true) {
-        const modal = document.getElementById('universalModal');
-        const container = document.getElementById('modalContainer');
-        
-        // Choose icon based on status
-        const icon = isSuccess 
-            ? 'bi-check-circle-fill text-success' 
-            : 'bi-exclamation-triangle-fill text-danger';
+    <script>
+        function showModal(title, message, isSuccess = true) {
+            const modal = document.getElementById('universalModal');
+            const container = document.getElementById('modalContainer');
 
-        container.innerHTML = `
+            // Choose icon based on status
+            const icon = isSuccess
+                ? 'bi-check-circle-fill text-success'
+                : 'bi-exclamation-triangle-fill text-danger';
+
+            container.innerHTML = `
             <i class="bi ${icon} modal-icon" style="font-size: 3rem; display: block; margin-bottom: 1rem;"></i>
             <h2 style="margin-bottom: 8px; color: #1a1a1a;">${title}</h2>
             <p style="color: #666; margin-bottom: 20px;">${message}</p>
             <button class="modal-btn" onclick="closeAndRefresh(${isSuccess})">Close</button>
         `;
 
-        modal.style.display = 'flex';
-    }
-
-    function closeAndRefresh(shouldRefresh) {
-        if (shouldRefresh) {
-            window.location.reload();
-        } else {
-            document.getElementById('universalModal').style.display = 'none';
-        }
-    }
-
-    /**
-     * FORM SUBMISSION
-     */
-    document.getElementById('visitorForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById('visitorName').value.trim();
-        const contact = document.getElementById('contactNumber').value.trim();
-
-        // Validation logic (Original)
-        if (!name) {
-            document.getElementById('nameError').style.display = 'block';
-            return;
-        }
-        if (!/^[0-9]{11}$/.test(contact)) {
-            document.getElementById('contactError').style.display = 'block';
-            return;
+            modal.style.display = 'flex';
         }
 
-        document.getElementById('nameError').style.display = 'none';
-        document.getElementById('contactError').style.display = 'none';
-
-        const formData = new FormData();
-        formData.append('visitor_name', name);
-        formData.append('contact_number', contact);
-
-        try {
-            const response = await fetch('invite-visitor-save.php', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await response.json();
-
-            if (data.success) {
-                // Trigger Modal instead of Alert
-                showModal('Success!', 'Visitor pass generated for ' + data.visitor_name + '!', true);
+        function closeAndRefresh(shouldRefresh) {
+            if (shouldRefresh) {
+                window.location.reload();
             } else {
-                // Trigger Error Modal
-                showModal('Error', data.message || 'Something went wrong.', false);
+                document.getElementById('universalModal').style.display = 'none';
             }
-        } catch (error) {
-            showModal('Connection Error', 'Unable to reach the server. Please check your connection.', false);
         }
-    });
 
-    /**
-     * COUNTDOWN TIMER
-     */
-    const expiryTime = "<?= $activeExpiry ?? '' ?>";
+        document.getElementById('visitorForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    if (expiryTime) {
-        const countdownEl = document.getElementById('expiryTimestamp');
+            const name = document.getElementById('visitorName').value.trim();
+            const contact = document.getElementById('contactNumber').value.trim();
 
-        const timer = setInterval(() => {
-            const distance = new Date(expiryTime).getTime() - Date.now();
-
-            if (distance <= 0) {
-                clearInterval(timer);
-                if (countdownEl) {
-                    countdownEl.textContent = 'Expired';
-                    countdownEl.style.color = '#ff4d4f';
-                }
-
-                const qrContainer = document.getElementById('qrContainer');
-                if (qrContainer) {
-                    qrContainer.innerHTML = `
-                        <i class="bi bi-qr-code"></i>
-                        <p class="qr-instruction">Pass expired. Generate a new one.</p>
-                    `;
-                }
+            // Validation logic (Original)
+            if (!name) {
+                document.getElementById('nameError').style.display = 'block';
+                return;
+            }
+            if (!/^[0-9]{11}$/.test(contact)) {
+                document.getElementById('contactError').style.display = 'block';
                 return;
             }
 
-            const h = Math.floor(distance / (1000 * 60 * 60));
-            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById('nameError').style.display = 'none';
+            document.getElementById('contactError').style.display = 'none';
 
-            if (countdownEl) {
-                countdownEl.textContent = 
-                    `${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+            const formData = new FormData();
+            formData.append('visitor_name', name);
+            formData.append('contact_number', contact);
+
+            try {
+                const response = await fetch('invite-visitor-save.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    // Trigger Modal instead of Alert
+                    showModal('Success!', 'Visitor pass generated for ' + data.visitor_name + '!', true);
+                } else {
+                    // Trigger Error Modal
+                    showModal('Error', data.message || 'Something went wrong.', false);
+                }
+            } catch (error) {
+                showModal('Connection Error', 'Unable to reach the server. Please check your connection.', false);
             }
-        }, 1000);
-    }
-</script>
+        });
+
+        const expiryTime = "<?= $activeExpiry ?? '' ?>";
+
+        if (expiryTime) {
+            const countdownEl = document.getElementById('expiryTimestamp');
+
+            const timer = setInterval(() => {
+                const distance = new Date(expiryTime).getTime() - Date.now();
+
+                if (distance <= 0) {
+                    clearInterval(timer);
+                    if (countdownEl) {
+                        countdownEl.textContent = 'Expired';
+                        countdownEl.style.color = '#ff4d4f';
+                    }
+
+                    const qrContainer = document.getElementById('qrContainer');
+                    if (qrContainer) {
+                        qrContainer.innerHTML = `
+                        <i class="bi bi-qr-code"></i>
+                        <p class="qr-instruction">Pass expired. Generate a new one.</p>
+                    `;
+                    }
+                    return;
+                }
+
+                const h = Math.floor(distance / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (countdownEl) {
+                    countdownEl.textContent =
+                        `${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+                }
+            }, 1000);
+        }
+    </script>
 </body>
 
 </html>

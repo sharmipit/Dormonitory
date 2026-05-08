@@ -84,80 +84,90 @@ try {
 </head>
 
 <style>
-.avatar, .alert-inline-icon, .actions i, .ann-menu-btn {
+  .avatar,
+  .alert-inline-icon,
+  .actions i,
+  .ann-menu-btn {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 40px !important;  
-    height: 40px !important;=
-    font-size: 1.25rem !important;
+    width: 40px !important;
+    height: 40px !important;
+    =font-size: 1.25rem !important;
     border-radius: 10px !important;
     flex-shrink: 0 !important;
-}
+  }
 
-html {
+  html {
     font-size: 16px;
-}
+  }
 
-@media (max-width: 768px) {
+  @media (max-width: 768px) {
     html {
-        font-size: 14px; 
+      font-size: 14px;
     }
-    
+
     .main {
-        padding: 15px !important;
+      padding: 15px !important;
     }
 
-    .ann-topbar, .top-bar {
-        flex-direction: column !important;
-        gap: 15px !important;
-        align-items: stretch !important;
+    .ann-topbar,
+    .top-bar {
+      flex-direction: column !important;
+      gap: 15px !important;
+      align-items: stretch !important;
     }
 
-    .search, .ann-filter {
-        width: 100% !important;
+    .search,
+    .ann-filter {
+      width: 100% !important;
     }
 
-    .card, .ann-wrap {
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
+    .card,
+    .ann-wrap {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
     }
 
-    table, .ann-table-head, .ann-row {
-        min-width: 600px; 
+    table,
+    .ann-table-head,
+    .ann-row {
+      min-width: 600px;
     }
 
-    .footer, .ann-footer {
-        flex-direction: column !important;
-        gap: 20px !important;
-        text-align: center !important;
+    .footer,
+    .ann-footer {
+      flex-direction: column !important;
+      gap: 20px !important;
+      text-align: center !important;
     }
 
     .ann-pagination {
-        justify-content: center !important;
-        width: 100% !important;
+      justify-content: center !important;
+      width: 100% !important;
     }
-    
-    .modal-box, .confirm-box {
-        width: 90% !important;
-        padding: 20px !important;
-    }
-}
 
-.actions {
+    .modal-box,
+    .confirm-box {
+      width: 90% !important;
+      padding: 20px !important;
+    }
+  }
+
+  .actions {
     display: flex !important;
     gap: 8px !important;
     align-items: center;
-}
+  }
 
-.actions i {
+  .actions i {
     cursor: pointer;
     transition: transform 0.2s ease;
-}
+  }
 
-.actions i:hover {
+  .actions i:hover {
     transform: scale(1.1);
-}
+  }
 </style>
 
 <body>

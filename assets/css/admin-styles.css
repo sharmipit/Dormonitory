@@ -1,17 +1,4 @@
 /* ============================================================
-   ADMIN STYLES — admin-styles.css
-   Sections:
-     1. Base & Reset
-     2. CSS Variables
-     3. Shared Components
-     4. Table (Residents & Visitors)
-     5. Dashboard
-     6. Rooms
-     7. Announcements & Security (shared .ann-* system)
-     8. Responsive
-   ============================================================ */
-
-/* ============================================================
    1. BASE & RESET
    ============================================================ */
 
@@ -59,20 +46,22 @@ body {
 .add-res-btn {
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   gap: 8px;
   background-color: var(--accent);
   color: white;
   border: none;
-  border-radius: 50px; 
-  padding: 10px 22px; 
+  border-radius: 50px;
+  padding: 10px 22px;
   width: fit-content;
-  min-width: 160px; 
-  font-size: 0.875rem; 
-  font-weight: 600;   
+  min-width: 160px;
+  font-size: 0.875rem;
+  font-weight: 600;
   font-family: var(--font-main);
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.1s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.1s ease;
   box-shadow: var(--shadow-btn);
   margin-bottom: 20px;
 }

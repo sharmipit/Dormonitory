@@ -16,8 +16,6 @@ body {
   overflow-x: hidden;
 }
 
-
-
 /* --- Landing Page Styles --- */
 .landing-container {
   display: flex;
@@ -515,8 +513,6 @@ body {
   margin: 0;
 }
 
-
-
 /* --- Animation Keyframes --- */
 
 @keyframes fadeInUp {
@@ -554,12 +550,12 @@ body {
 
 .logo-area {
   animation: fadeInUp 1s ease-out forwards;
-  opacity: 0; 
+  opacity: 0;
 }
 
 .content-area {
   animation: fadeInUp 1s ease-out 0.4s forwards;
-  opacity: 0; 
+  opacity: 0;
 }
 
 .image-wrapper {
@@ -577,11 +573,15 @@ body {
   transform: translateY(0);
 }
 
-.col-md-4:nth-child(2) .feature-card-centered { transition-delay: 0.1s; }
-.col-md-4:nth-child(3) .feature-card-centered { transition-delay: 0.2s; }
-.col-md-4:nth-child(4) .feature-card-centered { transition-delay: 0.3s; }
-
-
+.col-md-4:nth-child(2) .feature-card-centered {
+  transition-delay: 0.1s;
+}
+.col-md-4:nth-child(3) .feature-card-centered {
+  transition-delay: 0.2s;
+}
+.col-md-4:nth-child(4) .feature-card-centered {
+  transition-delay: 0.3s;
+}
 
 /* --- Size Responsiveness --- */
 

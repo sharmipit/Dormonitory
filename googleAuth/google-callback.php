@@ -22,7 +22,7 @@ if (isset($_GET['code'])) {
         $userInfo = $oauth2->userinfo->get();
 
         $email = $userInfo->email;
-        $name  = $userInfo->name;
+        $name = $userInfo->name;
 
         // Check if resident exists with this email
         $stmt = $pdo->prepare("SELECT * FROM resident WHERE email = ?");
@@ -31,9 +31,9 @@ if (isset($_GET['code'])) {
 
         if ($resident) {
             // Existing resident — log them in
-            $_SESSION['loggedin']  = true;
-            $_SESSION['id']        = $resident['resident_id'];
-            $_SESSION['email']     = $resident['email'];
+            $_SESSION['loggedin'] = true;
+            $_SESSION['id'] = $resident['resident_id'];
+            $_SESSION['email'] = $resident['email'];
             $_SESSION['firstname'] = $resident['first_name'];
             header('Location: ../resident/home.php');
             exit();
